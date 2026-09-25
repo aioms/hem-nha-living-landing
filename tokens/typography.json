@@ -1,0 +1,76 @@
+{
+  "families": [
+    "Jost",
+    "Cormorant Garamond"
+  ],
+  "scale": {
+    "heading-1": {
+      "fontFamily": "Jost",
+      "fontSize": "360px",
+      "fontWeight": "700",
+      "lineHeight": null,
+      "source": "css"
+    },
+    "heading-2": {
+      "fontFamily": "Jost",
+      "fontSize": "300px",
+      "fontWeight": "700",
+      "lineHeight": null,
+      "source": "css"
+    },
+    "heading-3": {
+      "fontFamily": "Jost",
+      "fontSize": "240px",
+      "fontWeight": "700",
+      "lineHeight": null,
+      "source": "css"
+    },
+    "body": {
+      "fontFamily": "Cormorant Garamond",
+      "fontSize": "11px",
+      "fontWeight": "400",
+      "lineHeight": null,
+      "source": "css"
+    },
+    "caption": {
+      "fontFamily": "Cormorant Garamond",
+      "fontSize": "15px",
+      "fontWeight": "400",
+      "lineHeight": null,
+      "source": "css"
+    }
+  },
+  "fontFaces": [
+    {
+      "family": "Cormorant Garamond",
+      "src": "https://www.nagicreative.com/fonts/CormorantGaramond-Medium.otf",
+      "format": "opentype",
+      "weight": "500"
+    },
+    {
+      "family": "Jost",
+      "src": "https://www.nagicreative.com/fonts/Jost-400-Book.ttf",
+      "format": "truetype",
+      "weight": "400"
+    },
+    {
+      "family": "Jost",
+      "src": "https://www.nagicreative.com/fonts/Jost-600-Semi.ttf",
+      "format": "truetype",
+      "weight": "600"
+    },
+    {
+      "family": "Pinyon Script",
+      "src": "https://www.nagicreative.com/fonts/PinyonScript-Regular.ttf",
+      "format": "truetype",
+      "weight": "400"
+    }
+  ],
+  "rules": {
+    "maxSizesPerScreen": 4,
+    "headingWeightRange": "600-700",
+    "bodyWeight": 400,
+    "lineHeightBody": 1.5,
+    "lineHeightHeading": 1.2
+  }
+}

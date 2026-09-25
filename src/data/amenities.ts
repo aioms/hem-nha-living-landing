@@ -1,0 +1,66 @@
+import { AmenitySpace } from '../types';
+
+export const AMENITIES: AmenitySpace[] = [
+  {
+    id: 'rooftop',
+    name: 'Sân Thượng',
+    tagline: 'Trên đỉnh ngôi nhà, dưới vòm bầu trời',
+    description: 'Khoảng trời riêng mà chúng tôi dành tặng cho mọi cư dân. Nơi buổi sáng trở thành yoga, buổi chiều là tách cafe và buổi tối là tiệc ngắm sao nhỏ giữa những người bạn mới.',
+    hours: '06:00 — 23:00',
+    features: ['Pergola thông thoáng toàn bộ sân thượng', 'Bàn ghế mây đan ngoài trời', 'Khu bida & bi lắc giải trí', 'Đèn dây trang trí lãng mạn về đêm', 'Không gian yoga & thiền buổi sáng'],
+    image: '/assets/photos/amenities/rooftop/rooftop-skyline-bar.webp',
+    gallery: [
+      '/assets/photos/amenities/rooftop/rooftop-welcome.webp',
+      '/assets/photos/amenities/rooftop/rooftop-foosball.webp',
+      '/assets/photos/amenities/rooftop/rooftop-billiards-sunset.webp',
+    ],
+  },
+  {
+    id: 'cafe',
+    name: 'Cafe Hẻm',
+    tagline: 'Nơi ngày mới bắt đầu thật nhẹ nhàng',
+    description: 'Cafe ở tầng trệt không chỉ là nơi uống cà phê — đây là không gian sống động nhất trong ngôi nhà. Thư viện mini, bàn ghế gỗ cũ, ánh sáng tự nhiên và menu đồ uống theo mùa tạo nên một co-working cafe ấm cúng và sáng tạo.',
+    hours: '07:00 — 21:30',
+    features: ['Menu cà phê specialty & trà thảo mộc', 'Wifi tốc độ cao co-working', 'Thư viện mini & board games', 'Mặt bằng sự kiện nhỏ', 'Vườn nội thất với cây xanh tươi'],
+    image: '/assets/photos/cafe/cafe-main-lounge.webp',
+    gallery: [
+      '/assets/photos/cafe/cafe-bar.webp',
+      '/assets/photos/cafe/cafe-library-nook.webp',
+      '/assets/photos/cafe/cafe-communal-table.webp',
+      '/assets/photos/cafe/cafe-window-view.webp',
+    ],
+  },
+  {
+    id: 'laundry',
+    name: 'Khu Giặt Ủi',
+    tagline: 'Tiện nghi không nói — tự hiểu',
+    description: 'Khu giặt sấy tự phục vụ hiện đại với máy giặt cửa trước và máy sấy công nghiệp. Chỉ cần 45 phút là quần áo sạch thơm. Miễn phí cho tất cả khách lưu trú hàng tháng, dịch vụ theo coin cho khách ngắn hạn.',
+    hours: '07:00 — 22:00',
+    features: ['Máy giặt cửa trước dung tích lớn 9kg', 'Máy sấy công nghiệp nhanh & mạnh', 'Bàn là hơi nước + khu phơi đồ', 'Xà phòng giặt sinh học sạch sẽ', 'Miễn phí cho monthly guests'],
+    image: '/assets/photos/amenities/laundry/laundry-lounge.webp',
+    gallery: [],
+  },
+  {
+    id: 'billiards',
+    name: 'Billiards & Foosball',
+    tagline: 'Trò chơi kết nối con người',
+    description: 'Khu giải trí tại sân thượng với bàn bida chính quy và bàn bi lắc (foosball) cho những buổi chiều nhộn nhịp, kết bạn và thư giãn sau một ngày làm việc căng thẳng. Không ai xa lạ sau một trận bida chung.',
+    hours: '10:00 — 23:00',
+    features: ['Bàn Bida Carom & Pool chuẩn kích thước', 'Bàn bi lắc Foosball 11 người chất lượng', 'Đèn bàn đúng chuẩn thi đấu', 'Loa bluetooth kết nối tự do', 'Miễn phí cho tất cả khách lưu trú'],
+    image: '/assets/photos/amenities/rooftop/rooftop-billiards-sunset.webp',
+    gallery: [],
+  },
+  {
+    id: 'atrium',
+    name: 'Giếng Trời',
+    tagline: 'Nhịp thở của ngôi nhà',
+    description: 'Giếng trời xuyên suốt các tầng với cây xanh treo và ánh sáng tự nhiên đổ xuống như một bức tranh sống. Điểm gặp gỡ yên ả giữa các phòng, nơi bạn có thể ngồi xuống ghế mây, đọc sách và đắm mình trong sự yên tĩnh hiếm có giữa lòng đô thị.',
+    hours: 'Mở cửa 24/7',
+    features: ['Hệ thống cây xanh treo tự nhiên đa tầng', 'Ánh sáng tự nhiên trực tiếp', 'Ghế mây thư giãn & góc ngồi tiếp khách', 'Wifi phủ toàn bộ', 'Khu đọc sách yên tĩnh'],
+    image: '/assets/photos/courtyard/atrium-tree.webp',
+    gallery: [
+      '/assets/photos/courtyard/atrium-light.webp',
+      '/assets/photos/courtyard/staircase-gallery.webp',
+    ],
+  },
+];

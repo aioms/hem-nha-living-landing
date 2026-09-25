@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------------------------------- */
+/* NAGICREATIVE DESIGN SYSTEM — THEME TOKENS (Tailwind v4 @theme)            */
+/* -------------------------------------------------------------------------- */
+
+@theme {
+  /* Color palette */
+  --color-nagi-sand: #fbf5e8;
+  --color-nagi-sandAlt: #f8f1e3;
+  --color-nagi-warmWhite: #faf6ee;
+  --color-nagi-cream: #f4e8d2;
+  --color-nagi-clay: #e9ddca;
+  --color-nagi-parchment: #f2e9da;
+  --color-nagi-terracotta: #866437;
+  --color-nagi-gold: #be9a66;
+  --color-nagi-goldLight: #d8bc8e;
+  --color-nagi-ochre: #79683f;
+  --color-nagi-charcoal: #444444;
+  --color-nagi-slate: #364252;
+  --color-nagi-deepNavy: #1a2438;
+  --color-nagi-cardEdge: #22303f;
+  --color-nagi-darkBg: #121a2a;
+  --color-nagi-muted: #8e8474;
+  --color-nagi-border: #6f6559;
+  --color-nagi-borderLight: rgba(111, 101, 89, 0.2);
+  --color-nagi-borderGold: rgba(216, 188, 142, 0.4);
+
+  /* Font families */
+  --font-family-serif: "Cormorant Garamond", Georgia, serif;
+  --font-family-sans: "Jost", system-ui, sans-serif;
+  --font-family-script: "Pinyon Script", cursive;
+
+  /* Shadows */
+  --shadow-flat-hair: 0 1px 0 rgba(111, 101, 89, 0.2);
+  --shadow-raised-gold: 0 0 0 4px rgba(190, 154, 102, 0.15);
+  --shadow-floating-card: 0 10px 28px -12px rgba(34, 48, 63, 0.15);
+  --shadow-night-glow: 0 0 30px rgba(216, 188, 142, 0.15);
+
+  /* Border radii */
+  --radius-nagi-sm: 3px;
+  --radius-nagi: 9px;
+  --radius-nagi-md: 12px;
+  --radius-nagi-lg: 16px;
+  --radius-nagi-pill: 999px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* NAGICREATIVE DESIGN SYSTEM — FONT FACES                                   */
+/* -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/Jost-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pinyon Script';
+  src: url('/fonts/PinyonScript-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* -------------------------------------------------------------------------- */
+/* DESIGN SYSTEM CSS VARIABLES                                               */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --sand-bg: #fbf5e8;
+  --sand-card: #f8f1e3;
+  --cream-card: #f4e8d2;
+  --dark-navy: #1a2438;
+  --card-edge: #22303f;
+  --text-main: #444444;
+  --text-muted: #8e8474;
+  --text-dark: #364252;
+  --gold-accent: #be9a66;
+  --terracotta: #866437;
+  --border-light: rgba(111, 101, 89, 0.2);
+  --border-strong: #6f6559;
+}
+
+/* -------------------------------------------------------------------------- */
+/* BASE STYLES                                                                */
+/* -------------------------------------------------------------------------- */
+
+html {
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-main);
+  background-color: var(--sand-bg);
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom animations */
+@keyframes nagiRipple {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.02); opacity: 0.4; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+@keyframes slowFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-ripple {
+  animation: nagiRipple 4s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: slowFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+  animation: gentleFloat 6s ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #fbf5e8;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8bc8e;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #be9a66;
+}
+
+/* -------------------------------------------------------------------------- */
+/* COMPONENT CLASSES                                                          */
+/* -------------------------------------------------------------------------- */
+
+.btn-primary {
+  background-color: #22303f;
+  color: #fbf5e8;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  transition: all 250ms ease-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #121a2a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(34, 48, 63, 0.2);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: #364252;
+  border: 1px solid rgba(111, 101, 89, 0.35);
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  transition: all 250ms ease-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  border-color: #364252;
+  background-color: rgba(248, 241, 227, 0.6);
+  transform: translateY(-1px);
+}
+
+.arch-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8e8474;
+  border-bottom: 1px solid rgba(142, 132, 116, 0.4);
+  padding-bottom: 2px;
+}
+
+/* Mobile safe area */
+.safe-area-inset-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+/* Selection color */
+::selection {
+  background-color: #be9a66;
+  color: #fbf5e8;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid #be9a66;
+  outline-offset: 3px;
+}
+
+/* Transition duration utilities */
+.duration-600 { transition-duration: 600ms; }
+.duration-700 { transition-duration: 700ms; }
+.duration-800 { transition-duration: 800ms; }
+.duration-900 { transition-duration: 900ms; }
+.duration-400 { transition-duration: 400ms; }

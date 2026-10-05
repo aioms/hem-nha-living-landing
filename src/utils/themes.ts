@@ -1,4 +1,4 @@
-import { MomentKey } from '../types';
+import { MomentKey, Room } from '../types';
 import { clsx } from 'clsx';
 
 export const MOMENT_THEMES: Record<MomentKey, {
@@ -15,58 +15,98 @@ export const MOMENT_THEMES: Record<MomentKey, {
   timeEmoji: string;
 }> = {
   dawn: {
-    bgPage: '#fcf8f2',
-    bgSection: '#faf5ee',
-    bgCard: '#f8f1e7',
-    accentColor: '#be9a66',
-    textColor: '#364252',
-    mutedColor: '#8e8474',
-    borderColor: 'rgba(190, 154, 102, 0.3)',
-    pillBg: '#f4e8d2',
-    pillText: '#79683f',
+    bgPage: '#faf7f2',
+    bgSection: '#f2f7f4',
+    bgCard: '#eef5f1',
+    accentColor: '#79a594',
+    textColor: '#223035',
+    mutedColor: '#668074',
+    borderColor: 'rgba(121, 165, 148, 0.35)',
+    pillBg: '#d8e8e0',
+    pillText: '#2f5244',
     label: 'Sớm Mai',
     timeEmoji: '🌅',
   },
   noon: {
-    bgPage: '#fdf7ed',
-    bgSection: '#f9f2e4',
-    bgCard: '#f4ead9',
-    accentColor: '#866437',
-    textColor: '#22303f',
-    mutedColor: '#79683f',
-    borderColor: 'rgba(134, 100, 55, 0.3)',
-    pillBg: '#eedcc0',
-    pillText: '#5c4016',
-    label: 'Trưa Hè',
+    bgPage: '#faf6f0',
+    bgSection: '#f9f4eb',
+    bgCard: '#f4ede1',
+    accentColor: '#9b7848',
+    textColor: '#2a231c',
+    mutedColor: '#847360',
+    borderColor: 'rgba(217, 199, 176, 0.55)',
+    pillBg: '#efe6d8',
+    pillText: '#684c25',
+    label: 'Mơ Trưa',
     timeEmoji: '☀️',
   },
   sunset: {
-    bgPage: '#fdf1e8',
-    bgSection: '#f9ece2',
-    bgCard: '#f4e2d4',
-    accentColor: '#b8623b',
-    textColor: '#3a2016',
-    mutedColor: '#8d5035',
-    borderColor: 'rgba(184, 98, 59, 0.3)',
-    pillBg: '#f3ded0',
-    pillText: '#7a3520',
+    bgPage: '#faf5f1',
+    bgSection: '#f9efeb',
+    bgCard: '#f4e5de',
+    accentColor: '#ae7055',
+    textColor: '#362118',
+    mutedColor: '#8c5743',
+    borderColor: 'rgba(174, 112, 85, 0.35)',
+    pillBg: '#f3ded5',
+    pillText: '#7a3a24',
     label: 'Hoàng Hôn',
     timeEmoji: '🌇',
   },
   night: {
-    bgPage: '#141d2e',
-    bgSection: '#1a2438',
-    bgCard: '#1e2b44',
-    accentColor: '#d8bc8e',
-    textColor: '#f2e9da',
-    mutedColor: '#8e97ad',
-    borderColor: 'rgba(216, 188, 142, 0.25)',
-    pillBg: 'rgba(216, 188, 142, 0.12)',
-    pillText: '#d8bc8e',
+    bgPage: '#162024',
+    bgSection: '#1e2a2e',
+    bgCard: '#25353c',
+    accentColor: '#d9c7b0',
+    textColor: '#faf6f0',
+    mutedColor: '#9baebe',
+    borderColor: 'rgba(109, 130, 177, 0.3)',
+    pillBg: 'rgba(109, 130, 177, 0.22)',
+    pillText: '#a2b5e2',
     label: 'Đêm Sao',
     timeEmoji: '🌙',
   },
 };
+
+export const DIY_THEME = {
+  bgPage: '#faf7f2',
+  bgSection: '#f4ede1',
+  bgCard: '#ece3d4',
+  accentColor: '#ae7055',
+  textColor: '#223035',
+  mutedColor: '#79a594',
+  borderColor: 'rgba(174, 112, 85, 0.25)',
+  pillBg: '#efe6d8',
+  pillText: '#4f6b73',
+  label: 'Hẻm DIY',
+  timeEmoji: '🛠️',
+};
+
+export const LIVING_THEME = {
+  bgPage: '#faf6f0',
+  bgSection: '#f4ece1',
+  bgCard: '#eef5f1',
+  accentColor: '#4f6b73',
+  textColor: '#223035',
+  mutedColor: '#9a958f',
+  borderColor: 'rgba(79, 107, 115, 0.25)',
+  pillBg: '#d8e8e0',
+  pillText: '#2f5244',
+  label: 'Hẻm Living',
+  timeEmoji: '🛋️',
+};
+
+
+export function getRoomTheme(room: Room | null) {
+  if (!room) return MOMENT_THEMES.dawn;
+  if (room.momentKey && MOMENT_THEMES[room.momentKey]) {
+    return MOMENT_THEMES[room.momentKey];
+  }
+  if (room.category === 'diy') {
+    return DIY_THEME;
+  }
+  return LIVING_THEME;
+}
 
 export function cn(...inputs: (string | undefined | null | boolean)[]) {
   return clsx(inputs);

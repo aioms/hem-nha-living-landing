@@ -1,13 +1,15 @@
 import { useInView } from '../hooks/useScroll';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function IntroSection() {
+  const { t } = useLanguage();
   const [ref, inView] = useInView(0.2);
 
   return (
     <section
       id="intro"
       className="py-24 md:py-36 px-6 md:px-10 lg:px-16 max-w-[1280px] mx-auto"
-      aria-label="Giới thiệu về Hẻm Nhà Living"
+      aria-label="About Hẻm Nhà Living"
     >
       <div ref={ref} className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
         {/* Left: text content */}
@@ -17,30 +19,41 @@ export default function IntroSection() {
             className={`arch-tag mb-8 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
             <span className="text-nagi-gold">凪</span>
-            <span>Ngôi nhà</span>
+            <span>{t.intro.label}</span>
           </div>
 
           <h2
-            className={`font-serif text-[clamp(2rem,4.5vw,3.5rem)] font-medium leading-tight text-nagi-cardEdge mb-6 transition-all duration-700 delay-100 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            className={`font-sans text-[clamp(1.65rem,3.8vw,3.25rem)] font-medium leading-tight text-nagi-cardEdge mb-6 transition-all duration-700 delay-100 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
-            Một ngôi nhà sống,<br />
-            không chỉ để ở.
+            <span className="block whitespace-nowrap">{t.intro.title1}</span>
+            <span className="block whitespace-nowrap">{t.intro.title2}</span>
           </h2>
 
           <div
-            className={`space-y-5 transition-all duration-700 delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            className={`space-y-4 text-base md:text-lg text-nagi-slate leading-relaxed transition-all duration-700 delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
-            <p className="font-serif text-lg text-nagi-slate leading-relaxed">
-              Hẻm Nhà Living là một không gian sống đa tầng được thiết kế như một cộng đồng nhỏ — nơi mỗi người
-              có thể tìm thấy nhịp sống phù hợp với mình, dù chỉ dừng lại một đêm hay định cư cả tháng.
+            <div className="space-y-1.5">
+              <p>
+                {t.intro.p1}
+              </p>
+              <p className="pl-3">
+                {t.intro.p2}
+              </p>
+            </div>
+            <div className="space-y-1.5 pl-1">
+              <p className="font-medium text-nagi-charcoal">{t.intro.p3Title}</p>
+              <p className="pl-3">
+                {t.intro.p4}
+              </p>
+              <p className="pl-3">
+                {t.intro.p5}
+              </p>
+            </div>
+            <p>
+              {t.intro.p6}
             </p>
-            <p className="font-serif text-lg text-nagi-slate leading-relaxed">
-              Tầng trệt là <strong className="font-semibold text-nagi-terracotta">Cafe Hẻm</strong> — nơi ngày mới bắt đầu.
-              Từ tầng 2 đến tầng 5, bốn căn phòng mang bốn thời điểm trong ngày, mỗi phòng một câu chuyện.
-              Trên cùng là <strong className="font-semibold text-nagi-terracotta">Sân Thượng</strong> — nơi tất cả mọi người gặp nhau.
-            </p>
-            <p className="font-serif text-lg text-nagi-slate leading-relaxed">
-              Không phải khách sạn. Không phải hostel. Là nơi để sống, thực sự sống.
+            <p className="font-medium text-nagi-charcoal">
+              {t.intro.p7}
             </p>
           </div>
 
@@ -49,12 +62,12 @@ export default function IntroSection() {
             className={`mt-10 grid grid-cols-3 gap-6 transition-all duration-700 delay-300 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
             {[
-              { num: '4', label: 'Phòng concept' },
-              { num: '5', label: 'Tầng không gian' },
-              { num: '∞', label: 'Khoảnh khắc' },
+              { num: t.intro.stat1Number, label: t.intro.stat1Label },
+              { num: t.intro.stat2Number, label: t.intro.stat2Label },
+              { num: t.intro.stat3Number, label: t.intro.stat3Label },
             ].map(({ num, label }) => (
               <div key={label} className="text-center">
-                <div className="font-script text-4xl md:text-5xl text-nagi-gold">{num}</div>
+                <div className="font-sans text-4xl md:text-5xl font-light text-nagi-gold">{num}</div>
                 <div className="font-sans text-xs uppercase tracking-widest text-nagi-muted mt-1">{label}</div>
               </div>
             ))}
@@ -87,7 +100,7 @@ export default function IntroSection() {
 
           {/* Decorative badge */}
           <div className="absolute -top-5 -right-3 md:-right-6 bg-nagi-cardEdge text-nagi-parchment rounded-full w-20 h-20 flex flex-col items-center justify-center shadow-floating-card">
-            <span className="font-script text-2xl leading-none">by</span>
+            <span className="font-serif italic text-xl leading-none">by</span>
             <span className="font-sans text-[0.5rem] tracking-[0.2em] uppercase">NK</span>
           </div>
         </div>

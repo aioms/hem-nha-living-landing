@@ -1,4 +1,5 @@
 export type MomentKey = 'dawn' | 'noon' | 'sunset' | 'night';
+export type RoomCategory = 'moment' | 'diy' | 'living';
 
 export interface RoomImage {
   url: string;
@@ -10,21 +11,26 @@ export interface Room {
   code: string;
   name: string;
   subtitle: string;
-  momentKey: MomentKey;
-  momentTime: string;
+  category?: RoomCategory;
+  momentKey?: MomentKey;
+  momentTime?: string;
+  leaseTerm?: string;
   concept: string;
   story: string;
   area: string;
   capacity: string;
   bedType: string;
   floor: string;
-  shortTermPrice: number; // VND per night
-  monthlyPrice: number;   // VND per month
+  shortTermPrice?: number; // VND per night
+  weeklyPrice?: number;    // VND per week
+  monthlyPrice?: number;   // VND per month
   amenities: string[];
   features: {
     highlight: string;
-    lightMood: string;
-    view: string;
+    lightMood?: string;
+    view?: string;
+    atmosphere?: string;
+    suitableFor?: string;
   };
   images: RoomImage[];
   isAvailable: boolean;

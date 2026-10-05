@@ -1,21 +1,25 @@
 import { useInView } from '../hooks/useScroll';
 import { AmenitySpace } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { getLocalizedAmenity } from '../utils/localizedContent';
 
 interface AmenitiesSectionProps {
   amenities: AmenitySpace[];
 }
 
 export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
+  const { t, language } = useLanguage();
   const [ref, inView] = useInView(0.1);
 
-  const featured = amenities.find(a => a.id === 'rooftop')!;
-  const others = amenities.filter(a => a.id !== 'rooftop' && a.id !== 'cafe');
+  const localizedAmenities = amenities.map(a => getLocalizedAmenity(a, language));
+  const featured = localizedAmenities.find(a => a.id === 'rooftop')!;
+  const others = localizedAmenities.filter(a => a.id !== 'rooftop' && a.id !== 'cafe');
 
   return (
     <section
       id="amenities"
       className="py-24 md:py-36 px-6 md:px-10 lg:px-16 max-w-[1280px] mx-auto"
-      aria-label="Tiện ích trong Hẻm Nhà Living"
+      aria-label="Amenities at Hẻm Nhà Living"
     >
       <div ref={ref}>
         {/* Section header */}
@@ -23,18 +27,17 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
           <div
             className={`arch-tag mb-6 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
-            <span>Cuộc sống trong nhà</span>
+            <span>{t.amenities.label}</span>
           </div>
           <h2
-            className={`font-serif text-[clamp(2rem,4.5vw,3.5rem)] font-medium leading-tight text-nagi-cardEdge mb-5 transition-all duration-700 delay-100 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            className={`font-sans text-[clamp(2rem,4.5vw,3.5rem)] font-medium leading-tight text-nagi-cardEdge mb-5 transition-all duration-700 delay-100 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           >
-            Nhiều hơn một chỗ để ngủ.
+            {t.amenities.title}
           </h2>
           <p
-            className={`font-serif text-lg text-nagi-slate max-w-2xl leading-relaxed transition-all duration-700 delay-200 ${inView ? 'opacity-100' : 'opacity-0'}`}
+            className={`text-base md:text-lg text-nagi-slate max-w-2xl leading-relaxed transition-all duration-700 delay-200 ${inView ? 'opacity-100' : 'opacity-0'}`}
           >
-            Từ sân thượng ngắm sao đến bàn bida chiều tà, từ giếng trời ngập sáng đến khu giặt sấy tiện nghi —
-            mọi không gian đều được thiết kế để bạn <em>sống thực sự</em> tại đây.
+            {t.amenities.desc}
           </p>
         </div>
 
@@ -45,29 +48,29 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
           <div className="relative aspect-[21/9] md:min-h-[520px]">
             <img
               src={featured.image}
-              alt="Sân thượng Hẻm Nhà Living — không gian mở với pergola, bàn ghế mây và bầu trời thành phố"
+              alt="Hẻm Nhà Living Rooftop Terrace"
               className="w-full h-full object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1a2438]/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1e2a2e]/90 via-transparent to-transparent" />
 
             {/* Overlay text */}
             <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
               <div className="grid md:grid-cols-2 gap-6 items-end">
                 <div>
-                  <span className="arch-tag !text-[#d8bc8e] !border-[#d8bc8e]/40 mb-4 block">
-                    {featured.hours}
+                  <span className="arch-tag !text-[#d9c7b0] !border-[#d9c7b0]/40 mb-4 block">
+                    {t.amenities.rooftopHours || featured.hours}
                   </span>
-                  <h3 className="font-script text-[clamp(2.5rem,6vw,5rem)] leading-none text-[#d8bc8e] mb-2">
-                    {featured.name}
+                  <h3 className="font-sans font-normal text-[clamp(2rem,5vw,3.5rem)] leading-none text-[#d9c7b0] mb-2 tracking-tight">
+                    {t.amenities.rooftopName || featured.name}
                   </h3>
-                  <p className="font-sans text-sm text-[#8e97ad] tracking-wide">
-                    {featured.tagline}
+                  <p className="font-sans text-sm text-[#79a594] tracking-wide">
+                    {t.amenities.rooftopTagline || featured.tagline}
                   </p>
                 </div>
                 <div>
-                  <p className="font-serif text-base text-[#e9ddca] leading-relaxed">
-                    {featured.description}
+                  <p className="text-base text-[#faf6f0] leading-relaxed">
+                    {t.amenities.rooftopDesc || featured.description}
                   </p>
                 </div>
               </div>
@@ -114,17 +117,17 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
                 {/* Content */}
                 <div className={isEven ? '' : 'md:order-1'}>
                   <span className="arch-tag mb-5 block">{amenity.hours}</span>
-                  <h3 className="font-script text-[clamp(2rem,4vw,3.5rem)] text-nagi-terracotta mb-1">
+                  <h3 className="font-sans font-normal text-[clamp(1.75rem,3.5vw,2.5rem)] text-nagi-terracotta mb-1 tracking-tight">
                     {amenity.name}
                   </h3>
                   <p className="font-sans text-sm text-nagi-muted mb-4">{amenity.tagline}</p>
-                  <p className="font-serif text-base text-nagi-slate leading-relaxed mb-6">
+                  <p className="text-base text-nagi-slate leading-relaxed mb-6">
                     {amenity.description}
                   </p>
                   <ul className="space-y-2">
                     {amenity.features.slice(0, 4).map((f) => (
                       <li key={f} className="flex items-start gap-2 font-sans text-sm text-nagi-slate">
-                        <span className="text-nagi-gold text-xs mt-0.5">✦</span>
+                        <span className="text-[#2f5244] text-xs mt-0.5">✦</span>
                         {f}
                       </li>
                     ))}
@@ -134,6 +137,7 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
             );
           })}
         </div>
+
       </div>
     </section>
   );

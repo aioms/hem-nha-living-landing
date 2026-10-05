@@ -1,13 +1,20 @@
 import { useInView } from '../hooks/useScroll';
+import { useLanguage } from '../context/LanguageContext';
 
-export default function ContactSection({ onBookingOpen }: { onBookingOpen: () => void }) {
+interface ContactSectionProps {
+  onBookingOpen: () => void;
+  onNavigateToPolicy?: (policyKey: 'terms' | 'cancellation' | 'privacy') => void;
+}
+
+export default function ContactSection({ onBookingOpen, onNavigateToPolicy }: ContactSectionProps) {
+  const { t, language } = useLanguage();
   const [ref, inView] = useInView(0.15);
 
   return (
     <section
       id="contact"
       className="py-24 md:py-36 px-6 md:px-10 lg:px-16 bg-nagi-cardEdge"
-      aria-label="Liên hệ và thông tin Hẻm Nhà Living"
+      aria-label="Contact & Information"
     >
       <div ref={ref} className="max-w-[1280px] mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
@@ -19,41 +26,40 @@ export default function ContactSection({ onBookingOpen }: { onBookingOpen: () =>
               {/* Logo large */}
               <div className="mb-8">
                 <img
-                  src="/assets/branding/logo-transparent.png"
+                  src="/logohemnha/logohem-9.png"
                   alt="Hẻm Nhà Living logo"
                   className="w-24 h-24 object-contain"
-                  style={{ filter: 'brightness(10) invert(1)' }}
                 />
               </div>
 
-              <h2 className="font-script text-[clamp(3rem,6vw,5rem)] text-nagi-parchment leading-none mb-4">
-                Hẻm Nhà<br />Living
+              <h2 className="font-sans font-normal text-[clamp(2.5rem,5vw,4rem)] text-nagi-parchment leading-tight mb-4 tracking-tight">
+                Hẻm Nhà<br />
+                <span className="text-nagi-goldLight font-light tracking-widest text-[0.6em] uppercase">Living</span>
               </h2>
               <p className="font-sans text-sm tracking-[0.2em] uppercase text-nagi-muted mb-6">by NK</p>
 
-              <p className="font-serif text-lg text-nagi-clay leading-relaxed max-w-sm">
-                Boutique Homestay · Monthly Living<br />
-                Cafe · Rooftop · Billiards & Foosball
+              <p className="text-base md:text-lg text-nagi-clay leading-relaxed max-w-sm whitespace-pre-line">
+                {t.contact.brandSubtitle}
               </p>
 
               <div className="mt-10 space-y-4">
                 {[
                   {
                     icon: '📍',
-                    label: 'Địa chỉ',
-                    value: '[Địa chỉ cụ thể — cần cập nhật]',
-                    note: 'Placeholder — chờ bổ sung thông tin thực tế',
+                    label: t.contact.addressLabel,
+                    value: t.contact.addressVal,
+                    note: '',
                   },
                   {
                     icon: '📞',
-                    label: 'Điện thoại / Zalo',
-                    value: '[Số điện thoại — cần cập nhật]',
-                    note: 'Placeholder — chờ bổ sung thông tin thực tế',
+                    label: t.contact.phoneLabel,
+                    value: t.contact.phoneVal,
+                    note: '',
                   },
                   {
                     icon: '⏰',
-                    label: 'Check-in / Check-out',
-                    value: 'Check-in: 14:00 · Check-out: 12:00',
+                    label: t.contact.checkInOutLabel,
+                    value: t.contact.checkInOutVal,
                     note: '',
                   },
                 ].map(({ icon, label, value, note }) => (
@@ -70,14 +76,14 @@ export default function ContactSection({ onBookingOpen }: { onBookingOpen: () =>
                 ))}
               </div>
 
-              {/* Social links — placeholder */}
+              {/* Social links */}
               <div className="mt-8 flex gap-3">
                 {['Facebook', 'Instagram', 'TikTok'].map(platform => (
                   <a
                     key={platform}
                     href="#"
                     className="px-4 py-2 rounded-nagi-pill border border-nagi-muted/30 text-nagi-muted font-sans text-xs hover:border-nagi-goldLight/50 hover:text-nagi-goldLight transition-all duration-200"
-                    aria-label={`Hẻm Nhà Living trên ${platform}`}
+                    aria-label={`Hẻm Nhà Living on ${platform}`}
                   >
                     {platform}
                   </a>
@@ -92,15 +98,17 @@ export default function ContactSection({ onBookingOpen }: { onBookingOpen: () =>
           >
             {/* Quick CTA card */}
             <div className="bg-nagi-parchment rounded-nagi-lg p-8">
-              <h3 className="font-serif text-2xl text-nagi-cardEdge mb-2">Sẵn sàng trải nghiệm?</h3>
-              <p className="font-serif text-base text-nagi-slate mb-6 leading-relaxed">
-                Kiểm tra phòng trống và đặt chỗ chỉ trong 2 phút. Chúng tôi xác nhận trong 2–4 giờ.
+              <h3 className="font-sans font-semibold text-2xl text-nagi-cardEdge mb-2">
+                {t.contact.readyTitle}
+              </h3>
+              <p className="text-base text-nagi-slate mb-6 leading-relaxed">
+                {t.contact.readyDesc}
               </p>
               <button onClick={onBookingOpen} className="btn-primary w-full py-4 text-base">
-                Kiểm tra phòng trống →
+                {t.contact.checkBtn}
               </button>
               <p className="font-sans text-xs text-nagi-muted text-center mt-4">
-                Chưa thu phí cho đến khi xác nhận · Hủy miễn phí 48 giờ trước
+                {t.contact.guarantee}
               </p>
             </div>
 
@@ -108,39 +116,57 @@ export default function ContactSection({ onBookingOpen }: { onBookingOpen: () =>
             <div className="rounded-nagi-md overflow-hidden bg-nagi-slate/30 aspect-[4/3] flex items-center justify-center">
               <div className="text-center text-nagi-muted">
                 <div className="text-4xl mb-3">🗺️</div>
-                <div className="font-sans text-sm">Bản đồ vị trí</div>
-                <div className="font-sans text-xs mt-1 opacity-60">[Nhúng Google Maps sau khi có địa chỉ thực tế]</div>
+                <div className="font-sans text-sm">{t.contact.mapLabel}</div>
+                <div className="font-sans text-xs mt-1 opacity-60">
+                  {language === 'vi' ? '[Bản đồ vị trí Tân Thuận Tây, Q.7, TP.HCM]' : '[Tan Thuan Tay, District 7, HCMC Map]'}
+                </div>
               </div>
             </div>
 
             {/* FAQ quick */}
-            <div className="space-y-3">
-              {[
-                { q: 'Tôi có thể check-in sớm không?', a: 'Vui lòng liên hệ trước. Chúng tôi hỗ trợ early check-in tùy thuộc phòng còn trống.' },
-                { q: 'Có hỗ trợ đưa đón không?', a: 'Hẻm Nhà có thể hỗ trợ kết nối xe đưa đón theo yêu cầu. Liên hệ trực tiếp để biết chi tiết.' },
-                { q: 'Thú cưng có được không?', a: 'Hiện tại chưa hỗ trợ thú cưng trong phòng. Cảm ơn bạn đã thông cảm.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="rounded-nagi border border-nagi-muted/20 overflow-hidden">
-                  <summary className="font-sans text-sm text-nagi-parchment px-4 py-3 cursor-pointer hover:bg-nagi-muted/10 transition-colors list-none flex items-center justify-between">
-                    {q}
-                    <span className="text-nagi-muted">+</span>
-                  </summary>
-                  <div className="font-sans text-sm text-nagi-clay px-4 py-3 border-t border-nagi-muted/10">
-                    {a}
-                  </div>
-                </details>
-              ))}
+            <div>
+              <h4 className="font-sans text-xs uppercase tracking-widest text-nagi-goldLight font-semibold mb-3">
+                {t.contact.faqTitle}
+              </h4>
+              <div className="space-y-3">
+                {t.contact.faqs.map(({ q, a }) => (
+                  <details key={q} className="rounded-nagi border border-nagi-muted/20 overflow-hidden">
+                    <summary className="font-sans text-sm text-nagi-parchment px-4 py-3 cursor-pointer hover:bg-nagi-muted/10 transition-colors list-none flex items-center justify-between">
+                      {q}
+                      <span className="text-nagi-muted">+</span>
+                    </summary>
+                    <div className="font-sans text-sm text-nagi-clay px-4 py-3 border-t border-nagi-muted/10">
+                      {a}
+                    </div>
+                  </details>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Footer strip */}
         <div className="mt-20 pt-8 border-t border-nagi-muted/20 flex flex-wrap gap-4 items-center justify-between text-nagi-muted font-sans text-xs">
-          <span>© {new Date().getFullYear()} Hẻm Nhà Living by NK. All rights reserved.</span>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-nagi-parchment transition-colors">Điều khoản sử dụng</a>
-            <a href="#" className="hover:text-nagi-parchment transition-colors">Chính sách hủy phòng</a>
-            <a href="#" className="hover:text-nagi-parchment transition-colors">Bảo mật thông tin</a>
+          <span>© {new Date().getFullYear()} {t.contact.rightsReserved}</span>
+          <div className="flex flex-wrap gap-6">
+            <button
+              onClick={() => onNavigateToPolicy ? onNavigateToPolicy('terms') : (window.location.hash = 'terms')}
+              className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left"
+            >
+              {t.contact.termsLink}
+            </button>
+            <button
+              onClick={() => onNavigateToPolicy ? onNavigateToPolicy('cancellation') : (window.location.hash = 'cancellation-policy')}
+              className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left"
+            >
+              {t.contact.cancelLink}
+            </button>
+            <button
+              onClick={() => onNavigateToPolicy ? onNavigateToPolicy('privacy') : (window.location.hash = 'privacy-policy')}
+              className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left"
+            >
+              {t.contact.privacyLink}
+            </button>
           </div>
         </div>
       </div>

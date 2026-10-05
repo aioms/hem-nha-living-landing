@@ -20,49 +20,32 @@ This is a **light-themed** interface with a neutral, approachable feel. The ligh
 
 ---
 
-## 2. Color Palette & Roles
+## 2. Color Palette & Roles (Official Guideline)
 
+### Primary Colors
+| Color | Hex | Role | Meaning |
+|---|---|---|---|
+| **Deep Slate** | `#4F6B73` | primary | The primary brand color, representing stability, tranquility, and trust. |
+| **Sage Green** | `#79A594` | primary-accent | Inspired by nature, bringing freshness, balance, and a slower pace of living. |
+| **Terracotta** | `#AE7055` | primary-accent | Reflects the warmth of clay, traditional rooftops, and the timeless charm of old Saigon. |
+
+### Supporting Colors
+| Color | Hex | Role | Meaning |
+|---|---|---|---|
+| **Warm Sand** | `#D9C7B0` | surface-warm | Adds softness, warmth, and an inviting atmosphere. |
+| **Soft Concrete** | `#9A958F` | text-muted / border | Inspired by weathered concrete walls found throughout Saigon's alleyways. |
+| **Misty Blue** | `#6D82B1` | secondary-accent | A subtle accent that introduces depth, serenity, and visual balance. |
+
+### Surface & Functional Roles
 | Token | Hex | Role | Use |
 |---|---|---|---|
-| card-edge | `#22303f` | surface | Card and panel backgrounds |
-| card | `#fbf5e8` | surface | Card and panel backgrounds |
-| card | `#1a2438` | surface | Card and panel backgrounds |
-| theme-color | `#f2e9da` | text-primary | Headings and body text |
-| text-primary | `#444444` | text-primary | Headings and body text |
-| text-muted | `#364252` | text-muted | Captions, placeholders, secondary info |
-| border | `#6f6559` | border | Dividers, card borders, outlines |
-| warning | `#866437` | warning | Warning states, caution indicators |
-| info | `#121a2a` | info | Informational highlights |
-| unknown | `#4e5765` | unknown | Palette color |
-| muted | `#8e8474` | unknown | Palette color |
-| unknown | `#be9a66` | unknown | Palette color |
-| unknown | `#d8bc8e` | unknown | Palette color |
-| unknown | `#cfcfcc` | unknown | Palette color |
-| unknown | `#c8c4bd` | unknown | Palette color |
-| unknown | `#7a746c` | unknown | Palette color |
-| unknown | `#000000` | unknown | Palette color |
-| unknown | `#e4e4e2` | unknown | Palette color |
-| unknown | `#e9ddca` | unknown | Palette color |
-| unknown | `#8089a0` | unknown | Palette color |
+| `page-bg` | `#FAF6F0` | surface | Page canvas and light section backgrounds |
+| `card-bg` | `#F4ECE1` | surface | Card, modal and panel backgrounds |
+| `dark-section` | `#1E2A2E` | surface | Cafe Hẻm, Night Room, and Footer backgrounds |
+| `text-dark` | `#223035` | text-primary | Headings and high-contrast titles |
+| `text-body` | `#2B383C` | text-body | Standard body text |
+| `text-muted` | `#9A958F` | text-muted | Secondary labels, captions, metadata |
 
-### CSS Variable Tokens
-
-```css
---font-accent: "Pinyon Script",cursive;
---muted: #8e8474;
---card: #f8f1e3;
---card-edge: #22303f1a;
---card: #fbf5e8;
---muted: #79683f;
---card: #f4e8d2;
---card-edge: #2d33421f;
---muted: #a6aec1;
---card: #3a4b6a;
---card-edge: #f0e7d524;
---muted: #8e97ad;
---card: #1a2438;
---card-edge: #ede3cf21;
-```
 
 
 ---
@@ -70,44 +53,30 @@ This is a **light-themed** interface with a neutral, approachable feel. The ligh
 ## 3. Typography Rules
 
 **Font Stack:**
-- **Jost** — Heading 1, Heading 2, Heading 3
-- **Cormorant Garamond** — Body, Caption
+- **Be Vietnam Pro** (`Be Vietnam`) — Heading 1, Heading 2, Heading 3, Section Titles, Buttons, Navigation, Labels, and UI
+- **Cormorant Garamond** — Optional editorial accents / quotes
+- **Pinyon Script** — Decorative cursive badges
 
 **Font Sources:**
 
-```css
-@font-face {
-  font-family: "Cormorant Garamond";
-  src: url("https://www.nagicreative.com/fonts/CormorantGaramond-Medium.otf") format("opentype");
-  font-weight: 500;
-}
-@font-face {
-  font-family: "Jost";
-  src: url("https://www.nagicreative.com/fonts/Jost-400-Book.ttf") format("truetype");
-  font-weight: 400;
-}
-@font-face {
-  font-family: "Pinyon Script";
-  src: url("https://www.nagicreative.com/fonts/PinyonScript-Regular.ttf") format("truetype");
-  font-weight: 400;
-}
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 ```
 
-| Role | Font | Size | Weight |
-|---|---|---|---|
-| Heading 1 | Jost | 360px | 700 |
-| Heading 2 | Jost | 300px | 700 |
-| Heading 3 | Jost | 240px | 700 |
-| Body | Cormorant Garamond | 11px | 400 |
-| Caption | Cormorant Garamond | 15px | 400 |
+| Role | Font | Weight |
+|---|---|---|
+| Heading 1 (Hero & Main Display) | Be Vietnam Pro | 400 - 600 |
+| Heading 2 (Section Headers) | Be Vietnam Pro | 500 - 600 |
+| Heading 3 (Card Titles) | Be Vietnam Pro | 500 - 600 |
+| Buttons & Interactive CTAs | Be Vietnam Pro | 500 |
+| Navigation & Tags | Be Vietnam Pro | 400 - 500 |
+| Body Text | Be Vietnam Pro | 400 |
 
-**Typographic Rules:**
-- Limit to 2 font families max per screen
-- Use **Jost** for body/UI text, **Cormorant Garamond** for display/headings
-- Maintain consistent hierarchy: no more than 3-4 font sizes per screen
-- Headings use bold (600-700), body uses regular (400)
-- Line height: 1.5 for body text, 1.2 for headings
-- Use color and opacity for secondary hierarchy, not additional font sizes
+**Typographic Rules (Fixed Standard):**
+- Headers, Titles, and Buttons **must permanently use Be Vietnam Pro** across all landing page sections and modals.
+- Maintain clear visual hierarchy with consistent weight and line heights (1.1–1.2 for headings, 1.6 for body).
 
 
 ---

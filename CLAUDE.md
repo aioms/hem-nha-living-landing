@@ -1,17 +1,15 @@
-# nagicreative Design System
+# nagicreative Design System — Hẻm Nhà Living
 
-This project uses the **nagicreative** design system extracted by skillui.
+This project uses the **nagicreative** design system.
+
+## Typography Standard (Fixed)
+- **Headers, Titles, Buttons & UI**: Fixed to **Be Vietnam Pro** (`Be Vietnam`, sans-serif) across all landing page sections, modals, and future modifications.
+- **Editorial accents**: Cormorant Garamond (optional for italic quotes/accents).
+- **Decorative script**: Pinyon Script (e.g. badge labels).
 
 ## How to use
 
-Read `SKILL.md` in this directory for the full design system reference before writing any UI code.
+Read `DESIGN.md` and `tokens/typography.json` for token and typography specifications.
 
-Key files:
-- `SKILL.md` — master design reference (read this first)
-- `references/DESIGN.md` — extended tokens and component specs
-- `references/ANIMATIONS.md` — motion and keyframe specs
-- `references/LAYOUT.md` — grid and layout containers
-- `references/COMPONENTS.md` — DOM component patterns
-- `screens/scroll/` — scroll journey screenshots (study before implementing)
+When building or modifying any UI, always keep Headers, Titles, and Buttons in **Be Vietnam Pro**.
 
-When building any UI, always read SKILL.md first and match colors, fonts, spacing, and motion exactly.

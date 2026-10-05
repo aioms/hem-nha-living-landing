@@ -1,83 +1,69 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "core": {
-    "surface": {
-      "value": "#1a2438",
-      "role": "surface",
-      "name": "card"
+  "primary": {
+    "deep-slate": {
+      "value": "#4F6B73",
+      "role": "primary",
+      "name": "Deep Slate",
+      "description": "The primary brand color, representing stability, tranquility, and trust."
     },
-    "text-muted": {
-      "value": "#364252",
-      "role": "text-muted"
+    "sage-green": {
+      "value": "#79A594",
+      "role": "primary-accent",
+      "name": "Sage Green",
+      "description": "Inspired by nature, bringing freshness, balance, and a slower pace of living."
     },
-    "border": {
-      "value": "#6f6559",
-      "role": "border"
+    "terracotta": {
+      "value": "#AE7055",
+      "role": "primary-accent",
+      "name": "Terracotta",
+      "description": "Reflects the warmth of clay, traditional rooftops, and the timeless charm of old Saigon."
+    }
+  },
+  "supporting": {
+    "warm-sand": {
+      "value": "#D9C7B0",
+      "role": "surface-warm",
+      "name": "Warm Sand",
+      "description": "Adds softness, warmth, and an inviting atmosphere."
+    },
+    "soft-concrete": {
+      "value": "#9A958F",
+      "role": "text-muted-border",
+      "name": "Soft Concrete",
+      "description": "Inspired by weathered concrete walls found throughout Saigon's alleyways, creating a clean and understated foundation."
+    },
+    "misty-blue": {
+      "value": "#6D82B1",
+      "role": "secondary-accent",
+      "name": "Misty Blue",
+      "description": "A subtle accent that introduces depth, serenity, and visual balance."
+    }
+  },
+  "surface": {
+    "page-light": {
+      "value": "#FAF6F0",
+      "role": "background-page"
+    },
+    "card-light": {
+      "value": "#F4ECE1",
+      "role": "background-card"
+    },
+    "dark-section": {
+      "value": "#1E2A2E",
+      "role": "background-dark"
     },
     "text-primary": {
-      "value": "#444444",
+      "value": "#2B383C",
       "role": "text-primary"
-    }
-  },
-  "status": {
-    "warning": {
-      "value": "#866437",
-      "role": "warning"
-    }
-  },
-  "extended": {
-    "color-4e5765": {
-      "value": "#4e5765",
-      "role": "unknown"
     },
-    "muted": {
-      "value": "#8e8474",
-      "role": "unknown",
-      "name": "muted"
-    },
-    "color-be9a66": {
-      "value": "#be9a66",
-      "role": "unknown"
-    },
-    "color-d8bc8e": {
-      "value": "#d8bc8e",
-      "role": "unknown"
-    },
-    "color-cfcfcc": {
-      "value": "#cfcfcc",
-      "role": "unknown"
-    },
-    "color-c8c4bd": {
-      "value": "#c8c4bd",
-      "role": "unknown"
-    },
-    "color-7a746c": {
-      "value": "#7a746c",
-      "role": "unknown"
-    },
-    "color-121a2a": {
-      "value": "#121a2a",
-      "role": "info"
-    },
-    "color-000000": {
-      "value": "#000000",
-      "role": "unknown"
-    },
-    "color-e4e4e2": {
-      "value": "#e4e4e2",
-      "role": "unknown"
-    },
-    "color-e9ddca": {
-      "value": "#e9ddca",
-      "role": "unknown"
-    },
-    "color-8089a0": {
-      "value": "#8089a0",
-      "role": "unknown"
+    "text-dark": {
+      "value": "#223035",
+      "role": "text-heading"
     }
   },
   "meta": {
-    "theme": "light",
-    "extracted": "2026-09-13"
+    "theme": "Hem Nha Living Official Palette",
+    "version": "1.1.0"
   }
 }

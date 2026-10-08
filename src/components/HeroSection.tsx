@@ -15,7 +15,7 @@ export default function HeroSection({
   onOpenEarlyBird,
 }: HeroSectionProps) {
   const { t } = useLanguage();
-  const [headlineRef, headlineInView] = useInView(0.1);
+  const [headlineRef, headlineInView] = useInView(0, '0px');
   const [parallaxRef, parallaxOffset] = useParallax(0.2);
 
   return (
@@ -37,9 +37,15 @@ export default function HeroSection({
           loading="eager"
           fetchPriority="high"
         />
-        {/* editorial overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#faf6f0]/30 via-transparent to-[#faf6f0]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#faf6f0]/50 via-transparent to-transparent" />
+        {/* Editorial overlay: reveals the top ~1/3 of the building and sky, smoothly transitions into warm cream for logo and content */}
+        {/* Top vignette subtle shadow for header legibility */}
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/45 via-black/20 to-transparent pointer-events-none" />
+
+        {/* Vertical gradient: transparent top showing ~1/3 facade, softly fading into warm #faf6f0 at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#faf6f0]/65 via-55% to-[#faf6f0] to-85%" />
+
+        {/* Horizontal light diffusion from left to keep headline, logo and CTAs readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#faf6f0]/75 via-[#faf6f0]/40 via-45% to-transparent" />
       </div>
 
       {/* Content */}
@@ -47,7 +53,7 @@ export default function HeroSection({
         <div ref={headlineRef} className="max-w-3xl">
           {/* Eyebrow */}
           <div
-            className={`arch-tag mb-5 transition-all duration-700 flex flex-wrap items-center gap-2 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            className={`arch-tag mb-5 transition-all duration-500 flex flex-wrap items-center gap-2 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
           >
             <span>{t.hero.eyebrow}</span>
             <span className="w-8 h-px bg-current opacity-40 inline-block" />
@@ -55,17 +61,17 @@ export default function HeroSection({
             <span className="w-8 h-px bg-current opacity-40 inline-block hidden sm:inline-block" />
             <button
               onClick={() => onOpenEarlyBird ? onOpenEarlyBird() : document.getElementById('early-bird')?.scrollIntoView({ behavior: 'smooth' })}
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-800/15 hover:bg-emerald-800/25 border border-emerald-700/30 text-emerald-900 text-[0.7rem] font-bold tracking-wide transition-all cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-800/15 hover:bg-emerald-800/25 border border-emerald-700/30 text-emerald-900 text-[0.625rem] xs:text-[0.68rem] sm:text-[0.7rem] font-bold tracking-tight sm:tracking-wide transition-all cursor-pointer shadow-2xs whitespace-nowrap"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-              <span>{t.earlyBird.sproutBadge}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
+              <span className="whitespace-nowrap">{t.earlyBird.sproutBadge}</span>
             </button>
           </div>
 
           {/* Main headline logo - Left aligned flush with tagline text below */}
           <h1 className="sr-only">Hẻm Nhà Living</h1>
           <div
-            className={`relative mb-6 transition-all duration-800 delay-100 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+            className={`relative mb-6 transition-all duration-500 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
           >
             {/* Seamless organic ambient aura behind logo */}
             <div
@@ -86,14 +92,14 @@ export default function HeroSection({
 
           {/* Tagline */}
           <p
-            className={`text-[clamp(1.1rem,2.2vw,1.6rem)] text-nagi-slate max-w-xl leading-relaxed mb-8 transition-all duration-700 delay-200 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            className={`text-[clamp(1.1rem,2.2vw,1.6rem)] text-nagi-slate max-w-xl leading-relaxed mb-8 transition-all duration-500 delay-100 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
           >
             {t.hero.taglineMoments}
           </p>
 
           {/* CTAs */}
           <div
-            className={`flex flex-wrap gap-4 transition-all duration-700 delay-300 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            className={`flex flex-wrap gap-4 transition-all duration-500 delay-150 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
           >
             <button
               onClick={() => onNavigateToMoments()}

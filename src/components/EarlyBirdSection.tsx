@@ -50,12 +50,12 @@ export default function EarlyBirdSection({ onOpenForm, formUrl }: EarlyBirdSecti
             {/* Left Content */}
             <div className="max-w-2xl">
               {/* Sprout status badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#79a594]/20 border border-[#79a594]/35 text-[#d4ebe1] text-xs font-semibold tracking-wider uppercase mb-4 shadow-2xs backdrop-blur-xs">
-                <span className="relative flex h-2.5 w-2.5">
+              <div className="inline-flex items-center gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full bg-[#79a594]/20 border border-[#79a594]/35 text-[#d4ebe1] text-[0.625rem] xs:text-[0.68rem] sm:text-xs font-semibold tracking-wider uppercase mb-4 shadow-2xs backdrop-blur-xs whitespace-nowrap">
+                <span className="relative flex h-2.5 w-2.5 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
                 </span>
-                <span>{t.earlyBird.sproutBadge}</span>
+                <span className="whitespace-nowrap">{t.earlyBird.sproutBadge}</span>
               </div>
 
               {/* Title */}

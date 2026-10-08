@@ -145,7 +145,7 @@ export default function EarlyBirdModal({ isOpen, onClose, formUrl }: EarlyBirdMo
                 </div>
                 <div>{language === 'vi' ? '• Giảm ngay đến 20% tổng chi phí kỳ lưu trú đầu tiên' : '• Up to 20% off your initial stay'}</div>
                 <div>{language === 'vi' ? '• Ưu tiên chọn tầng & căn phòng có ánh sáng/ban công ưng ý' : '• Priority room & balcony view selection'}</div>
-                <div>{language === 'vi' ? '• Tặng 02 ly cà phê signature chào mừng tại Cafe Hẻm' : '• 2 complimentary signature coffees at Cafe Hẻm'}</div>
+                <div>{language === 'vi' ? '• Tặng 02 ly cà phê signature chào mừng tại Quando Quando cafe' : '• 2 complimentary signature coffees at Quando Quando cafe'}</div>
               </div>
 
               <button

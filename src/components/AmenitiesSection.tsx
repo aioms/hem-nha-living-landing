@@ -45,20 +45,20 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
         <div
           className={`relative rounded-nagi-lg overflow-hidden mb-8 transition-all duration-900 delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
         >
-          <div className="relative aspect-[21/9] md:min-h-[520px]">
+          <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] min-h-[440px] md:min-h-[520px]">
             <img
               src={featured.image}
               alt="Hẻm Nhà Living Rooftop Terrace"
               className="w-full h-full object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1e2a2e]/90 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1e2a2e]/95 via-[#1e2a2e]/60 to-transparent" />
 
             {/* Overlay text */}
-            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10 lg:p-12">
               <div className="grid md:grid-cols-2 gap-6 items-end">
-                <div>
-                  <span className="arch-tag !text-[#d9c7b0] !border-[#d9c7b0]/40 mb-4 block">
+                <div className="min-w-0">
+                  <span className="arch-tag !text-[#d9c7b0] !border-[#d9c7b0]/40 mb-3 sm:mb-4 block">
                     {t.amenities.rooftopHours || featured.hours}
                   </span>
                   <h3 className="font-sans font-normal text-[clamp(2rem,5vw,3.5rem)] leading-none text-[#d9c7b0] mb-2 tracking-tight">
@@ -68,8 +68,8 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
                     {t.amenities.rooftopTagline || featured.tagline}
                   </p>
                 </div>
-                <div>
-                  <p className="text-base text-[#faf6f0] leading-relaxed">
+                <div className="min-w-0">
+                  <p className="text-base md:text-lg text-[#faf6f0] leading-relaxed max-w-full break-words">
                     {t.amenities.rooftopDesc || featured.description}
                   </p>
                 </div>

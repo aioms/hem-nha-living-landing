@@ -370,7 +370,7 @@ export const translations: Record<Language, Translations> = {
       leadSuffix: '. Thân mời bạn đăng ký lưu trú đợt Early Bird ngay hôm nay để nhận ưu đãi độc quyền cùng quyền ưu tiên chọn những căn phòng đẹp nhất.',
       perk1: 'Ưu đãi độc quyền giảm đến 20%',
       perk2: 'Ưu tiên chọn phòng & góc ban công ưng ý',
-      perk3: 'Tặng voucher đồ uống tại Cafe Hẻm',
+      perk3: 'Tặng voucher đồ uống tại Quando Quando cafe',
       ctaButton: 'Đăng ký nhận ưu đãi Early Bird',
       disclaimer: 'Đăng ký giữ chỗ không mất phí • Nhận tin báo đầu tiên',
       modal: {
@@ -788,14 +788,14 @@ export const translations: Record<Language, Translations> = {
       switchLangAria: 'Switch language',
     },
     earlyBird: {
-      sproutBadge: 'In the Works • Welcoming Guests this December 2026',
+      sproutBadge: 'Shaping up! • Welcoming Guests this December 2026',
       headline: 'Hẻm Nhà Living is coming to life',
       lead: "We're putting the finishing touches on every cozy corner to welcome you this",
       leadHighlight: 'December',
       leadSuffix: '. Sign up for our Early Bird list today to unlock exclusive perks and first pick of our most charming rooms.',
       perk1: 'Up to 20% off your stay',
       perk2: 'Priority room & balcony selection',
-      perk3: 'Complimentary drinks at our Alley Cafe',
+      perk3: 'Complimentary drinks at Quando Quando cafe',
       ctaButton: 'Claim Your Early Bird Perk',
       disclaimer: 'Free priority signup • First to know when doors open',
       modal: {

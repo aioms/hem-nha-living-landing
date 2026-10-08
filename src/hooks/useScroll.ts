@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 // Intersection observer for scroll reveal
-export function useInView(threshold = 0.15): [React.RefObject<HTMLDivElement>, boolean] {
+export function useInView(threshold = 0.15, rootMargin = '0px 0px -50px 0px'): [React.RefObject<HTMLDivElement>, boolean] {
   const ref = useRef<HTMLDivElement>(null!);
   const [isInView, setIsInView] = useState(false);
 
@@ -13,12 +13,12 @@ export function useInView(threshold = 0.15): [React.RefObject<HTMLDivElement>, b
           observer.disconnect(); // fire once
         }
       },
-      { threshold, rootMargin: '0px 0px -50px 0px' }
+      { threshold, rootMargin }
     );
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [threshold]);
+  }, [threshold, rootMargin]);
 
   return [ref, isInView];
 }

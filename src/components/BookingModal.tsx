@@ -5,6 +5,7 @@ import { DIY_LIVING_ROOMS } from '../data/diyLivingRooms';
 import { getRoomTheme, formatPriceCompact } from '../utils/themes';
 import { useLanguage } from '../context/LanguageContext';
 import { getLocalizedRoom } from '../utils/localizedContent';
+import { submitRegularBooking } from '../services/bookingService';
 
 const ALL_ROOMS = [...ROOMS, ...DIY_LIVING_ROOMS];
 
@@ -81,11 +82,52 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    // TODO: Connect to actual booking API / backend
-    // This is a mock submission — replace with real API call
-    await new Promise(r => setTimeout(r, 1400));
-    setIsLoading(false);
-    setSubmitted(true);
+
+    try {
+      const stayTypeLabel = form.stayType === 'short_term'
+        ? (language === 'vi' ? 'Ngắn ngày (Short-term)' : 'Short-term')
+        : (language === 'vi' ? `Theo tháng (${form.monthlyMonths} tháng)` : `Monthly (${form.monthlyMonths} months)`);
+
+      const nights = form.stayType === 'short_term' && form.checkIn && form.checkOut
+        ? Math.max(1, Math.ceil((new Date(form.checkOut).getTime() - new Date(form.checkIn).getTime()) / 86400000))
+        : 1;
+
+      const checkInLabel = form.stayType === 'short_term' ? form.checkIn : form.monthlyStartDate;
+      const checkOutLabel = form.stayType === 'short_term'
+        ? `${form.checkOut} (${nights} ${language === 'vi' ? 'đêm' : 'nights'})`
+        : `${form.monthlyMonths} ${language === 'vi' ? 'tháng' : 'months'} (Từ ${form.monthlyStartDate})`;
+
+      const roomNameLabel = selectedRoom ? `${selectedRoom.name} (${selectedRoom.code || ''})` : form.selectedRoomId;
+
+      const estimatedPrice = selectedRoom
+        ? formatPriceCompact(
+            form.stayType === 'short_term'
+              ? nights * (selectedRoom.shortTermPrice || 0)
+              : form.monthlyMonths * (selectedRoom.monthlyPrice || 0)
+          )
+        : '';
+
+      await submitRegularBooking({
+        stayType: stayTypeLabel,
+        fullName: form.fullName.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim() || undefined,
+        checkIn: checkInLabel,
+        checkOut: checkOutLabel,
+        guests: form.guests,
+        roomType: roomNameLabel,
+        specialRequest: form.note.trim() || undefined,
+        estimatedPrice,
+      });
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error('Error submitting regular booking:', err);
+      // Fallback: đã được lưu trong localStorage nên vẫn đánh dấu submitted
+      setSubmitted(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const reset = () => {

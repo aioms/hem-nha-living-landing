@@ -381,6 +381,36 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
           >
             {t.nav.checkAvailability}
           </button>
+
+          {/* Social & Map quick links */}
+          <div className="pt-3 border-t border-current/10 flex items-center justify-center gap-4 text-xs font-sans">
+            <a
+              href="https://www.facebook.com/profile.php?id=61594197129289"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-nagi-muted hover:text-nagi-goldLight transition-colors"
+            >
+              Facebook
+            </a>
+            <span className="text-nagi-muted/40">•</span>
+            <a
+              href="https://www.instagram.com/hemnhaliving/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-nagi-muted hover:text-nagi-goldLight transition-colors"
+            >
+              Instagram
+            </a>
+            <span className="text-nagi-muted/40">•</span>
+            <a
+              href="https://maps.app.goo.gl/AoTNEA5Tfnqa4qhK8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-nagi-muted hover:text-nagi-goldLight transition-colors"
+            >
+              Google Maps
+            </a>
+          </div>
         </div>
       </div>
     </nav>

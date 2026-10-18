@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import {
+  submitEarlyBirdBooking,
+  formatEarlyBirdStayOption,
+  formatEarlyBirdExpectedDate,
+} from '../services/bookingService';
 
 interface EarlyBirdModalProps {
   isOpen: boolean;
@@ -30,11 +35,13 @@ export default function EarlyBirdModal({ isOpen, onClose, formUrl }: EarlyBirdMo
   const [form, setForm] = useState<EarlyBirdFormState>(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       setSubmitted(false);
+      setErrorMessage(null);
     } else {
       document.body.style.overflow = '';
     }
@@ -45,30 +52,39 @@ export default function EarlyBirdModal({ isOpen, onClose, formUrl }: EarlyBirdMo
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.fullName.trim() || !form.phone.trim()) return;
 
     setIsSubmitting(true);
-    // Simulate submission and save to localStorage
-    setTimeout(() => {
-      try {
-        const existing = JSON.parse(localStorage.getItem('hemnha_early_bird_leads') || '[]');
-        existing.push({
-          ...form,
-          submittedAt: new Date().toISOString(),
-        });
-        localStorage.setItem('hemnha_early_bird_leads', JSON.stringify(existing));
-      } catch (err) {
-        console.error('Save lead error:', err);
-      }
-      setIsSubmitting(false);
+    setErrorMessage(null);
+
+    try {
+      const stayOptionLabel = formatEarlyBirdStayOption(form.stayType, language);
+      const expectedPeriodLabel = formatEarlyBirdExpectedDate(form.expectedDate, language);
+
+      await submitEarlyBirdBooking({
+        fullName: form.fullName.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim() || undefined,
+        stayOption: stayOptionLabel,
+        expectedStayingPeriod: expectedPeriodLabel,
+        specialNote: form.note.trim() || undefined,
+      });
+
       setSubmitted(true);
-    }, 450);
+    } catch (err: any) {
+      console.error('Error submitting early bird:', err);
+      // Vẫn hiển thị hoàn tất vì đã lưu dự phòng vào localStorage
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleResetAndClose = () => {
     setSubmitted(false);
+    setErrorMessage(null);
     setForm(initialForm);
     onClose();
   };

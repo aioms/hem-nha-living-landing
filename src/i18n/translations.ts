@@ -61,6 +61,8 @@ export interface Translations {
     checkAvailabilityBtn: string;
     scrollDown: string;
     stayOptionsLabel: string;
+    homestayOption: string;
+    longTermOption: string;
     homestayBadge: string;
     homestaySubtitle: string;
     monthlyBadge: string;
@@ -409,6 +411,8 @@ export const translations: Record<Language, Translations> = {
       checkAvailabilityBtn: 'Kiểm tra phòng trống',
       scrollDown: 'Cuộn xuống',
       stayOptionsLabel: 'Lựa chọn lưu trú',
+      homestayOption: 'Homestay • 4 Khoảnh khắc',
+      longTermOption: 'Long-term Studios',
       homestayBadge: 'Homestay',
       homestaySubtitle: '• 4 Khoảnh khắc',
       monthlyBadge: 'Thuê tháng',
@@ -834,6 +838,8 @@ export const translations: Record<Language, Translations> = {
       checkAvailabilityBtn: 'Check Availability',
       scrollDown: 'Scroll down',
       stayOptionsLabel: 'Stay Options',
+      homestayOption: 'Homestay • 4 Moments',
+      longTermOption: 'Long-term Studios',
       homestayBadge: 'Homestay',
       homestaySubtitle: '• 4 Moments',
       monthlyBadge: 'Monthly',

@@ -34,15 +34,15 @@ export default function MonthlyLivingSection({ onBookingOpen, onNavigateToDiyLiv
             {/* Main image */}
             <div className="relative rounded-nagi-md overflow-hidden shadow-floating-card">
               <img
-                src="/assets/photos/diy-living/hem-scandi/page_090.jpg"
+                src="/assets/photos/diy-living/hem-japandi/page_077.jpg"
                 onError={(e) => {
                   const target = e.currentTarget;
                   if (!target.dataset.triedJpeg) {
                     target.dataset.triedJpeg = 'true';
-                    target.src = '/assets/photos/diy-living/hem-scandi/page_090.jpeg';
+                    target.src = '/assets/photos/diy-living/hem-japandi/page_077.jpeg';
                   } else {
                     target.onerror = null;
-                    target.src = '/assets/photos/rooms/trua-he/hero.webp';
+                    target.src = '/assets/photos/diy-living/hem-scandi/page_090.jpg';
                   }
                 }}
                 alt="Long-term apartment interior at Hẻm Nhà Living"

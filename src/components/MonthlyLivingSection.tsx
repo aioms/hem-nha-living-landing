@@ -1,3 +1,4 @@
+import Image from './Image';
 import { useInView } from '../hooks/useScroll';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -33,7 +34,7 @@ export default function MonthlyLivingSection({ onBookingOpen, onNavigateToDiyLiv
           >
             {/* Main image */}
             <div className="relative rounded-nagi-md overflow-hidden shadow-floating-card">
-              <img
+              <Image
                 src="/assets/photos/diy-living/hem-japandi/page_077.jpg"
                 onError={(e) => {
                   const target = e.currentTarget;
@@ -54,7 +55,7 @@ export default function MonthlyLivingSection({ onBookingOpen, onNavigateToDiyLiv
 
             {/* Offset accent image */}
             <div className="absolute -bottom-6 -right-6 md:-right-10 w-[45%] rounded-nagi overflow-hidden shadow-floating-card border-4 border-[#f4ece1]">
-              <img
+              <Image
                 src="/assets/photos/diy-living/hem-diy-1/page_016.jpg"
                 onError={(e) => {
                   const target = e.currentTarget;

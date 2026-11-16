@@ -1,3 +1,4 @@
+import Image from './Image';
 import { useLanguage } from '../context/LanguageContext';
 
 interface StickyBookingBarProps {
@@ -15,10 +16,11 @@ export default function StickyBookingBar({ onOpen }: StickyBookingBarProps) {
         role="complementary"
         aria-label={t.stickyBar.checkBtn}
       >
-        <img
+        <Image
           src="/logohemnha/logohem-9.png"
           alt=""
           aria-hidden="true"
+          sizes="28px"
           className="w-7 h-7 object-contain"
         />
         <span className="font-sans text-sm opacity-80">{t.stickyBar.brand}</span>

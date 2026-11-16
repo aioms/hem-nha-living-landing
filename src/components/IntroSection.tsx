@@ -1,3 +1,4 @@
+import Image from './Image';
 import { useInView } from '../hooks/useScroll';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -80,7 +81,7 @@ export default function IntroSection() {
         >
           {/* Large image */}
           <div className="relative rounded-nagi-md overflow-hidden shadow-floating-card">
-            <img
+            <Image
               src="/assets/photos/courtyard/atrium-tree.webp"
               alt="Giếng trời ngập ánh sáng tự nhiên với cây xanh treo và cầu thang gỗ"
               className="w-full aspect-[3/4] object-cover"
@@ -90,7 +91,7 @@ export default function IntroSection() {
 
           {/* Offset accent image */}
           <div className="absolute -bottom-8 -left-6 md:-left-10 w-[42%] rounded-nagi overflow-hidden shadow-floating-card border-4 border-nagi-sand">
-            <img
+            <Image
               src="/assets/photos/architecture/facade-entrance.webp"
               alt="Lối vào boutique của Hẻm Nhà Living"
               className="w-full aspect-square object-cover"

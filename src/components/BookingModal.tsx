@@ -1,4 +1,6 @@
+import Image from './Image';
 import { useState, useEffect } from 'react';
+import { localizedPath } from '../seo/routes';
 import { Room, BookingFormState, StayType } from '../types';
 import { ROOMS } from '../data/rooms';
 import { DIY_LIVING_ROOMS } from '../data/diyLivingRooms';
@@ -379,7 +381,7 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                         aria-label={`${language === 'vi' ? 'Chọn phòng' : 'Select room'} ${room.name}`}
                       >
                         <div className="w-24 flex-shrink-0">
-                          <img
+                          <Image
                             src={room.images[0]?.url}
                             alt={`Phòng ${room.name}`}
                             className="w-full h-full object-cover"
@@ -442,9 +444,9 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                       className="flex items-center gap-3 p-3 rounded-nagi text-sm"
                       style={{ backgroundColor: theme?.pillBg, color: theme?.pillText }}
                     >
-                      <img
+                      <Image
                         src={selectedRoom.images[0]?.url}
-                        alt=""
+                        alt={selectedRoom.name}
                         className="w-10 h-10 rounded object-cover"
                       />
                       <div>
@@ -505,7 +507,7 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                   <div className="rounded-nagi-md overflow-hidden border border-nagi-border/20">
                     {/* Room hero */}
                     <div className="relative h-36">
-                      <img
+                      <Image
                         src={selectedRoom.images[0]?.url}
                         alt={`Phòng ${selectedRoom.name}`}
                         className="w-full h-full object-cover"
@@ -558,16 +560,16 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                       {language === 'vi' ? (
                         <>
                           Bằng việc gửi yêu cầu, bạn đồng ý với{' '}
-                          <a href="#terms" onClick={onClose} className="underline hover:text-nagi-terracotta">Điều khoản dịch vụ</a>,{' '}
-                          <a href="#cancellation-policy" onClick={onClose} className="underline hover:text-nagi-terracotta">Chính sách hủy phòng</a> và{' '}
-                          <a href="#privacy-policy" onClick={onClose} className="underline hover:text-nagi-terracotta">Chính sách bảo mật</a>.
+                          <a href={localizedPath('/dieu-khoan', language)} onClick={onClose} className="underline hover:text-nagi-terracotta">Điều khoản dịch vụ</a>,{' '}
+                          <a href={localizedPath('/chinh-sach-huy-phong', language)} onClick={onClose} className="underline hover:text-nagi-terracotta">Chính sách hủy phòng</a> và{' '}
+                          <a href={localizedPath('/chinh-sach-bao-mat', language)} onClick={onClose} className="underline hover:text-nagi-terracotta">Chính sách bảo mật</a>.
                         </>
                       ) : (
                         <>
                           By submitting, you agree to our{' '}
-                          <a href="#terms" onClick={onClose} className="underline hover:text-nagi-terracotta">Terms of Service</a>,{' '}
-                          <a href="#cancellation-policy" onClick={onClose} className="underline hover:text-nagi-terracotta">Cancellation Policy</a>, and{' '}
-                          <a href="#privacy-policy" onClick={onClose} className="underline hover:text-nagi-terracotta">Privacy Policy</a>.
+                          <a href={localizedPath('/dieu-khoan', language)} onClick={onClose} className="underline hover:text-nagi-terracotta">Terms of Service</a>,{' '}
+                          <a href={localizedPath('/chinh-sach-huy-phong', language)} onClick={onClose} className="underline hover:text-nagi-terracotta">Cancellation Policy</a>, and{' '}
+                          <a href={localizedPath('/chinh-sach-bao-mat', language)} onClick={onClose} className="underline hover:text-nagi-terracotta">Privacy Policy</a>.
                         </>
                       )}
                     </p>

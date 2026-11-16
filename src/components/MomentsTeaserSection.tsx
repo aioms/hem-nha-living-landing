@@ -1,3 +1,5 @@
+import Image from './Image';
+import { localizedPath, roomPath } from '../seo/routes';
 import { Room } from '../types';
 import { getRoomTheme, formatPriceCompact } from '../utils/themes';
 import { useInView } from '../hooks/useScroll';
@@ -86,7 +88,7 @@ export default function MomentsTeaserSection({
             return (
               <div
                 key={room.id}
-                onClick={() => onNavigateToMoments(room.id)}
+                onClick={event => { if (!(event.target as Element).closest('a, button')) onNavigateToMoments(room.id); }}
                 className={`group cursor-pointer rounded-nagi-lg overflow-hidden border transition-all duration-500 hover:-translate-y-2 hover:shadow-floating-card flex flex-col justify-between ${
                   inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
@@ -99,8 +101,9 @@ export default function MomentsTeaserSection({
               >
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
+                  <Image
                     src={room.images[0]?.url}
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     alt={room.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
@@ -128,7 +131,7 @@ export default function MomentsTeaserSection({
                       className="font-sans text-2xl font-semibold mb-1"
                       style={{ color: theme.accentColor }}
                     >
-                      {room.name}
+                      <a href={localizedPath(roomPath(room.id), language)} >{room.name}</a>
                     </h3>
                     <div
                       className="font-sans text-xs tracking-wide mb-3 opacity-70 line-clamp-1"

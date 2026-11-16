@@ -1,12 +1,13 @@
+import Image from './Image';
+import { localizedPath, policyPath } from '../seo/routes';
 import { useInView } from '../hooks/useScroll';
 import { useLanguage } from '../context/LanguageContext';
 
 interface ContactSectionProps {
   onBookingOpen: () => void;
-  onNavigateToPolicy?: (policyKey: 'terms' | 'cancellation' | 'privacy') => void;
 }
 
-export default function ContactSection({ onBookingOpen, onNavigateToPolicy }: ContactSectionProps) {
+export default function ContactSection({ onBookingOpen }: ContactSectionProps) {
   const { t, language } = useLanguage();
   const [ref, inView] = useInView(0.15);
 
@@ -25,8 +26,9 @@ export default function ContactSection({ onBookingOpen, onNavigateToPolicy }: Co
             >
               {/* Logo large */}
               <div className="mb-8">
-                <img
+                <Image
                   src="/logohemnha/logohem-9.png"
+                  sizes="96px"
                   alt="Hẻm Nhà Living logo"
                   className="w-24 h-24 object-contain"
                 />
@@ -186,7 +188,7 @@ export default function ContactSection({ onBookingOpen, onNavigateToPolicy }: Co
             {/* FAQ quick */}
             <div>
               <h4 className="font-sans text-xs uppercase tracking-widest text-nagi-goldLight font-semibold mb-3">
-                {t.contact.faqTitle}
+                <a href={localizedPath('/faq', language)}>{t.contact.faqTitle}</a>
               </h4>
               <div className="space-y-3">
                 {t.contact.faqs.map(({ q, a }) => (
@@ -209,24 +211,21 @@ export default function ContactSection({ onBookingOpen, onNavigateToPolicy }: Co
         <div className="mt-20 pt-8 border-t border-nagi-muted/20 flex flex-wrap gap-4 items-center justify-between text-nagi-muted font-sans text-xs">
           <span>© {new Date().getFullYear()} {t.contact.rightsReserved}</span>
           <div className="flex flex-wrap gap-6">
-            <button
-              onClick={() => onNavigateToPolicy ? onNavigateToPolicy('terms') : (window.location.hash = 'terms')}
+            <a href={localizedPath(policyPath('terms'), language)}
               className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left"
             >
               {t.contact.termsLink}
-            </button>
-            <button
-              onClick={() => onNavigateToPolicy ? onNavigateToPolicy('cancellation') : (window.location.hash = 'cancellation-policy')}
+            </a>
+            <a href={localizedPath(policyPath('cancellation'), language)}
               className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left"
             >
               {t.contact.cancelLink}
-            </button>
-            <button
-              onClick={() => onNavigateToPolicy ? onNavigateToPolicy('privacy') : (window.location.hash = 'privacy-policy')}
+            </a>
+            <a href={localizedPath(policyPath('privacy'), language)}
               className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left"
             >
               {t.contact.privacyLink}
-            </button>
+            </a>
           </div>
         </div>
       </div>

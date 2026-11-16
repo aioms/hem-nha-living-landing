@@ -1,0 +1,108 @@
+import assert from 'node:assert/strict';
+import { readFile, access } from 'node:fs/promises';
+import path from 'node:path';
+import { load } from 'cheerio';
+import sharp from 'sharp';
+
+const origin = 'https://hemnhaliving.com';
+const sitemap = load(await readFile('dist/sitemap.xml', 'utf8'), { xml: true });
+const urls = sitemap('loc').map((_, node) => sitemap(node).text()).get();
+assert.equal(urls.length, 40);
+assert.equal(new Set(urls).size, urls.length);
+const titles = new Set(), descriptions = new Set(), links = new Map(), imagePaths = new Set();
+const htmlFile = pathname => pathname === '/' ? 'dist/index.html' : path.join('dist', pathname + '.html');
+const normalize = text => text.replace(/\s+/g, ' ').trim();
+for (const url of urls) {
+  const pathname = new URL(url).pathname;
+  const html = await readFile(htmlFile(pathname), 'utf8');
+  const $ = load(html);
+  const language = /^\/en(?:\/|$)/.test(pathname) ? 'en' : 'vi';
+  assert.equal($('html').attr('lang'), language, url);
+  assert.equal($('title').length, 1, url);
+  const title = $('title').text(), description = $('meta[name="description"]').attr('content');
+  assert.ok(title.includes('Hẻm Nhà Living') && !titles.has(title), `Unique title: ${url}`);
+  assert.ok(description && !descriptions.has(description), `Unique description: ${url}`);
+  titles.add(title); descriptions.add(description);
+  assert.equal($('link[rel="canonical"]').length, 1, url);
+  assert.equal($('link[rel="canonical"]').attr('href'), url);
+  assert.equal($('meta[property="og:url"]').attr('content'), url);
+  assert.equal($('meta[property="og:title"]').attr('content'), title);
+  assert.equal($('meta[property="og:description"]').attr('content'), description);
+  assert.equal($('meta[property="og:locale"]').attr('content'), language === 'vi' ? 'vi_VN' : 'en_US');
+  assert.equal($('meta[name="twitter:title"]').attr('content'), title);
+  assert.equal($('meta[name="title"]').length, 0);
+  assert.ok($('meta[property="og:image"]').attr('content').startsWith(origin + '/'));
+  assert.equal($('meta[property="og:image:width"]').attr('content'), '1200');
+  assert.equal($('meta[property="og:image:height"]').attr('content'), '630');
+  assert.equal($('link[hreflang]').length, 3);
+  const vi = pathname.replace(/^\/en(?=\/|$)/, '') || '/';
+  const en = '/en' + (vi === '/' ? '' : vi);
+  assert.equal($('link[hreflang="vi"]').attr('href'), origin + vi);
+  assert.equal($('link[hreflang="en"]').attr('href'), origin + en);
+  assert.equal($('link[hreflang="x-default"]').attr('href'), origin + vi);
+  assert.equal($('main h1').length, 1, `One H1: ${url}`);
+  const text = normalize($('main').text());
+  assert.ok(text.length > 1000 && text.includes('0912254657') && /19\/8A/.test(text), `Real text/NAP: ${url}`);
+  assert.ok(!html.includes('hemnhaliving.vn') && !text.includes('Trưa Hè') && !text.includes('trung tâm Sài Gòn'));
+  assert.equal($('script[type="application/ld+json"]').length, 1);
+  const graph = JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
+  const business = graph.find(node => node['@type'] === 'LodgingBusiness');
+  assert.equal(business.telephone, '+84912254657');
+  assert.equal(business.url, origin + '/');
+  assert.equal(business.geo.latitude, 10.7483367);
+  assert.equal(business.geo.longitude, 106.7266712);
+  assert.equal(business.address.addressCountry, 'VN');
+  assert.ok(business.address.streetAddress.includes('19/8A') && business.sameAs.length >= 2);
+  assert.ok(!graph.some(node => node.offers || node.priceRange), 'No unapproved offers/rates');
+  const faq = graph.find(node => node['@type'] === 'FAQPage');
+  assert.equal(faq.mainEntity.length, /\/faq$/.test(pathname) ? 12 : 3);
+  for (const question of faq.mainEntity) {
+    assert.ok(text.includes(normalize(question.name)), `Visible FAQ question: ${url}`);
+    assert.ok(text.includes(normalize(question.acceptedAnswer.text)), `Visible FAQ answer: ${url}`);
+  }
+  const outgoing = [];
+  for (const node of $('a[href]').toArray()) {
+    const href = $(node).attr('href');
+    const target = new URL(href, url);
+    if (target.origin !== origin || !['http:', 'https:'].includes(target.protocol)) continue;
+    assert.ok(urls.includes(origin + target.pathname), `Real internal link: ${href} on ${url}`);
+    outgoing.push(origin + target.pathname);
+    if (target.hash) {
+      const targetHtml = load(await readFile(htmlFile(target.pathname), 'utf8'));
+      assert.ok(targetHtml(`[id="${target.hash.slice(1)}"]`).length, `Anchor target: ${href}`);
+    }
+  }
+  links.set(url, outgoing);
+  for (const node of $('img').toArray()) {
+    const img = $(node), src = img.attr('src');
+    assert.ok(img.attr('alt') || img.attr('aria-hidden') === 'true', `Alt: ${src}`);
+    assert.ok(img.attr('width') && img.attr('height'), `Intrinsic size: ${src}`);
+    assert.ok(img.attr('loading'), `Loading: ${src}`);
+    assert.ok(src.startsWith('/assets/optimized/') && img.attr('srcset') && img.attr('sizes'), `Responsive WebP: ${src}`);
+    imagePaths.add(src);
+    for (const variant of img.attr('srcset').split(', ')) imagePaths.add(variant.split(' ')[0]);
+  }
+}
+const seen = new Set();
+function walk(url) { if (seen.has(url)) return; seen.add(url); for (const target of links.get(url) || []) walk(target); }
+walk(origin + '/');
+assert.equal(seen.size, urls.length, 'Every page reachable through HTML links from homepage');
+for (const src of imagePaths) {
+  const meta = await sharp('dist' + src).metadata();
+  assert.equal(meta.format, 'webp', src);
+}
+const og = await sharp('dist/assets/og/hem-nha-living.jpg').metadata();
+assert.equal(og.width, 1200); assert.equal(og.height, 630);
+for (const file of ['robots.txt', 'llms.txt']) {
+  assert.equal(await readFile('dist/' + file, 'utf8'), await readFile('public/' + file, 'utf8'));
+}
+assert.ok((await readFile('dist/robots.txt', 'utf8')).includes(origin + '/sitemap.xml'));
+const notFound = load(await readFile('dist/404.html', 'utf8'));
+assert.equal(notFound('meta[name="robots"]').attr('content'), 'noindex, follow');
+assert.equal(notFound('main h1').length, 1);
+const config = JSON.parse(await readFile('vercel.json', 'utf8'));
+assert.ok(config.redirects.some(rule => rule.has?.some(item => item.value === 'www.hemnhaliving.com') && rule.statusCode === 301));
+assert.ok(config.redirects.some(rule => rule.source === '/index.html' && rule.statusCode === 301));
+assert.ok(!config.rewrites, 'No SPA catch-all that masks missing pages');
+assert.ok(config.headers.every(rule => rule.headers.some(header => header.value.includes('31536000, immutable'))));
+console.log(`PASS: ${urls.length} pages; unique metadata, full HTML/NAP, linked crawl graph, bilingual alternates, FAQ parity, ${imagePaths.size} real WebP derivatives, OG dimensions, discovery files and host configuration.`);

@@ -99,3 +99,53 @@ test('mobile menu, room detail and booking controls still work without submissio
   await page.getByRole('button', { name: /Chi tiết|Xem chi tiết/ }).click();
   await expect(page.getByRole('button', { name: /Đặt phòng|Đặt ngay|Chọn phòng/ }).last()).toBeAttached();
 });
+
+for (const language of ['vi', 'en'] as const) {
+  test(`owner decisions remain consistent in studio modals and booking (${language})`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    const prefix = language === 'vi' ? '' : '/en';
+    await page.goto(`${prefix}/thue-thang/hem-scandi`);
+    await page.getByRole('button', { name: /Xem chi tiết Hẻm Scandi|View Details Hẻm Scandi/ }).click();
+    const detail = page.getByRole('dialog');
+    await expect(detail).toContainText('3.x M đ');
+    await expect(detail).toContainText('8.x M đ');
+    await expect(detail).toContainText(language === 'vi' ? 'Tầng 2' : '2nd Floor');
+    await detail.getByRole('button', { name: /^(Đóng|Close)$/ }).click();
+    await page.getByRole('button', { name: /Đăng ký thuê phòng Hẻm Scandi|Inquire & Apply Hẻm Scandi/ }).click();
+    const booking = page.getByRole('dialog');
+    await booking.locator('#monthstart').fill('2027-01-01');
+    await booking.locator('#months').selectOption('3');
+    await booking.getByRole('button', { name: /Tiếp tục chọn phòng|Continue to Select Room/ }).click();
+    await expect(booking.getByRole('button', { name: /Chọn phòng Mo-Japandi|Select room Mo-Japandi/ })).toContainText('7.x M đ');
+    await booking.getByRole('button', { name: /Chọn phòng Hẻm Scandi|Select room Hẻm Scandi/ }).click();
+    await booking.getByRole('button', { name: /Tiếp tục →|Continue →/ }).click();
+    await booking.locator('#fullName').fill('Local verification');
+    await booking.locator('#phone').fill('0900000000');
+    await booking.getByRole('button', { name: /Xem lại|Review details/ }).click();
+    await expect(booking).toContainText(language === 'vi'
+      ? '8.x M đ/tháng × 3 tháng · Liên hệ xác nhận tổng'
+      : '8.x M đ/mo × 3 month(s) · Contact us for total');
+    await expect(booking).toContainText(language === 'vi' ? 'Thuê dài hạn đặt cọc theo thỏa thuận.' : 'Long-term rentals have a deposit by agreement.');
+    await expect(booking).toContainText(language === 'vi' ? 'Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ.' : 'Free cancellation up to 48 hours before check-in.');
+    await expect(booking).not.toContainText(/30%|100%|8[.,]5\s*M|7[.,]9\s*M|2[.,]69\s*M/);
+    expect(await booking.evaluate(el => el.scrollWidth <= window.innerWidth)).toBe(true);
+    // No submission: never create a real lead during verification.
+  });
+
+  test(`homestay booking uses a 50% deposit and 48h cancellation (${language})`, async ({ page }) => {
+    await page.goto(`${language === 'vi' ? '' : '/en'}/homestay/mo-trua`);
+    await page.locator('main').getByRole('button', { name: /Kiểm tra & Đặt phòng|Check & Reserve/ }).click();
+    const booking = page.getByRole('dialog');
+    await booking.locator('#checkin').fill('2027-01-01');
+    await booking.locator('#checkout').fill('2027-01-03');
+    await booking.getByRole('button', { name: /Tiếp tục chọn phòng|Continue to Select Room/ }).click();
+    await booking.getByRole('button', { name: /Chọn phòng Mơ Trưa|Select room Mơ Trưa/ }).click();
+    await booking.getByRole('button', { name: /Tiếp tục →|Continue →/ }).click();
+    await booking.locator('#fullName').fill('Local verification');
+    await booking.locator('#phone').fill('0900000000');
+    await booking.getByRole('button', { name: /Xem lại|Review details/ }).click();
+    await expect(booking).toContainText('978K ₫');
+    await expect(booking).toContainText(language === 'vi' ? 'Homestay ngắn ngày đặt cọc 50%.' : 'Short-stay homestays require a 50% deposit.');
+    await expect(booking).toContainText(language === 'vi' ? 'Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ.' : 'Free cancellation up to 48 hours before check-in.');
+  });
+}

@@ -2,7 +2,7 @@ import Image from './Image';
 import { useState, useEffect } from 'react';
 import { localizedPath, roomPath } from '../seo/routes';
 import { Room } from '../types';
-import { DIY_THEME, LIVING_THEME, formatPriceCompact } from '../utils/themes';
+import { DIY_THEME, LIVING_THEME } from '../utils/themes';
 import { useInView } from '../hooks/useScroll';
 import { useLanguage } from '../context/LanguageContext';
 import { getLocalizedRoom } from '../utils/localizedContent';
@@ -242,7 +242,7 @@ export function DiyLivingCard({ room: rawRoom, index, onSelect, onDetail, fullDe
           {/* Pricing & CTA Buttons */}
           <div style={{ borderTop: `1px solid ${theme.borderColor}`, paddingTop: '1.25rem' }}>
             <div className="flex items-baseline gap-4 mb-4">
-              {room.weeklyPrice && (
+              {room.weeklyPriceDisplay && (
                 <>
                   <div>
                     <div
@@ -255,7 +255,7 @@ export function DiyLivingCard({ room: rawRoom, index, onSelect, onDetail, fullDe
                       className="font-serif text-lg md:text-xl font-bold"
                       style={{ color: theme.accentColor }}
                     >
-                      {room.weeklyPriceDisplay || formatPriceCompact(room.weeklyPrice)}
+                      {room.weeklyPriceDisplay}
                       <span className="text-sm font-normal text-current opacity-70">
                         {language === 'vi' ? '/tuần' : '/wk'}
                       </span>
@@ -265,7 +265,7 @@ export function DiyLivingCard({ room: rawRoom, index, onSelect, onDetail, fullDe
                 </>
               )}
 
-              {room.monthlyPrice ? (
+              {room.monthlyPriceDisplay ? (
                 <div>
                   <div
                     className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60 mb-0.5"
@@ -276,7 +276,7 @@ export function DiyLivingCard({ room: rawRoom, index, onSelect, onDetail, fullDe
                       : (language === 'vi' ? 'Thuê tháng' : 'Monthly lease')}
                   </div>
                   <div className="font-serif text-xl md:text-2xl font-bold" style={{ color: theme.accentColor }}>
-                    {room.monthlyPriceDisplay || formatPriceCompact(room.monthlyPrice)}<span className="text-sm font-normal text-current opacity-70">{language === 'vi' ? '/tháng' : '/mo'}</span>
+                    {room.monthlyPriceDisplay}<span className="text-sm font-normal text-current opacity-70">{language === 'vi' ? '/tháng' : '/mo'}</span>
                   </div>
                 </div>
               ) : null}

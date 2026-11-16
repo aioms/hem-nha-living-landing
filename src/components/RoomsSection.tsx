@@ -214,7 +214,7 @@ function RoomCard({ room, index, onSelect }: RoomCardProps) {
                   {formatPriceCompact(room.shortTermPrice ?? 0)}
                 </div>
               </div>
-              {room.monthlyPrice ? (
+              {room.monthlyPriceDisplay ? (
                 <>
                   <div className="opacity-40" style={{ color: theme.mutedColor }}>·</div>
                   <div>
@@ -222,7 +222,7 @@ function RoomCard({ room, index, onSelect }: RoomCardProps) {
                       Thuê tháng
                     </div>
                     <div className="font-sans text-xl font-medium" style={{ color: theme.textColor }}>
-                      {formatPriceCompact(room.monthlyPrice)}/tháng
+                      {room.monthlyPriceDisplay}/tháng
                     </div>
                   </div>
                 </>

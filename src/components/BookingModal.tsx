@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { localizedPath } from '../seo/routes';
 import { Room, BookingFormState, StayType } from '../types';
 import { ROOMS } from '../data/rooms';
+import { stayPolicies } from '../data/stayPolicies';
 import { DIY_LIVING_ROOMS } from '../data/diyLivingRooms';
 import { getRoomTheme, formatPriceCompact } from '../utils/themes';
 import { useLanguage } from '../context/LanguageContext';
@@ -49,22 +50,38 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
       setForm(prev => ({
         ...prev,
         selectedRoomId: initialRoom.id,
-        stayType: initialRoom.category === 'diy' || initialRoom.category === 'living' ? 'monthly' : prev.stayType,
+        stayType: initialRoom.category === 'diy' || initialRoom.category === 'living' ? 'monthly' : 'short_term',
       }));
     }
   }, [initialRoom]);
 
   if (!isOpen) return null;
 
-  const update = (patch: Partial<BookingFormState>) => setForm(prev => ({ ...prev, ...patch }));
+  const update = (patch: Partial<BookingFormState>) => setForm(prev => ({
+    ...prev,
+    ...patch,
+    selectedRoomId: patch.stayType && patch.stayType !== prev.stayType ? '' : (patch.selectedRoomId ?? prev.selectedRoomId),
+  }));
 
   const rawSelectedRoom = ALL_ROOMS.find(r => r.id === form.selectedRoomId) || null;
   const selectedRoom = getLocalizedRoom(rawSelectedRoom, language);
   const theme = selectedRoom ? getRoomTheme(selectedRoom) : null;
+  const policy = stayPolicies[language];
+  const depositNotice = form.stayType === 'short_term' ? policy.homestayDeposit : policy.rentalDeposit;
+  const nights = form.stayType === 'short_term' && form.checkIn && form.checkOut
+    ? Math.max(1, Math.ceil((new Date(form.checkOut).getTime() - new Date(form.checkIn).getTime()) / 86400000))
+    : 1;
+  // Blurred studio rates cannot produce an exact total or deposit amount.
+  const estimatePrice = (room: Room) => form.stayType === 'short_term'
+    ? formatPriceCompact(nights * (room.shortTermPrice || 0))
+    : language === 'vi'
+      ? `${room.monthlyPriceDisplay}/tháng × ${form.monthlyMonths} tháng · Liên hệ xác nhận tổng`
+      : `${room.monthlyPriceDisplay}/mo × ${form.monthlyMonths} month(s) · Contact us for total`;
 
   const availableRooms = ALL_ROOMS.filter(room => {
     if (!room.isAvailable) return false;
     if (form.stayType === 'short_term' && !room.shortTermPrice) return false;
+    if (form.stayType === 'monthly' && !room.monthlyPriceDisplay) return false;
     if (form.stayType === 'short_term' && form.checkIn && form.checkOut) {
       // Mock: filter against unavailable dates
       const checkin = new Date(form.checkIn);
@@ -90,10 +107,6 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
         ? (language === 'vi' ? 'Ngắn ngày (Short-term)' : 'Short-term')
         : (language === 'vi' ? `Theo tháng (${form.monthlyMonths} tháng)` : `Monthly (${form.monthlyMonths} months)`);
 
-      const nights = form.stayType === 'short_term' && form.checkIn && form.checkOut
-        ? Math.max(1, Math.ceil((new Date(form.checkOut).getTime() - new Date(form.checkIn).getTime()) / 86400000))
-        : 1;
-
       const checkInLabel = form.stayType === 'short_term' ? form.checkIn : form.monthlyStartDate;
       const checkOutLabel = form.stayType === 'short_term'
         ? `${form.checkOut} (${nights} ${language === 'vi' ? 'đêm' : 'nights'})`
@@ -101,13 +114,7 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
 
       const roomNameLabel = selectedRoom ? `${selectedRoom.name} (${selectedRoom.code || ''})` : form.selectedRoomId;
 
-      const estimatedPrice = selectedRoom
-        ? formatPriceCompact(
-            form.stayType === 'short_term'
-              ? nights * (selectedRoom.shortTermPrice || 0)
-              : form.monthlyMonths * (selectedRoom.monthlyPrice || 0)
-          )
-        : '';
+      const estimatedPrice = selectedRoom ? estimatePrice(selectedRoom) : '';
 
       await submitRegularBooking({
         stayType: stayTypeLabel,
@@ -200,8 +207,8 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                   {language === 'vi' ? 'Lưu ý quan trọng:' : 'Important Notice:'}
                 </strong>
                 {language === 'vi'
-                  ? 'Đây là yêu cầu tạm giữ chỗ. Đặt phòng chỉ được xác nhận sau khi chúng tôi liên hệ và bạn thanh toán đặt cọc 30%.'
-                  : 'This is a reservation hold request. Booking is confirmed once our team reaches out and a 30% deposit is processed.'}
+                  ? `Đây là yêu cầu tạm giữ chỗ. Đặt phòng được xác nhận sau khi chúng tôi liên hệ và bạn thanh toán đặt cọc. ${depositNotice} ${policy.cancellation}`
+                  : `This is a reservation hold request. Booking is confirmed after our team contacts you and the deposit is paid. ${depositNotice} ${policy.cancellation}`}
               </div>
               <button onClick={reset} className="btn-primary px-8">
                 {t.bookingModal.closeBtn}
@@ -363,12 +370,6 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                     const room = getLocalizedRoom(rawRoom, language) || rawRoom;
                     const roomTheme = getRoomTheme(room);
                     const isSelected = form.selectedRoomId === room.id;
-                    const nights = form.stayType === 'short_term' && form.checkIn && form.checkOut
-                      ? Math.ceil((new Date(form.checkOut).getTime() - new Date(form.checkIn).getTime()) / 86400000)
-                      : 0;
-                    const price = form.stayType === 'short_term'
-                      ? nights * (room.shortTermPrice || 0)
-                      : form.monthlyMonths * (room.monthlyPrice || 0);
 
                     return (
                       <button
@@ -399,15 +400,11 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                             <div className="text-right flex-shrink-0">
                               {room.originalShortTermPrice && form.stayType === 'short_term' && (
                                 <div className="font-sans text-xs line-through opacity-50 text-nagi-muted">
-                                  {price > 0
-                                    ? formatPriceCompact(nights * room.originalShortTermPrice)
-                                    : `${Math.round(room.originalShortTermPrice / 1000)}k đ`}
+                                  {formatPriceCompact(nights * room.originalShortTermPrice)}
                                 </div>
                               )}
                               <div className="font-sans text-lg font-semibold text-nagi-terracotta">
-                                {price > 0 ? formatPriceCompact(price) : formatPriceCompact(
-                                  (form.stayType === 'short_term' ? room.shortTermPrice : room.monthlyPrice) || room.monthlyPrice || room.shortTermPrice || 0
-                                )}
+                                {form.stayType === 'short_term' ? estimatePrice(room) : room.monthlyPriceDisplay}
                               </div>
                               <div className="font-sans text-[0.6rem] text-nagi-muted uppercase tracking-wider">
                                 {form.stayType === 'short_term'
@@ -541,11 +538,7 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                     <div className="bg-nagi-clay/40 px-4 py-4 flex items-center justify-between">
                       <span className="font-sans text-sm text-nagi-cardEdge">{t.bookingModal.estimatedTotalLabel}</span>
                       <span className="font-sans text-2xl font-semibold text-nagi-terracotta">
-                        {formatPriceCompact(
-                          form.stayType === 'short_term'
-                            ? Math.ceil((new Date(form.checkOut).getTime() - new Date(form.checkIn).getTime()) / 86400000) * (selectedRoom.shortTermPrice || 0)
-                            : form.monthlyMonths * (selectedRoom.monthlyPrice || 0)
-                        )}
+                        {estimatePrice(selectedRoom)}
                       </span>
                     </div>
                   </div>
@@ -553,8 +546,8 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                   <div className="bg-nagi-clay/30 rounded-nagi px-4 py-3 text-xs text-nagi-slate font-sans leading-relaxed space-y-1.5">
                     <p>
                       {language === 'vi'
-                        ? 'Đây là yêu cầu giữ chỗ. Hẻm Nhà Living sẽ liên hệ xác nhận và hướng dẫn thanh toán/đặt cọc trong vòng 2–4 giờ. Chưa phát sinh chi phí cho đến khi xác nhận.'
-                        : 'This is a reservation request. Our team will contact you within 2–4 hours to confirm and assist with deposit/payment. No charges are incurred until confirmation.'}
+                        ? `Đây là yêu cầu giữ chỗ. Hẻm Nhà Living sẽ liên hệ xác nhận và hướng dẫn thanh toán/đặt cọc trong vòng 2–4 giờ. Chưa phát sinh chi phí cho đến khi xác nhận. ${depositNotice} ${policy.cancellation}`
+                        : `This is a reservation request. Our team will contact you within 2–4 hours to confirm and assist with deposit/payment. No charges are incurred until confirmation. ${depositNotice} ${policy.cancellation}`}
                     </p>
                     <p className="text-[11px] text-nagi-muted">
                       {language === 'vi' ? (

@@ -39,7 +39,7 @@ URL quyết định ngôn ngữ. Bỏ tự đổi sang tiếng Anh theo `navigat
 - Canonical, `og:url`, schema URLs cùng dùng `https://hemnhaliving.com`. OG/Twitter có title/description theo trang, locale và ảnh tuyệt đối.
 - Ảnh chia sẻ `public/assets/og/hem-nha-living.jpg` đúng **1200×630**, ghép ảnh mặt tiền và logo gốc, giữ màu nền thương hiệu; đã xem ảnh kết quả. Không dùng ảnh dọc làm preview.
 - JSON-LD gồm `LodgingBusiness` (cũng thuộc nhóm Organization), `WebSite`, `WebPage`, `FAQPage`; trang chủ/cafe thêm `CafeOrCoffeeShop`. NAP, email, geo, URL, Maps, sameAs, check-in/check-out lấy từ dữ liệu đã có. Địa chỉ ghi rõ Tân Thuận, Quận 7; không tự thêm mã bưu chính hoặc số phòng toàn tòa nhà.
-- FAQPage sử dụng đúng câu hỏi/đáp án có trong nội dung HTML. `/faq` có **12 câu**: địa chỉ, dự kiến mở cửa, hình thức lưu trú, giờ nhận/trả phòng, sức chứa, cafe cho khách ngoài, rooftop/giặt sấy, liên hệ bảng giá, nơi xem điều kiện hủy và 3 câu hỏi cũ. Không tự thêm khoảng cách, thời gian di chuyển, giá hoặc điều kiện thương mại mới.
+- FAQPage sử dụng đúng câu hỏi/đáp án có trong nội dung HTML. `/faq` có **13 câu**: 8 câu về địa chỉ, mở cửa, hình thức lưu trú, giờ nhận/trả phòng, sức chứa, cafe, tiện ích và bảng giá; 5 câu dùng chung với footer về hủy phòng, đặt cọc và 3 câu hỏi cũ. Hủy phòng và đặt cọc dùng quyết định chủ nhà đã chốt; không tự thêm khoảng cách, thời gian di chuyển hay giá chính xác.
 - Thống nhất tên hiển thị **Mơ Trưa**. Giữ ID `trua-he` và đường dẫn ảnh cũ trong dữ liệu để tương thích; URL công khai là `/homestay/mo-trua`.
 - Sửa “trung tâm Sài Gòn” / “heart of Saigon” trong copy vị trí thành Tân Thuận, Quận 7. Giữ các câu thương hiệu nói về nhịp sống Sài Gòn.
 
@@ -76,25 +76,28 @@ Cấu hình theo [tài liệu project configuration của Vercel](https://vercel
 
 Không đổi palette, class bố cục hoặc nội dung thương hiệu chính của landing. Trang mới dùng card/section hiện có. So sánh cục bộ với bản gốc `698b57f`, ở viewport 1440×900 và 390×844, các section trang chủ có vị trí/kích thước lệch dưới 0,1px sau khi ổn định. Lần so này chặn request bên ngoài ở cả hai bản; đây là kiểm tra geometry/font stack, không phải kiểm tra pixel toàn bộ dưới mọi điều kiện mạng.
 
-## Cố ý giữ và những điểm chủ nhà phải xác nhận
+## Quyết định chủ nhà đã áp dụng
 
 ### Giá
 
-Giữ nguyên số trong dữ liệu, cách rút gọn/làm mờ trên giao diện và logic ước tính booking. Không đủ căn cứ chọn bên nào đúng khi số và label khác nhau. Đã thêm `TODO(owner)` ngay cạnh dữ liệu liên quan.
+Giá studio công bố dạng `.x` là nguồn duy nhất. Đã bỏ toàn bộ trường giá số tuần/tháng và các TODO chờ duyệt liên quan. Booking giữ giá `.x`, kỳ thuê và yêu cầu liên hệ xác nhận tổng; không nhân thành tổng hay tiền cọc chính xác.
 
-| Phòng / kỳ thuê | Số trong code | Hiển thị hiện tại | Cần quyết định |
-| --- | --- | --- | --- |
-| Mo-Japandi / tháng | 8.500.000 ₫ | `7.x M đ` | Chốt mức tháng và label |
-| Hẻm Scandi / tuần | 2.690.000 ₫ | `3.x M đ` | Chốt mức tuần và label |
-| Hẻm Scandi / tháng | 7.900.000 ₫ | `8.x M đ` | Chốt mức tháng và label |
+| Phòng / kỳ thuê | Giá công bố |
+| --- | --- |
+| Mo-Japandi / tháng | `7.x M đ` |
+| Hẻm Scandi / tuần | `3.x M đ` |
+| Hẻm Scandi / tháng | `8.x M đ` |
 
-Các giá homestay hiện có trên UI vẫn giữ: Sớm Mai 599.000 ₫, Mơ Trưa 489.000 ₫, Hoàng Hôn 679.000 ₫, Đêm Sao 789.000 ₫ mỗi đêm. Không xem việc có số trong code là bằng chứng mức giá đã được duyệt mở bán. Chưa xuất `Offer`, `priceRange`, trạng thái phòng trống hoặc lịch giá vào schema/llms.txt, kể cả giá đang hiển thị nhất quán, để chủ nhà duyệt mức công bố và điều kiện áp dụng trước. Không biến `isAvailable: true` và lịch mock tháng 9/2026 thành dữ liệu availability có cấu trúc.
+Giá homestay hiện có giữ nguyên. Không xuất `Offer`, `price`, `priceRange` hay availability giả định vào JSON-LD. FAQ hiển thị và JSON-LD dùng chung nội dung; llms.txt đồng bộ Việt/Anh. Build sinh lại 40 trang Việt/Anh và trang 404.
 
-### Các điều kiện và facts khác
+### Chính sách và tầng studio
 
-1. **Hủy phòng:** footer ghi hủy miễn phí trước 48 giờ; bảng chính sách ghi trên 7 ngày hoàn 100%, 3–7 ngày hoàn 50%, dưới 72 giờ không hoàn. Không tự chọn một quy định. FAQ mới dẫn đến chính sách và đề nghị liên hệ xác nhận, không nhân bản số mâu thuẫn vào câu trả lời mới.
-2. **Đặt cọc:** modal xác nhận nhắc cọc 30%; chính sách ghi thanh toán 100% hoặc cọc theo thỏa thuận. Chủ nhà cần chốt điều kiện chính thức.
-3. **Tầng studio:** dữ liệu từng phòng ghi tầng 2, nhưng mô tả phân nhóm nói tầng 2–4. Chưa thêm số tầng/số phòng toàn tòa vào schema; cần chủ nhà xác nhận phân bổ phòng.
+1. **Hủy phòng:** miễn phí trước giờ nhận phòng ít nhất 48 giờ, hoàn toàn bộ khoản đã thanh toán. Giữ quy định không hoàn tiền khi báo hủy dưới 48 giờ hoặc không đến. Đổi ngày cần báo trước ít nhất 48 giờ; không còn các tầng thời gian cũ.
+2. **Đặt cọc:** homestay ngắn ngày 50%; thuê dài hạn (tuần/tháng/năm) theo thỏa thuận. Dùng chung nội dung giữa modal, chính sách và FAQ footer.
+3. **Tầng studio:** Hẻm Living ở tầng 2. Hẻm DIY thuê năm tại tầng trệt giữ nguyên.
+
+### Các phạm vi khác giữ nguyên
+
 4. **DIY:** mô tả marketing nói studio thô/tự bài trí nhưng dữ liệu liệt kê sofabed, giường, bếp/tủ lạnh. Cần chốt hạng mục bàn giao; chưa tự sửa tiện nghi.
 5. **Ngày mở cửa/giờ vận hành:** tháng 12/2026 giữ là dự kiến; giờ check-in/out, cafe/rooftop/giải trí lấy từ repo. Chủ nhà nên xác nhận lại trước mở bán; chưa khai báo doanh nghiệp đã hoạt động hoặc ngày khai trương chính xác trong schema.
 6. **Form booking/Early Bird:** luồng cũ có localStorage fallback khi backend thiếu hoặc lỗi; không sửa backend hay gửi lead thật trong tác vụ SEO. Chưa xác minh lead đi đến Sheet/Telegram. Chủ nhà cần thử end-to-end bằng cấu hình thật trong tác vụ riêng.
@@ -133,7 +136,8 @@ Kết quả đã chạy:
 
 - `npm run build`: **PASS**, xuất 40 trang + 404.
 - `npm run check:seo`: **PASS**, kiểm tra title/description riêng, canonical/OG, hreflang, NAP, schema, FAQ khớp nội dung, đồ thị link đi tới đủ 40 trang, mọi ảnh tham chiếu tồn tại/WebP thật, OG 1200×630, discovery files và cấu hình hosting.
-- `npm run test:seo`: **4/4 PASS**. HTTP/HTML và hydration của cả 40 URL; chuyển trang không reload; đổi ngôn ngữ; back/forward; hash cũ; policy tabs; scroll contact; đọc không JS ở desktop/mobile; mobile menu và modal chi tiết. Chặn request ngoài trong test, không gửi form thật.
+- `npm run test:seo`: **8/8 PASS**. Thêm kiểm tra giá `.x`, tầng studio, tổng thuê tháng không suy diễn giá số, cọc 50% homestay và hủy miễn phí 48 giờ trong booking Việt/Anh; studio modal/booking kiểm tra ở màn hình 390px. HTTP/HTML và hydration của cả 40 URL; chuyển trang không reload; đổi ngôn ngữ; back/forward; hash cũ; policy tabs; scroll contact; đọc không JS ở desktop/mobile; mobile menu và modal chi tiết. Chặn request ngoài trong test, không gửi form thật.
+- Grep `dist/`: **PASS**, không còn giá cũ, tiền cọc hoặc ngưỡng hủy/tầng studio mâu thuẫn. Các chuỗi số trùng trong CSS/SVG, tọa độ và tên ảnh không phải nội dung chính sách.
 - `git diff --check`: **PASS**.
 - `curl` trên preview: `/en/homestay/mo-trua` trả HTML Anh đúng route; robots/sitemap/llms đều 200.
 

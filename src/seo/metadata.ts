@@ -24,7 +24,7 @@ export function structuredData(route: Route, language: Language) {
     { '@type': 'FAQPage', '@id': canonical + '#faq', inLanguage: language, mainEntity: getFaqs(language, route.view === 'faq').map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
   ];
   if (route.view === 'cafe' || route.view === 'home') graph.push({ '@type': 'CafeOrCoffeeShop', '@id': ORIGIN + '/#quando-quando', name: 'Quando Quando Cafe', url: ORIGIN + localizedPath('/cafe', language), address, telephone: '+84912254657', containedInPlace: { '@id': businessId } });
-  // TODO(owner): Approve published rates before adding Offer/priceRange or availability.
+  // Studio rates are intentionally blurred. Do not publish numeric Offer/priceRange or availability.
   return { '@context': 'https://schema.org', '@graph': graph };
 }
 export function escapeHtml(value: string) { return value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!); }

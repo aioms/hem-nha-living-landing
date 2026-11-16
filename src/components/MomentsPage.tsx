@@ -268,7 +268,7 @@ export function RoomCardItem({ room: rawRoom, index, onSelect, onDetail, fullDet
                 </div>
               </div>
 
-              {room.monthlyPrice ? (
+              {room.monthlyPriceDisplay ? (
                 <>
                   <div className="opacity-40" style={{ color: theme.mutedColor }}>·</div>
 
@@ -280,7 +280,7 @@ export function RoomCardItem({ room: rawRoom, index, onSelect, onDetail, fullDet
                       {language === 'vi' ? 'Thuê tháng' : 'Monthly lease'}
                     </div>
                     <div className="font-sans text-base md:text-lg font-semibold" style={{ color: theme.textColor }}>
-                      {formatPriceCompact(room.monthlyPrice)}{language === 'vi' ? '/tháng' : '/mo'}
+                      {room.monthlyPriceDisplay}{language === 'vi' ? '/tháng' : '/mo'}
                     </div>
                   </div>
                 </>

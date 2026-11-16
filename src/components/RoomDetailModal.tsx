@@ -254,14 +254,14 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
               </>
             )}
 
-            {room.weeklyPrice && (
+            {room.weeklyPriceDisplay && (
               <>
                 <div>
                   <div className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60">
                     {language === 'vi' ? 'Theo tuần' : 'Weekly rate'}
                   </div>
                   <div className="font-serif text-xl font-bold" style={{ color: theme.accentColor }}>
-                    {room.weeklyPriceDisplay || formatPriceCompact(room.weeklyPrice)}
+                    {room.weeklyPriceDisplay}
                     <span className="text-sm font-normal text-current opacity-70">
                       {language === 'vi' ? '/tuần' : '/wk'}
                     </span>
@@ -271,7 +271,7 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
               </>
             )}
 
-            {room.monthlyPrice && (
+            {room.monthlyPriceDisplay && (
               <div>
                 <div className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60">
                   {room.category === 'diy'
@@ -279,7 +279,7 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
                     : (language === 'vi' ? 'Thuê tháng' : 'Monthly lease')}
                 </div>
                 <div className="font-serif text-2xl font-bold" style={{ color: theme.accentColor }}>
-                  {room.monthlyPriceDisplay || formatPriceCompact(room.monthlyPrice)}<span className="text-sm font-normal text-current opacity-70">{t.roomDetailModal.perMonthLabel}</span>
+                  {room.monthlyPriceDisplay}<span className="text-sm font-normal text-current opacity-70">{t.roomDetailModal.perMonthLabel}</span>
                 </div>
               </div>
             )}

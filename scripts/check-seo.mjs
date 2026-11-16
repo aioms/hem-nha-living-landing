@@ -12,6 +12,11 @@ assert.equal(new Set(urls).size, urls.length);
 const titles = new Set(), descriptions = new Set(), links = new Map(), imagePaths = new Set();
 const htmlFile = pathname => pathname === '/' ? 'dist/index.html' : path.join('dist', pathname + '.html');
 const normalize = text => text.replace(/\s+/g, ' ').trim();
+const obsoleteTerms = /30%|(?:100%[^.]{0,45}(?:deposit|room charge)|(?:cọc|thanh toán)[^.]{0,45}100%)|72\s*(?:giờ|hours?|h\b)|7\s*(?:ngày|days?)|(?:8500000|2690000|7900000)|(?:8[.,]500[.,]000|2[.,]690[.,]000|7[.,]900[.,]000)|(?:8[.,]5|2[.,]69|7[.,]9)\s*(?:M|triệu)|(?:tầng|floor|floors)\s*2\s*[–-]\s*4/i;
+const approved = {
+  vi: { cancellation: 'Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ.', deposit: 'Homestay ngắn ngày đặt cọc 50%. Thuê dài hạn (studio theo tuần, tháng hoặc năm) đặt cọc theo thỏa thuận.' },
+  en: { cancellation: 'Free cancellation up to 48 hours before check-in.', deposit: 'Short-stay homestays require a 50% deposit. Long-term studio rentals (weekly, monthly or annual) have a deposit by agreement.' },
+};
 for (const url of urls) {
   const pathname = new URL(url).pathname;
   const html = await readFile(htmlFile(pathname), 'utf8');
@@ -42,9 +47,22 @@ for (const url of urls) {
   assert.equal($('link[hreflang="x-default"]').attr('href'), origin + vi);
   assert.equal($('main h1').length, 1, `One H1: ${url}`);
   const text = normalize($('main').text());
+  assert.doesNotMatch(text, obsoleteTerms, `Owner decisions: ${url}`);
+  assert.ok(text.includes(approved[language].cancellation), `48h cancellation in footer: ${url}`);
+  assert.ok(text.includes(approved[language].deposit), `Deposit in footer FAQ: ${url}`);
+  if (pathname.includes('chinh-sach-huy-phong') || /\/chinh-sach$/.test(pathname)) {
+    assert.equal($('#cancellation-policy tbody tr').length, 2, `Single cancellation threshold: ${url}`);
+    assert.ok(normalize($('#cancellation-policy').text()).includes(approved[language].deposit));
+  }
+  if (/\/thue-thang\/(?:mo-japandi|hem-scandi)$/.test(pathname)) {
+    assert.ok(text.includes(pathname.endsWith('hem-scandi') ? '8.x M đ' : '7.x M đ'));
+    assert.ok(text.includes(language === 'vi' ? 'Tầng 2' : '2nd Floor'));
+    if (pathname.endsWith('hem-scandi')) assert.ok(text.includes('3.x M đ'));
+  }
   assert.ok(text.length > 1000 && text.includes('0912254657') && /19\/8A/.test(text), `Real text/NAP: ${url}`);
   assert.ok(!html.includes('hemnhaliving.vn') && !text.includes('Trưa Hè') && !text.includes('trung tâm Sài Gòn'));
   assert.equal($('script[type="application/ld+json"]').length, 1);
+  assert.doesNotMatch($('script[type="application/ld+json"]').text(), obsoleteTerms, `Schema terms: ${url}`);
   const graph = JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
   const business = graph.find(node => node['@type'] === 'LodgingBusiness');
   assert.equal(business.telephone, '+84912254657');
@@ -53,9 +71,9 @@ for (const url of urls) {
   assert.equal(business.geo.longitude, 106.7266712);
   assert.equal(business.address.addressCountry, 'VN');
   assert.ok(business.address.streetAddress.includes('19/8A') && business.sameAs.length >= 2);
-  assert.ok(!graph.some(node => node.offers || node.priceRange), 'No unapproved offers/rates');
+  assert.doesNotMatch(JSON.stringify(graph), /"(?:offers|price|priceRange)"/, 'No invented numeric offers/rates');
   const faq = graph.find(node => node['@type'] === 'FAQPage');
-  assert.equal(faq.mainEntity.length, /\/faq$/.test(pathname) ? 12 : 3);
+  assert.equal(faq.mainEntity.length, /\/faq$/.test(pathname) ? 13 : 5);
   for (const question of faq.mainEntity) {
     assert.ok(text.includes(normalize(question.name)), `Visible FAQ question: ${url}`);
     assert.ok(text.includes(normalize(question.acceptedAnswer.text)), `Visible FAQ answer: ${url}`);
@@ -94,7 +112,9 @@ for (const src of imagePaths) {
 const og = await sharp('dist/assets/og/hem-nha-living.jpg').metadata();
 assert.equal(og.width, 1200); assert.equal(og.height, 630);
 for (const file of ['robots.txt', 'llms.txt']) {
-  assert.equal(await readFile('dist/' + file, 'utf8'), await readFile('public/' + file, 'utf8'));
+  const content = await readFile('dist/' + file, 'utf8');
+  assert.equal(content, await readFile('public/' + file, 'utf8'));
+  assert.doesNotMatch(content, obsoleteTerms, file);
 }
 assert.ok((await readFile('dist/robots.txt', 'utf8')).includes(origin + '/sitemap.xml'));
 const notFound = load(await readFile('dist/404.html', 'utf8'));

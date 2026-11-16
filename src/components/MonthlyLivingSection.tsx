@@ -75,7 +75,7 @@ export default function MonthlyLivingSection({ onBookingOpen, onNavigateToDiyLiv
             {/* Price badge floating */}
             <div className="absolute -top-5 left-6 bg-nagi-deepSlate text-nagi-sand rounded-nagi-md px-5 py-3 shadow-floating-card">
               <div className="font-sans text-[0.6rem] tracking-widest uppercase opacity-80 mb-0.5">{t.monthly.fromLabel}</div>
-              <div className="font-sans text-2xl font-bold">4.5M</div>
+              <div className="font-sans text-2xl font-bold">4.x M</div>
               <div className="font-sans text-[0.6rem] tracking-widest uppercase opacity-80">{t.monthly.monthUnit}</div>
             </div>
           </div>

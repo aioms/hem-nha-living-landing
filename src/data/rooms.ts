@@ -14,7 +14,8 @@ export const ROOMS: Room[] = [
     capacity: '2 người lớn',
     bedType: '1 Sofabed linh hoạt',
     floor: 'Tầng 1 — Mặt trước hướng nắng sớm',
-    shortTermPrice: 489000,
+    shortTermPrice: 599000,
+    originalShortTermPrice: 659000,
     amenities: [
       'Tông màu trắng thanh khiết và gỗ sồi ấm áp.',
       'Đèn trần đám mây bồng bềnh độc đáo.',
@@ -73,7 +74,8 @@ export const ROOMS: Room[] = [
     capacity: '2 người lớn',
     bedType: '1 Sofabed linh hoạt',
     floor: 'Tầng 1 — Tầm nhìn thoáng đãng',
-    shortTermPrice: 599000,
+    shortTermPrice: 489000,
+    originalShortTermPrice: 539000,
     amenities: [
       'Tông cam đất trầm dịu mắt, xoa dịu cái nắng chói chang.',
       'Đèn lông vũ bềnh bồng, mộng mơ.',
@@ -128,7 +130,8 @@ export const ROOMS: Room[] = [
     capacity: '2 người lớn',
     bedType: '1 Giường Queen + Sofa daybed',
     floor: 'Tầng 1 — Tầm nhìn ngắm hoàng hôn đắt giá',
-    shortTermPrice: 749000,
+    shortTermPrice: 679000,
+    originalShortTermPrice: 749000,
     amenities: [
       'Tường ombre chuyển màu rực rỡ, lãng mạn lúc chiều tà.',
       'Giường êm ái, độc đáo với sắc pastel ngọt ngào.',
@@ -197,6 +200,7 @@ export const ROOMS: Room[] = [
     bedType: '1 Giường Queen',
     floor: 'Tầng 1 — Yên tĩnh tuyệt đối',
     shortTermPrice: 789000,
+    originalShortTermPrice: 868000,
     amenities: [
       'Mảng tường & trần nhà lấp lánh vì sao như vũ trụ thu nhỏ.',
       'Màn chiếu rộng & sống động',

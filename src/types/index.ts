@@ -22,8 +22,11 @@ export interface Room {
   bedType: string;
   floor: string;
   shortTermPrice?: number; // VND per night
+  originalShortTermPrice?: number; // VND per night (original before discount)
   weeklyPrice?: number;    // VND per week
+  weeklyPriceDisplay?: string; // Formatted display, e.g. "2.x M đ"
   monthlyPrice?: number;   // VND per month
+  monthlyPriceDisplay?: string; // Formatted display, e.g. "4.x M đ"
   amenities: string[];
   features: {
     highlight: string;

@@ -71,6 +71,7 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Tầng:** `Tầng 1` *(trước đây: Tầng 2)*
 - **Diện tích:** `23m2 + ban công` *(trước đây: 28m2)*
 - **Giường ngủ:** `1 Sofabed linh hoạt` *(trước đây: 1 Giường Queen)*
+- **Giá ngắn hạn / đêm:** `Từ 599k đ/đêm` *(giá gốc gạch ngang: `659k đ/đêm`)*
 - **Giá thuê tháng:** Bỏ hẳn mục thuê tháng (chỉ phục vụ lưu trú ngắn hạn).
 - **Câu chuyện / Story:**
   > "Căn phòng đánh thức bạn bằng ánh sáng tự nhiên ngập tràn cùng những dải màu trắng mờ sương sớm, & màu gỗ sáng mộc mạc. Hãy để xúc giác cảm nhận sự mềm mại của tấm rèm voan, khứu giác hít hà hương hạt cà phê sáng từ góc bếp, và thính giác đón lấy những thanh âm rì rào, trong veo của một ngày mới bắt đầu."
@@ -86,6 +87,7 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Tầng:** `Tầng 1` *(trước đây: Tầng 3)*
 - **Diện tích:** `23m2 + ban công` *(trước đây: 32m2)*
 - **Giường ngủ:** `1 Sofabed linh hoạt` *(trước đây: 1 Giường Queen)*
+- **Giá ngắn hạn / đêm:** `Từ 489k đ/đêm` *(giá gốc gạch ngang: `539k đ/đêm`)*
 - **Giá thuê tháng:** Bỏ hẳn mục thuê tháng.
 - **Câu chuyện / Story:**
   > "Trốn khỏi cái chói chang bên ngoài, căn phòng ôm trọn bạn bằng tông màu cam đất ấm áp, dịu mắt. Dưới ánh sáng dìu dịu, chiếc đèn trần bằng lông vũ bồng bềnh như một giấc mơ. Thả mình xuống chiếc sofa nỉ mát & mềm, hít thở mùi hương trầm mộc mạc, bạn sẽ nghe thấy sự tĩnh lặng tuyệt đối, tách biệt hoàn toàn khỏi thế giới ồn ã."
@@ -101,6 +103,7 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Diện tích:** `25m2` *(trước đây: 35m2)*
 - **Giường ngủ:** `1 Giường Queen + Sofa daybed` *(trước đây: 1 Giường Queen Size + 1 Sofa Daybed)*
 - **Sức chứa:** `2 người lớn` *(trước đây: 2 người lớn (tối đa 3))*
+- **Giá ngắn hạn / đêm:** `Từ 679k đ/đêm` *(giá gốc gạch ngang: `749k đ/đêm`)*
 - **Giá thuê tháng:** Bỏ hẳn mục thuê tháng.
 - **Câu chuyện / Story:**
   > "Thời khắc chuyển giao diệu kỳ được thể hiện qua khoảng lặng lãng mạn dưới dải tường ombre hoàng hôn. Cuộn mình trên ghế lười êm ái, đắm chìm trong hương hoa ngọt dịu và giai điệu analog chậm rãi — đây là một trạm dừng hoàn hảo để tâm hồn thực sự nghỉ ngơi."
@@ -118,6 +121,7 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Diện tích:** `25m2` *(trước đây: 30m2)*
 - **Giường ngủ:** `1 Giường Queen` *(trước đây: 1 Giường Queen nệm nhung cao cấp & chăn lông vũ)*
 - **Sức chứa:** `2 người lớn` *(trước đây: 2 người lớn (tối đa 3))*
+- **Giá ngắn hạn / đêm:** `Từ 789k đ/đêm` *(giá gốc gạch ngang: `868k đ/đêm`)*
 - **Giá thuê tháng:** Bỏ hẳn mục thuê tháng.
 - **Câu chuyện / Story:**
   > "Một vũ trụ thu nhỏ hiện ra cùng bức tường ngân hà lấp lánh và ánh trăng lơ lửng. Cuộn tròn trên giường nhung xanh thẳm, hít hà hương đêm the mát và đắm chìm vào rạp phim thu nhỏ — trạm dừng hoàn hảo để bạn ngủ một giấc thật sâu và sạc đầy năng lượng."
@@ -141,7 +145,7 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Vị trí:** `Tầng trệt`
 - **Diện tích:** `22 m² (+ 8 m² sân hiên riêng)` *(trước đây: 28 m² + 10 m² sân hiên)*
 - **Giường:** `1 Sofabed linh hoạt` *(trước đây: 1 Giường Daybed mở rộng)*
-- **Giá thuê:** `Từ 4.5M ₫/tháng` *(trước đây: 9.2M ₫/tháng)*
+- **Giá thuê:** `4.x M đ/tháng` *(trước đây: 4.5M ₫/tháng)*
 - **Câu chuyện / Story:**
   > "Nằm tại tầng trệt yên tĩnh với khoảng sân vườn và giàn pergola gỗ mộc riêng biệt. Điểm nhấn là hệ cửa sổ gập lớn mở trọn ra không gian ngoài trời riêng biệt, sofa daybed thư giãn và khu bếp hiện đại. Đây là không gian nguyên bản lý tưởng cho những người yêu sáng tạo."
 - **Tiện ích:**
@@ -159,7 +163,7 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Vị trí:** `Tầng trệt`
 - **Diện tích:** `22 m² (+ 8 m² sân hiên riêng)` *(trước đây: 30 m²)*
 - **Giường:** `1 Giường Queen` *(trước đây: 1 Giường Queen gỗ sồi tự nhiên)*
-- **Giá thuê:** `Từ 5M ₫/tháng` *(trước đây: 9.6M ₫/tháng)*
+- **Giá thuê:** `5.x M đ/tháng` *(trước đây: 5.0M ₫/tháng)*
 - **Câu chuyện / Story:**
   > "Căn phòng mang sắc xanh rêu olive thanh lịch kết hợp cùng nội thất gỗ trầm ấm. Sở hữu bậu cửa sổ rộng kịch sàn nhìn ra mảng xanh nhiệt đới — nơi bạn có thể ngồi đọc sách, nhâm nhi tách trà hay đặt bàn làm việc hướng ra thiên nhiên."
 - **Tiện ích:**
@@ -179,8 +183,8 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Mã phòng & Tầng:** `LIVING 201 · Tầng 2 — Sống tối giản nhưng đầy đủ` *(trước: LIVING 202 · Tầng 2 — Ban công đón nắng sớm)*
 - **Diện tích:** `23 m² + ban công` *(trước: 28 m²)*
 - **Giường:** `1 Sofabed linh hoạt` *(trước: 1 Giường Pallet phong cách mộc)*
-- **Giá tuần:** `Từ 2.490K ₫` *(trước: Theo tuần 3.2M ₫)*
-- **Giá tháng:** `7.5M ₫/tháng` *(trước: 9.8M ₫/tháng)*
+- **Giá tuần:** `2.x M đ/tuần` *(trước đây: 2.5M ₫/tuần)*
+- **Giá tháng:** `7.x M đ/tháng` *(trước đây: 7.5M ₫/tháng)*
 - **Câu chuyện / Story:**
   > "Mang âm hưởng tối giản, căn studio lược bỏ mọi chi tiết rườm rà để nhường chỗ cho sự tĩnh lặng của tâm trí. Sự kết hợp giữa ánh sáng tự nhiên, chất liệu mộc mạc và màu sắc ấm áp tạo nên một không gian linh hoạt, hoàn hảo để bạn thong dong nán lại từ vài tuần đến cả năm."
 - **Tiện ích:**
@@ -194,8 +198,8 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Mã phòng & Tầng:** `LIVING 202 · Tầng 2 — Sống tinh tế & an yên` *(trước: LIVING 302 · Tầng 3 — Tĩnh lặng tuyệt đối)*
 - **Diện tích:** `23 m² + ban công` *(trước: 30 m²)*
 - **Tầng:** `Tầng 2` *(trước: Tầng 3)*
-- **Giá tuần:** `Từ 3.090K ₫` *(trước: Theo tuần 3.5M ₫)*
-- **Giá tháng:** `8.9M ₫/tháng` *(trước: 10.5M ₫/tháng)*
+- **Giá tuần:** `3.x M đ/tuần` *(trước đây: 3.1M ₫/tuần)*
+- **Giá tháng:** `8.x M đ/tháng` *(trước đây: 8.9M ₫/tháng)*
 - **Câu chuyện / Story:**
   > "Japandi là sự kết hợp hoàn hảo giữa nét trầm mặc của kiến trúc Nhật Bản và sự ấm cúng, tinh tế của phong cách Scandinavian. Căn phòng sử dụng gam màu gỗ ấm, vách nan gỗ tự nhiên và ban công gạch thông gió tạo nên những vệt bóng đổ tuyệt đẹp theo từng góc nắng trong ngày."
 - **Tiện ích:**
@@ -209,8 +213,8 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Mã phòng & Tầng:** `LIVING 203 · Tầng 2 — Sống hiện đại & linh hoạt` *(trước: LIVING 304 · Tầng 3 — Góc làm việc sáng tạo)*
 - **Diện tích:** `23 m² + ban công` *(trước: 32 m²)*
 - **Tầng:** `Tầng 2` *(trước: Tầng 3)*
-- **Giá tuần:** `Từ 2.990K ₫` *(trước: Theo tuần 3.3M ₫)*
-- **Giá tháng:** `8.5M ₫/tháng` *(trước: 10M ₫/tháng)*
+- **Giá tuần:** `2.x M đ/tuần` *(trước đây: 3.0M ₫/tuần)*
+- **Giá tháng:** `7.x M đ/tháng` *(trước đây: 8.5M ₫/tháng)*
 - **Câu chuyện / Story:**
   > "Với tinh thần Modern-Japandi hiện đại mà tĩnh tại, căn studio tối ưu công năng tối đa bằng các đường nét bo cong mềm mại và hệ nội thất thông minh. Đây là chốn dừng chân hoàn hảo cho những ai tìm kiếm sự cân bằng giữa nhịp sống năng động và khoảng lặng thư thái."
 - **Tiện ích:**
@@ -223,8 +227,8 @@ Tài liệu này tổng hợp toàn bộ các nội dung văn bản, thông số
 - **Mã phòng & Tầng:** `LIVING 204 · Tầng 2 — Sống thư thái nhưng linh hoạt` *(trước: LIVING 403 · Tầng 4 — Tầm nhìn thoáng đạt ngập tràn cây xanh)*
 - **Diện tích:** `23 m² + ban công` *(trước: 30 m²)*
 - **Tầng:** `Tầng 2` *(trước: Tầng 4)*
-- **Giá tuần:** `Từ 2.690K ₫` *(trước: Theo tuần 3.4M ₫)*
-- **Giá tháng:** `7.9M ₫/tháng` *(trước: 10.2M ₫/tháng)*
+- **Giá tuần:** `3.x M đ/tuần` *(trước đây: 2.7M ₫/tuần)*
+- **Giá tháng:** `8.x M đ/tháng` *(trước đây: 7.9M ₫/tháng)*
 - **Câu chuyện / Story:**
   > "Với tone Scandinavia thuần khiết, không gian mở ra một bản hòa ca êm dịu của tông màu trắng kem và gỗ sồi ấm áp. Mọi góc nhỏ đều được chăm chút khéo léo để mang lại cảm giác trong lành và thư thái tuyệt đối."
 - **Tiện ích:**

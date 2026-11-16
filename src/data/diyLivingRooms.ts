@@ -19,6 +19,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
     bedType: '1 Sofabed linh hoạt',
     floor: 'Tầng trệt — Lối đi sân vườn riêng biệt',
     monthlyPrice: 4500000,
+    monthlyPriceDisplay: '4.x M đ',
     amenities: [
       'Sân hiên nhà với giàn lam pergola thoáng mát',
       'Hệ cửa sổ gập lớn đón gió trời & ánh sáng tự nhiên',
@@ -85,6 +86,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
     bedType: '1 Giường Queen',
     floor: 'Tầng trệt — Không gian vườn cây & bậu cửa ngắm nắng',
     monthlyPrice: 5000000,
+    monthlyPriceDisplay: '5.x M đ',
     amenities: [
       'Bậu cửa sổ bay window rộng rãi tích hợp góc ngồi ngắm vườn cây',
       'Giường đôi tone gỗ với đệm lò xo êm ái',
@@ -154,7 +156,9 @@ export const DIY_LIVING_ROOMS: Room[] = [
     bedType: '1 Sofabed linh hoạt',
     floor: 'Tầng 2 — Sống tối giản nhưng đầy đủ',
     weeklyPrice: 2490000,
+    weeklyPriceDisplay: '2.x M đ',
     monthlyPrice: 7500000,
+    monthlyPriceDisplay: '7.x M đ',
     amenities: [
       'Sofabed linh hoạt với đệm nỉ êm ái trên bục gỗ mộc mạc.',
       'Góc bếp nhỏ (kitchenette) tích hợp gọn gàng, đầy đủ công năng.',
@@ -213,7 +217,9 @@ export const DIY_LIVING_ROOMS: Room[] = [
     bedType: '1 Giường Platform gỗ bục giật cấp (1m8 × 2m)',
     floor: 'Tầng 2 — Sống tinh tế & an yên',
     weeklyPrice: 3090000,
+    weeklyPriceDisplay: '3.x M đ',
     monthlyPrice: 8900000,
+    monthlyPriceDisplay: '8.x M đ',
     amenities: [
       'Bục giường gỗ giật cấp êm ái, tách biệt hoàn toàn.',
       'Vách lam gỗ tinh tế tích hợp hệ ngăn kéo ẩn bên dưới.',
@@ -276,7 +282,9 @@ export const DIY_LIVING_ROOMS: Room[] = [
     bedType: '1 Giường King Platform bục gỗ kết hợp nan che riêng tư',
     floor: 'Tầng 2 — Sống hiện đại & linh hoạt',
     weeklyPrice: 2990000,
+    weeklyPriceDisplay: '2.x M đ',
     monthlyPrice: 8500000,
+    monthlyPriceDisplay: '7.x M đ',
     amenities: [
       'Bàn gỗ bo cong cạnh mảng tường gạch kính ngập sáng.',
       'Góc giường giật cấp êm ái, tĩnh lặng sau vách ngăn mây đan.',
@@ -326,7 +334,9 @@ export const DIY_LIVING_ROOMS: Room[] = [
     bedType: '1 Giường Platform giật cấp trắng thanh lịch (1m6 × 2m)',
     floor: 'Tầng 2 — Sống thư thái nhưng linh hoạt',
     weeklyPrice: 2690000,
+    weeklyPriceDisplay: '3.x M đ',
     monthlyPrice: 7900000,
+    monthlyPriceDisplay: '8.x M đ',
     amenities: [
       'Giường bục giật cấp phân chia không gian.',
       'Hộc tủ kéo kết hợp với giường ẩn tiện lợi.',

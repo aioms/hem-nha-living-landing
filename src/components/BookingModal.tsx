@@ -395,6 +395,13 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                               <div className="font-sans text-xs text-nagi-muted mt-0.5">{room.area} · {room.capacity}</div>
                             </div>
                             <div className="text-right flex-shrink-0">
+                              {room.originalShortTermPrice && form.stayType === 'short_term' && (
+                                <div className="font-sans text-xs line-through opacity-50 text-nagi-muted">
+                                  {price > 0
+                                    ? formatPriceCompact(nights * room.originalShortTermPrice)
+                                    : `${Math.round(room.originalShortTermPrice / 1000)}k đ`}
+                                </div>
+                              )}
                               <div className="font-sans text-lg font-semibold text-nagi-terracotta">
                                 {price > 0 ? formatPriceCompact(price) : formatPriceCompact(
                                   (form.stayType === 'short_term' ? room.shortTermPrice : room.monthlyPrice) || room.monthlyPrice || room.shortTermPrice || 0

@@ -146,6 +146,11 @@ export default function MomentsTeaserSection({
                       <div className="font-sans text-[0.6rem] uppercase tracking-wider opacity-60">
                         {t.momentsTeaser.fromLabel}
                       </div>
+                      {room.originalShortTermPrice && (
+                        <div className="font-sans text-[0.7rem] line-through opacity-50 font-medium">
+                          {Math.round(room.originalShortTermPrice / 1000)}k{t.momentsTeaser.nightUnit}
+                        </div>
+                      )}
                       <div className="font-sans text-base font-bold" style={{ color: theme.accentColor }}>
                         {formatPriceCompact(room.shortTermPrice || 0)}{t.momentsTeaser.nightUnit}
                       </div>

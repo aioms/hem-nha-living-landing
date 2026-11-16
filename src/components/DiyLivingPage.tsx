@@ -252,7 +252,10 @@ function DiyLivingCard({ room: rawRoom, index, onSelect, onDetail }: DiyLivingCa
                       className="font-serif text-lg md:text-xl font-bold"
                       style={{ color: theme.accentColor }}
                     >
-                      {formatPriceCompact(room.weeklyPrice)}
+                      {room.weeklyPriceDisplay || formatPriceCompact(room.weeklyPrice)}
+                      <span className="text-sm font-normal text-current opacity-70">
+                        {language === 'vi' ? '/tuần' : '/wk'}
+                      </span>
                     </div>
                   </div>
                   <div className="opacity-40" style={{ color: theme.mutedColor }}>·</div>
@@ -270,7 +273,7 @@ function DiyLivingCard({ room: rawRoom, index, onSelect, onDetail }: DiyLivingCa
                       : (language === 'vi' ? 'Thuê tháng' : 'Monthly lease')}
                   </div>
                   <div className="font-serif text-xl md:text-2xl font-bold" style={{ color: theme.accentColor }}>
-                    {formatPriceCompact(room.monthlyPrice)}<span className="text-sm font-normal text-current opacity-70">{language === 'vi' ? '/tháng' : '/mo'}</span>
+                    {room.monthlyPriceDisplay || formatPriceCompact(room.monthlyPrice)}<span className="text-sm font-normal text-current opacity-70">{language === 'vi' ? '/tháng' : '/mo'}</span>
                   </div>
                 </div>
               ) : null}

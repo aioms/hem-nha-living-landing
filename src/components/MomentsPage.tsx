@@ -241,11 +241,27 @@ function RoomCardItem({ room: rawRoom, index, onSelect, onDetail }: RoomCardItem
                 >
                   {language === 'vi' ? 'Ngắn hạn / đêm' : 'Nightly rate'}
                 </div>
+                {room.originalShortTermPrice && (
+                  <div
+                    className="font-sans text-xs sm:text-sm line-through opacity-55 mb-0.5 font-medium tracking-tight"
+                    style={{ color: theme.mutedColor }}
+                  >
+                    {language === 'vi'
+                      ? `${Math.round(room.originalShortTermPrice / 1000)}k đ/đêm`
+                      : `${Math.round(room.originalShortTermPrice / 1000)}k / night`}
+                  </div>
+                )}
                 <div
                   className="font-serif text-xl md:text-2xl font-bold"
                   style={{ color: theme.accentColor }}
                 >
-                  {formatPriceCompact(room.shortTermPrice || 0)}
+                  {room.originalShortTermPrice ? (
+                    language === 'vi'
+                      ? `Từ ${Math.round((room.shortTermPrice || 0) / 1000)}k đ/đêm`
+                      : `From ${Math.round((room.shortTermPrice || 0) / 1000)}k / night`
+                  ) : (
+                    formatPriceCompact(room.shortTermPrice || 0)
+                  )}
                 </div>
               </div>
 

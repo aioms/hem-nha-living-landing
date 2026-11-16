@@ -269,6 +269,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
     isAvailable: true,
   },
   {
+    // TODO(owner): monthlyPrice=8500000 conflicts with monthlyPriceDisplay='7.x M đ'. Confirm before changing either.
     id: 'mo-japandi',
     code: 'LIVING 203',
     name: 'Mo-Japandi',
@@ -321,6 +322,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
     isAvailable: true,
   },
   {
+    // TODO(owner): weeklyPrice=2690000 vs '3.x M đ'; monthlyPrice=7900000 vs '8.x M đ'. Keep existing blurred display pending approval.
     id: 'hem-scandi',
     code: 'LIVING 204',
     name: 'Hẻm Scandi',

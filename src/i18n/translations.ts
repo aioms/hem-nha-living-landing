@@ -421,7 +421,7 @@ export const translations: Record<Language, Translations> = {
       monthlyFromPrice: 'Từ 4.5tr',
       moments: {
         dawn: 'Sớm Mai',
-        noon: 'Trưa Hè',
+        noon: 'Mơ Trưa',
         sunset: 'Hoàng Hôn',
         night: 'Đêm Sao',
       },
@@ -515,7 +515,7 @@ export const translations: Record<Language, Translations> = {
       checkBtn: 'Kiểm tra phòng trống →',
       guarantee: 'Chưa thu phí cho đến khi xác nhận · Hủy miễn phí 48 giờ trước',
       mapLabel: 'Bản đồ vị trí',
-      mapSub: 'Hẻm yên tĩnh ngay trung tâm Sài Gòn',
+      mapSub: 'Hẻm yên tĩnh tại Tân Thuận, Quận 7',
       faqTitle: 'Hỏi đáp thường gặp (Q&A)',
       faqs: [
         {
@@ -942,7 +942,7 @@ export const translations: Record<Language, Translations> = {
       checkBtn: 'Check Availability →',
       guarantee: 'No charges until confirmed · Free cancellation up to 48 hours prior',
       mapLabel: 'Location Map',
-      mapSub: 'Quiet alleyway in the heart of Saigon',
+      mapSub: 'Quiet alleyway in Tan Thuan, District 7',
       faqTitle: 'Frequently Asked Questions (Q&A)',
       faqs: [
         {

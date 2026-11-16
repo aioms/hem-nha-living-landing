@@ -91,7 +91,7 @@ export const ROOMS: Room[] = [
     images: [
       {
         url: '/assets/photos/rooms/trua-he/hero.webp',
-        caption: 'Không gian phòng khách Trưa Hè ấm cúng với sofa êm ái, đèn thả bồng bềnh và mảng tường cam đất',
+        caption: 'Không gian phòng khách Mơ Trưa ấm cúng với sofa êm ái, đèn thả bồng bềnh và mảng tường cam đất',
       },
       {
         url: '/assets/photos/rooms/trua-he/kitchenette.webp',

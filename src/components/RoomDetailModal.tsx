@@ -1,3 +1,4 @@
+import Image from './Image';
 import { useState, useEffect } from 'react';
 import { Room } from '../types';
 import { getRoomTheme, formatPriceCompact } from '../utils/themes';
@@ -86,7 +87,7 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
           {/* Gallery View */}
           <div className="space-y-3">
             <div className="relative aspect-[16/10] md:aspect-[16/9] w-full rounded-nagi overflow-hidden bg-black/10">
-              <img
+              <Image
                 src={room.images[activeImgIdx]?.url}
                 alt={room.images[activeImgIdx]?.caption || room.name}
                 className="w-full h-full object-cover transition-all duration-500"
@@ -107,7 +108,7 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
                       idx === activeImgIdx ? 'border-amber-500 scale-105' : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <img src={img.url} alt="" className="w-full h-full object-cover" />
+                    <Image sizes="80px" src={img.url} alt={img.caption || `${room.name} — ${idx + 1}`} className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>
@@ -253,14 +254,14 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
               </>
             )}
 
-            {room.weeklyPrice && (
+            {room.weeklyPriceDisplay && (
               <>
                 <div>
                   <div className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60">
                     {language === 'vi' ? 'Theo tuần' : 'Weekly rate'}
                   </div>
                   <div className="font-serif text-xl font-bold" style={{ color: theme.accentColor }}>
-                    {room.weeklyPriceDisplay || formatPriceCompact(room.weeklyPrice)}
+                    {room.weeklyPriceDisplay}
                     <span className="text-sm font-normal text-current opacity-70">
                       {language === 'vi' ? '/tuần' : '/wk'}
                     </span>
@@ -270,7 +271,7 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
               </>
             )}
 
-            {room.monthlyPrice && (
+            {room.monthlyPriceDisplay && (
               <div>
                 <div className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60">
                   {room.category === 'diy'
@@ -278,7 +279,7 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
                     : (language === 'vi' ? 'Thuê tháng' : 'Monthly lease')}
                 </div>
                 <div className="font-serif text-2xl font-bold" style={{ color: theme.accentColor }}>
-                  {room.monthlyPriceDisplay || formatPriceCompact(room.monthlyPrice)}<span className="text-sm font-normal text-current opacity-70">{t.roomDetailModal.perMonthLabel}</span>
+                  {room.monthlyPriceDisplay}<span className="text-sm font-normal text-current opacity-70">{t.roomDetailModal.perMonthLabel}</span>
                 </div>
               </div>
             )}

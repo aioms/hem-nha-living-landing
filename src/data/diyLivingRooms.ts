@@ -18,7 +18,6 @@ export const DIY_LIVING_ROOMS: Room[] = [
     capacity: '1–2 người lớn',
     bedType: '1 Sofabed linh hoạt',
     floor: 'Tầng trệt — Lối đi sân vườn riêng biệt',
-    monthlyPrice: 4500000,
     monthlyPriceDisplay: '4.x M đ',
     amenities: [
       'Sân hiên nhà với giàn lam pergola thoáng mát',
@@ -85,7 +84,6 @@ export const DIY_LIVING_ROOMS: Room[] = [
     capacity: '2 người lớn',
     bedType: '1 Giường Queen',
     floor: 'Tầng trệt — Không gian vườn cây & bậu cửa ngắm nắng',
-    monthlyPrice: 5000000,
     monthlyPriceDisplay: '5.x M đ',
     amenities: [
       'Bậu cửa sổ bay window rộng rãi tích hợp góc ngồi ngắm vườn cây',
@@ -139,7 +137,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
   },
 
   // ==========================================
-  // PHÂN LOẠI 2: HẺM LIVING (4 PHÒNG TẦNG 2-4)
+  // PHÂN LOẠI 2: HẺM LIVING (4 PHÒNG TẦNG 2)
   // Linh hoạt theo tuần / tháng / năm · Full tiện nghi
   // ==========================================
   {
@@ -155,9 +153,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
     capacity: '1–2 người lớn',
     bedType: '1 Sofabed linh hoạt',
     floor: 'Tầng 2 — Sống tối giản nhưng đầy đủ',
-    weeklyPrice: 2490000,
     weeklyPriceDisplay: '2.x M đ',
-    monthlyPrice: 7500000,
     monthlyPriceDisplay: '7.x M đ',
     amenities: [
       'Sofabed linh hoạt với đệm nỉ êm ái trên bục gỗ mộc mạc.',
@@ -216,9 +212,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
     capacity: '2 người lớn',
     bedType: '1 Giường Platform gỗ bục giật cấp (1m8 × 2m)',
     floor: 'Tầng 2 — Sống tinh tế & an yên',
-    weeklyPrice: 3090000,
     weeklyPriceDisplay: '3.x M đ',
-    monthlyPrice: 8900000,
     monthlyPriceDisplay: '8.x M đ',
     amenities: [
       'Bục giường gỗ giật cấp êm ái, tách biệt hoàn toàn.',
@@ -281,9 +275,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
     capacity: '2 người lớn',
     bedType: '1 Giường King Platform bục gỗ kết hợp nan che riêng tư',
     floor: 'Tầng 2 — Sống hiện đại & linh hoạt',
-    weeklyPrice: 2990000,
     weeklyPriceDisplay: '2.x M đ',
-    monthlyPrice: 8500000,
     monthlyPriceDisplay: '7.x M đ',
     amenities: [
       'Bàn gỗ bo cong cạnh mảng tường gạch kính ngập sáng.',
@@ -333,9 +325,7 @@ export const DIY_LIVING_ROOMS: Room[] = [
     capacity: '2 người lớn',
     bedType: '1 Giường Platform giật cấp trắng thanh lịch (1m6 × 2m)',
     floor: 'Tầng 2 — Sống thư thái nhưng linh hoạt',
-    weeklyPrice: 2690000,
     weeklyPriceDisplay: '3.x M đ',
-    monthlyPrice: 7900000,
     monthlyPriceDisplay: '8.x M đ',
     amenities: [
       'Giường bục giật cấp phân chia không gian.',

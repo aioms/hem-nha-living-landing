@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { translations, Language, Translations } from '../i18n/translations';
+import { languageFromPath, localizedPath, navigate } from '../seo/routes';
 
 interface LanguageContextType {
   language: Language;
@@ -10,29 +11,22 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'hemnha_language';
-
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === 'vi' || saved === 'en') return saved;
-      const browserLang = navigator.language?.toLowerCase() || '';
-      if (browserLang.startsWith('en')) return 'en';
-    } catch {
-      // fallback
-    }
-    return 'vi';
-  });
-
+export const LanguageProvider: React.FC<{ children: React.ReactNode; initialLanguage?: Language }> = ({ children, initialLanguage = 'vi' }) => {
+  // URL owns language: same HTML for crawlers, visitors and hydration.
+  const [language, setLanguageState] = useState<Language>(initialLanguage);
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    try {
-      localStorage.setItem(STORAGE_KEY, lang);
-    } catch {
-      // ignore
-    }
+    navigate(localizedPath(window.location.pathname, lang) + window.location.hash);
   };
+  useEffect(() => {
+    const sync = () => setLanguageState(languageFromPath(window.location.pathname));
+    window.addEventListener('popstate', sync);
+    window.addEventListener('site:navigate', sync);
+    return () => {
+      window.removeEventListener('popstate', sync);
+      window.removeEventListener('site:navigate', sync);
+    };
+  }, []);
 
   const toggleLanguage = () => {
     setLanguage(language === 'vi' ? 'en' : 'vi');

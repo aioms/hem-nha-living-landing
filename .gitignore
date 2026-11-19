@@ -47,3 +47,10 @@ Thumbs.db
 .stylelintcache
 *.tsbuildinfo
 .turbo/
+
+# Generated SSG/media and browser verification
+.ssr/
+.generated/
+public/assets/optimized/
+test-results/
+playwright-report/

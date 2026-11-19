@@ -5,7 +5,7 @@ import IntroSection from './components/IntroSection';
 import MomentsTeaserSection from './components/MomentsTeaserSection';
 import MomentsPage from './components/MomentsPage';
 import DiyLivingPage from './components/DiyLivingPage';
-import PolicyPage, { PolicyTab } from './components/PolicyPage';
+import PolicyPage from './components/PolicyPage';
 import CafeSection from './components/CafeSection';
 import AmenitiesSection from './components/AmenitiesSection';
 import MonthlyLivingSection from './components/MonthlyLivingSection';
@@ -19,150 +19,69 @@ import { ROOMS } from './data/rooms';
 import { DIY_LIVING_ROOMS } from './data/diyLivingRooms';
 import { AMENITIES } from './data/amenities';
 import { Room } from './types';
+import { useLanguage } from './context/LanguageContext';
+import { findRoute, legacyPath, localizedPath, navigate, tabPath } from './seo/routes';
+import { updateHead } from './seo/metadata';
+import FaqPage from './components/FaqPage';
+import RoomPage from './components/RoomPage';
 
-export default function App() {
-  const [currentTab, setCurrentTab] = useState<NavTab>('home');
-  const [policyTab, setPolicyTab] = useState<PolicyTab>('all');
+export default function App({ initialPath = '/' }: { initialPath?: string }) {
+  const { language } = useLanguage();
+  const [path, setPath] = useState(initialPath);
+  const route = findRoute(path);
+  const currentTab = route?.view || 'home';
+  const policyTab = route?.policy || 'all';
   const [bookingOpen, setBookingOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [roomForDetail, setRoomForDetail] = useState<Room | null>(null);
   const [earlyBirdOpen, setEarlyBirdOpen] = useState(false);
 
-  // Sync with URL hash on mount & on hashchange
   useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.toLowerCase();
-      if (
-        hash.startsWith('#terms') ||
-        hash.startsWith('#terms-of-service')
-      ) {
-        setCurrentTab('policies');
-        setPolicyTab('terms');
-      } else if (
-        hash.startsWith('#cancellation') ||
-        hash.startsWith('#cancellation-policy') ||
-        hash.startsWith('#cancel')
-      ) {
-        setCurrentTab('policies');
-        setPolicyTab('cancellation');
-      } else if (
-        hash.startsWith('#privacy') ||
-        hash.startsWith('#privacy-policy')
-      ) {
-        setCurrentTab('policies');
-        setPolicyTab('privacy');
-      } else if (
-        hash.startsWith('#policies') ||
-        hash.startsWith('#policy') ||
-        hash.startsWith('#legal')
-      ) {
-        setCurrentTab('policies');
-        setPolicyTab('all');
-      } else if (
-        hash.startsWith('#diy-living') ||
-        hash.startsWith('#diy') ||
-        hash.startsWith('#living') ||
-        hash.includes('hem-diy') ||
-        hash.includes('hem-minimal') ||
-        hash.includes('hem-japandi') ||
-        hash.includes('mo-japandi') ||
-        hash.includes('hem-scandi')
-      ) {
-        setCurrentTab('diy-living');
-        const roomId = hash.replace('#diy-living/', '').replace('#diy-living', '').replace('#', '');
-        if (roomId && roomId !== 'diy-living' && roomId !== 'diy' && roomId !== 'living') {
-          setTimeout(() => {
-            const target = document.getElementById(roomId);
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-          }, 150);
-        }
-      } else if (
-        hash.startsWith('#moments') ||
-        hash.includes('som-mai') ||
-        hash.includes('trua-he') ||
-        hash.includes('hoang-hon') ||
-        hash.includes('dem-sao')
-      ) {
-        setCurrentTab('moments');
-        const momentId = hash.replace('#moments/', '').replace('#moments', '').replace('#', '');
-        if (momentId && momentId !== 'moments') {
-          setTimeout(() => {
-            const target = document.getElementById(momentId);
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-          }, 150);
-        }
-      } else {
-        setCurrentTab('home');
+    const sync = () => {
+      const legacy = legacyPath(window.location.hash);
+      if (legacy) {
+        navigate(localizedPath(legacy, language), true);
       }
+      setPath(window.location.pathname);
+      if (window.location.hash) requestAnimationFrame(() => document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     };
+    const click = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const anchor = (event.target as Element).closest<HTMLAnchorElement>('a[href]');
+      if (!anchor || anchor.target || anchor.hasAttribute('download')) return;
+      const url = new URL(anchor.href);
+      if (url.origin !== window.location.origin || !findRoute(url.pathname)) return;
+      event.preventDefault();
+      navigate(url.pathname + url.search + url.hash);
+    };
+    sync();
+    window.addEventListener('popstate', sync);
+    window.addEventListener('hashchange', sync);
+    window.addEventListener('site:navigate', sync);
+    document.addEventListener('click', click);
+    return () => {
+      window.removeEventListener('popstate', sync);
+      window.removeEventListener('hashchange', sync);
+      window.removeEventListener('site:navigate', sync);
+      document.removeEventListener('click', click);
+    };
+  }, [language]);
 
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
+  useEffect(() => {
+    updateHead(path, language);
+    const id = window.location.hash.slice(1);
+    // Scroll only after React has committed the new view.
+    const frame = requestAnimationFrame(() => {
+      if (id) document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [path, language]);
 
   const handleTabChange = (tab: NavTab, sectionId?: string) => {
-    setCurrentTab(tab);
-    if (tab === 'diy-living') {
-      if (sectionId) {
-        window.location.hash = `diy-living/${sectionId}`;
-        setTimeout(() => {
-          const target = document.getElementById(sectionId);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }, 100);
-      } else {
-        window.location.hash = 'diy-living';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    } else if (tab === 'moments') {
-      if (sectionId) {
-        window.location.hash = `moments/${sectionId}`;
-        setTimeout(() => {
-          const target = document.getElementById(sectionId);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }, 100);
-      } else {
-        window.location.hash = 'moments';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    } else if (tab === 'policies') {
-      if (sectionId === 'terms') {
-        setPolicyTab('terms');
-        window.location.hash = 'terms';
-      } else if (sectionId === 'cancellation' || sectionId === 'cancellation-policy') {
-        setPolicyTab('cancellation');
-        window.location.hash = 'cancellation-policy';
-      } else if (sectionId === 'privacy' || sectionId === 'privacy-policy') {
-        setPolicyTab('privacy');
-        window.location.hash = 'privacy-policy';
-      } else {
-        setPolicyTab('all');
-        window.location.hash = 'policies';
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      if (sectionId) {
-        window.location.hash = sectionId;
-        setTimeout(() => {
-          const target = document.getElementById(sectionId);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
-      } else {
-        window.location.hash = '';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
+    const target = tabPath(tab, sectionId);
+    navigate(localizedPath(target.split('#')[0], language) + (target.includes('#') ? '#' + target.split('#')[1] : ''));
   };
 
   const openBooking = (room?: Room) => {
@@ -184,14 +103,14 @@ export default function App() {
     <>
       {/* Top Navigation with tabs */}
       <Navigation
+        initialPath={path}
         currentTab={currentTab}
-        onTabChange={handleTabChange}
         onBookingOpen={() => openBooking()}
       />
 
       {/* Main Content */}
       <main id="main-content">
-        {currentTab === 'home' && (
+        {route && currentTab === 'home' && (
           <>
             <HeroSection
               onBookingOpen={() => openBooking()}
@@ -214,37 +133,36 @@ export default function App() {
             <AmenitiesSection amenities={AMENITIES} />
             <ContactSection
               onBookingOpen={() => openBooking()}
-              onNavigateToPolicy={(key) => handleTabChange('policies', key)}
             />
           </>
         )}
 
         {currentTab === 'moments' && (
           <>
-            <MomentsPage
+            {route?.roomId ? <RoomPage key={path} room={ROOMS.find(room => room.id === route.roomId)!} onRoomSelect={openBooking} onViewDetail={openDetail} /> : <MomentsPage
+              key={path}
               rooms={ROOMS}
               onRoomSelect={openBooking}
               onViewDetail={openDetail}
               onNavigateHome={() => handleTabChange('home')}
-            />
+            />}
             <ContactSection
               onBookingOpen={() => openBooking()}
-              onNavigateToPolicy={(key) => handleTabChange('policies', key)}
             />
           </>
         )}
 
         {currentTab === 'diy-living' && (
           <>
-            <DiyLivingPage
+            {route?.roomId ? <RoomPage key={path} room={DIY_LIVING_ROOMS.find(room => room.id === route.roomId)!} onRoomSelect={openBooking} onViewDetail={openDetail} /> : <DiyLivingPage
+              key={path}
               rooms={DIY_LIVING_ROOMS}
               onRoomSelect={openBooking}
               onViewDetail={openDetail}
               onNavigateHome={() => handleTabChange('home')}
-            />
+            />}
             <ContactSection
               onBookingOpen={() => openBooking()}
-              onNavigateToPolicy={(key) => handleTabChange('policies', key)}
             />
           </>
         )}
@@ -252,16 +170,25 @@ export default function App() {
         {currentTab === 'policies' && (
           <>
             <PolicyPage
+              key={path}
               initialTab={policyTab}
               onNavigateHome={() => handleTabChange('home')}
               onBookingOpen={() => openBooking()}
             />
             <ContactSection
               onBookingOpen={() => openBooking()}
-              onNavigateToPolicy={(key) => handleTabChange('policies', key)}
             />
           </>
         )}
+        {['cafe', 'faq', 'amenities'].includes(currentTab) && (
+          <>
+            {currentTab === 'cafe' && <div className="pt-20"><CafeSection standalone /></div>}
+            {currentTab === 'amenities' && <div className="pt-20"><h1 className="sr-only">{language === 'vi' ? 'Rooftop & tiện ích Hẻm Nhà Living Quận 7' : 'Hẻm Nhà Living rooftop & amenities in District 7'}</h1><AmenitiesSection amenities={AMENITIES} /></div>}
+            {currentTab === 'faq' && <FaqPage />}
+            <ContactSection onBookingOpen={() => openBooking()} />
+          </>
+        )}
+        {!route && <><section className="pt-32 pb-20 px-6"><h1 className="font-sans text-3xl">{language === 'vi' ? 'Không tìm thấy trang' : 'Page not found'}</h1><a className="underline" href={localizedPath('/', language)}>{language === 'vi' ? 'Về trang chủ' : 'Back home'}</a></section><ContactSection onBookingOpen={() => openBooking()} /></>}
       </main>
 
       {/* Sticky CTA */}

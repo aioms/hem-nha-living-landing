@@ -101,18 +101,18 @@ function handleEarlyBirdSubmission(spreadsheet, data) {
   if (CONFIG.NOTIFY_ON_EARLY_BIRD && CONFIG.TELEGRAM_BOT_TOKEN !== 'YOUR_TELEGRAM_BOT_TOKEN') {
     const nowStr = Utilities.formatDate(new Date(), 'Asia/Ho_Chi_Minh', 'dd/MM/yyyy HH:mm:ss');
     const message = [
-      '🌱 *[HÈM NHÀ LIVING] KHÁCH ĐĂNG KÝ EARLY BIRD!*',
+      '🌱 <b>[HÈM NHÀ LIVING] KHÁCH ĐĂNG KÝ EARLY BIRD!</b>',
       '━━━━━━━━━━━━━━━━━━━━',
-      '👤 *Khách hàng:* ' + escapeMarkdown(guestName),
-      '📞 *Số điện thoại:* ' + escapeMarkdown(phoneNumber),
-      '✉️ *Email:* ' + (email ? escapeMarkdown(email) : '_Không cung cấp_'),
-      '🏡 *Gói quan tâm:* ' + escapeMarkdown(stayOption),
-      '📅 *Dự kiến đến ở:* ' + escapeMarkdown(expectedPeriod),
-      '📝 *Ghi chú:* ' + (specialNote ? escapeMarkdown(specialNote) : '_Không có_'),
+      '👤 <b>Khách hàng:</b> ' + escapeHtml(guestName),
+      '📞 <b>Số điện thoại:</b> ' + escapeHtml(phoneNumber),
+      '✉️ <b>Email:</b> ' + (email ? escapeHtml(email) : '<i>Không cung cấp</i>'),
+      '🏡 <b>Gói quan tâm:</b> ' + escapeHtml(stayOption),
+      '📅 <b>Dự kiến đến ở:</b> ' + escapeHtml(expectedPeriod),
+      '📝 <b>Ghi chú:</b> ' + (specialNote ? escapeHtml(specialNote) : '<i>Không có</i>'),
       '',
-      '⏰ *Thời gian gửi:* ' + nowStr,
+      '⏰ <b>Thời gian gửi:</b> ' + nowStr,
       '━━━━━━━━━━━━━━━━━━━━',
-      '👉 _Đội ngũ Hẻm Nhà hãy liên hệ khách sớm để áp dụng ưu đãi độc quyền!_'
+      '👉 <i>Đội ngũ Hẻm Nhà hãy liên hệ khách sớm để áp dụng ưu đãi độc quyền!</i>'
     ].join('\n');
 
     sendTelegramMessage(message);
@@ -172,22 +172,22 @@ function handleBookingSubmission(spreadsheet, data) {
   if (CONFIG.NOTIFY_ON_BOOKING && CONFIG.TELEGRAM_BOT_TOKEN !== 'YOUR_TELEGRAM_BOT_TOKEN') {
     const nowStr = Utilities.formatDate(new Date(), 'Asia/Ho_Chi_Minh', 'dd/MM/yyyy HH:mm:ss');
     const message = [
-      '🛎️ *[HÈM NHÀ LIVING] YÊU CẦU ĐẶT PHÒNG TẠM THỜI!*',
+      '🛎️ <b>[HÈM NHÀ LIVING] YÊU CẦU ĐẶT PHÒNG TẠM THỜI!</b>',
       '━━━━━━━━━━━━━━━━━━━━',
-      '🏡 *Phòng:* ' + escapeMarkdown(roomType),
-      '🔖 *Hình thức:* ' + escapeMarkdown(stayType),
-      '👤 *Khách hàng:* ' + escapeMarkdown(fullName),
-      '📞 *Số điện thoại:* ' + escapeMarkdown(phone),
-      '✉️ *Email:* ' + (email ? escapeMarkdown(email) : '_Không cung cấp_'),
-      '📅 *Nhận phòng (Check-in):* ' + escapeMarkdown(checkIn),
-      '📅 *Trả phòng (Check-out):* ' + escapeMarkdown(checkOut),
-      '👥 *Số lượng khách:* ' + guests + ' người',
-      estimatedPrice ? ('💰 *Ước tính:* ' + escapeMarkdown(estimatedPrice)) : '',
-      '📝 *Yêu cầu đặc biệt:* ' + (specialRequest ? escapeMarkdown(specialRequest) : '_Không có_'),
+      '🏡 <b>Phòng:</b> ' + escapeHtml(roomType),
+      '🔖 <b>Hình thức:</b> ' + escapeHtml(stayType),
+      '👤 <b>Khách hàng:</b> ' + escapeHtml(fullName),
+      '📞 <b>Số điện thoại:</b> ' + escapeHtml(phone),
+      '✉️ <b>Email:</b> ' + (email ? escapeHtml(email) : '<i>Không cung cấp</i>'),
+      '📅 <b>Nhận phòng (Check-in):</b> ' + escapeHtml(checkIn),
+      '📅 <b>Trả phòng (Check-out):</b> ' + escapeHtml(checkOut),
+      '👥 <b>Số lượng khách:</b> ' + guests + ' người',
+      estimatedPrice ? ('💰 <b>Ước tính:</b> ' + escapeHtml(estimatedPrice)) : '',
+      '📝 <b>Yêu cầu đặc biệt:</b> ' + (specialRequest ? escapeHtml(specialRequest) : '<i>Không có</i>'),
       '',
-      '⏰ *Thời gian gửi:* ' + nowStr,
+      '⏰ <b>Thời gian gửi:</b> ' + nowStr,
       '━━━━━━━━━━━━━━━━━━━━',
-      '👉 _Yêu cầu tạm giữ chỗ - Vui lòng liên hệ xác nhận & hướng dẫn thanh toán cọc 30%!_'
+      '👉 <i>Yêu cầu tạm giữ chỗ - Vui lòng liên hệ xác nhận & hướng dẫn thanh toán cọc 30%!</i>'
     ].filter(Boolean).join('\n');
 
     sendTelegramMessage(message);
@@ -201,15 +201,15 @@ function handleBookingSubmission(spreadsheet, data) {
 }
 
 /**
- * Gửi tin nhắn qua Telegram Bot API
+ * Gửi tin nhắn qua Telegram Bot API (sử dụng HTML mode)
  */
-function sendTelegramMessage(text) {
+function sendTelegramMessage(htmlText) {
   try {
     const url = 'https://api.telegram.org/bot' + CONFIG.TELEGRAM_BOT_TOKEN + '/sendMessage';
     const payload = {
       chat_id: CONFIG.TELEGRAM_CHAT_ID,
-      text: text,
-      parse_mode: 'Markdown'
+      text: htmlText,
+      parse_mode: 'HTML'
     };
 
     const options = {
@@ -228,11 +228,14 @@ function sendTelegramMessage(text) {
 }
 
 /**
- * Escape ký tự Markdown cho Telegram
+ * Escape ký tự đặc biệt cho Telegram HTML
  */
-function escapeMarkdown(text) {
+function escapeHtml(text) {
   if (!text) return '';
-  return String(text).replace(/([_*\[\]()~`>#+-=|{}.!])/g, '\\$1');
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 /**
@@ -255,7 +258,7 @@ function testEarlyBirdSubmission() {
     }
   };
   const result = doPost(fakePayload);
-  Logger.log('Test Early Bird Result: ' + result.getContentText());
+  Logger.log('Test Early Bird Result: ' + result.getContent());
 }
 
 function testBookingSubmission() {
@@ -277,5 +280,5 @@ function testBookingSubmission() {
     }
   };
   const result = doPost(fakePayload);
-  Logger.log('Test Booking Result: ' + result.getContentText());
+  Logger.log('Test Booking Result: ' + result.getContent());
 }

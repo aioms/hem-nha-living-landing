@@ -1,4 +1,6 @@
+import Image from './Image';
 import { useState, useEffect, useRef } from 'react';
+import { localizedPath, roomPath } from '../seo/routes';
 import { Room } from '../types';
 import { getRoomTheme, formatPriceCompact } from '../utils/themes';
 import { useInView } from '../hooks/useScroll';
@@ -13,13 +15,14 @@ interface MomentsPageProps {
 }
 
 interface RoomCardItemProps {
+  fullDetails?: boolean;
   room: Room;
   index: number;
   onSelect: (room: Room) => void;
   onDetail: (room: Room) => void;
 }
 
-function RoomCardItem({ room: rawRoom, index, onSelect, onDetail }: RoomCardItemProps) {
+export function RoomCardItem({ room: rawRoom, index, onSelect, onDetail, fullDetails = false }: RoomCardItemProps) {
   const { t, language } = useLanguage();
   const room = getLocalizedRoom(rawRoom, language) || rawRoom;
   const [imgIdx, setImgIdx] = useState(0);
@@ -69,11 +72,11 @@ function RoomCardItem({ room: rawRoom, index, onSelect, onDetail }: RoomCardItem
                 key={img.url + i}
                 className="w-full h-full flex-shrink-0 relative"
               >
-                <img
+                <Image
                   src={img.url}
                   alt={img.caption || room.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading={i === 0 ? 'eager' : 'lazy'}
+                  loading={i === 0 && index === 0 ? 'eager' : 'lazy'}
                 />
               </div>
             ))}
@@ -170,7 +173,7 @@ function RoomCardItem({ room: rawRoom, index, onSelect, onDetail }: RoomCardItem
               className="font-sans font-medium text-[clamp(2.2rem,4vw,3.25rem)] leading-none mb-1 tracking-tight"
               style={{ color: theme.accentColor }}
             >
-              {room.name}
+              <a href={localizedPath(roomPath(room.id), language)}>{room.name}</a>
             </h3>
 
             {/* Subtitle */}
@@ -222,7 +225,7 @@ function RoomCardItem({ room: rawRoom, index, onSelect, onDetail }: RoomCardItem
 
             {/* Top Amenities */}
             <ul className="space-y-1.5 mb-6">
-              {room.amenities.slice(0, 4).map((amenity) => (
+              {room.amenities.slice(0, fullDetails ? undefined : 4).map((amenity) => (
                 <li key={amenity} className="flex items-start gap-2 font-sans text-xs md:text-sm opacity-80">
                   <span className="text-[0.65rem] mt-0.5" style={{ color: theme.accentColor }}>✦</span>
                   <span>{amenity}</span>
@@ -265,7 +268,7 @@ function RoomCardItem({ room: rawRoom, index, onSelect, onDetail }: RoomCardItem
                 </div>
               </div>
 
-              {room.monthlyPrice ? (
+              {room.monthlyPriceDisplay ? (
                 <>
                   <div className="opacity-40" style={{ color: theme.mutedColor }}>·</div>
 
@@ -277,7 +280,7 @@ function RoomCardItem({ room: rawRoom, index, onSelect, onDetail }: RoomCardItem
                       {language === 'vi' ? 'Thuê tháng' : 'Monthly lease'}
                     </div>
                     <div className="font-sans text-base md:text-lg font-semibold" style={{ color: theme.textColor }}>
-                      {formatPriceCompact(room.monthlyPrice)}{language === 'vi' ? '/tháng' : '/mo'}
+                      {room.monthlyPriceDisplay}{language === 'vi' ? '/tháng' : '/mo'}
                     </div>
                   </div>
                 </>
@@ -339,12 +342,11 @@ export default function MomentsPage({ rooms, onRoomSelect, onViewDetail, onNavig
       {/* Page Breadcrumb / Navigation helper */}
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16 mb-8">
         <div className="flex items-center gap-2 text-xs font-sans text-nagi-muted">
-          <button
-            onClick={onNavigateHome}
+          <a href={localizedPath('/', language)}
             className="hover:text-nagi-cardEdge hover:underline transition-colors flex items-center gap-1 cursor-pointer"
           >
             <span>{t.momentsPage.breadcrumbHome}</span>
-          </button>
+          </a>
           <span>/</span>
           <span className="text-nagi-terracotta font-medium">{t.momentsPage.breadcrumbCurrent}</span>
         </div>
@@ -462,12 +464,11 @@ export default function MomentsPage({ rooms, onRoomSelect, onViewDetail, onNavig
             >
               {language === 'vi' ? 'Tư vấn đặt phòng nhanh' : 'Get in touch for advice'}
             </button>
-            <button
-              onClick={onNavigateHome}
+            <a href={localizedPath('/', language)}
               className="btn-ghost text-sm px-6 py-3 cursor-pointer"
             >
               {language === 'vi' ? 'Về trang chủ' : 'Back to home'}
-            </button>
+            </a>
           </div>
         </div>
       </div>

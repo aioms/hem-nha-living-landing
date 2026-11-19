@@ -1,8 +1,11 @@
+import Image from './Image';
+import { localizedPath } from '../seo/routes';
 import { useInView } from '../hooks/useScroll';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function CafeSection() {
-  const { t } = useLanguage();
+export default function CafeSection({ standalone = false }: { standalone?: boolean }) {
+  const Heading = standalone ? 'h1' : 'h2';
+  const { t, language } = useLanguage();
   const [ref, inView] = useInView(0.15);
 
   return (
@@ -13,8 +16,9 @@ export default function CafeSection() {
     >
       {/* Background texture image */}
       <div className="absolute inset-0 opacity-20">
-        <img
+        <Image
           src="/assets/photos/cafe/cafe-main-lounge.webp"
+          sizes="100vw"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-cover object-center"
@@ -32,11 +36,11 @@ export default function CafeSection() {
               <span>{t.cafe.label}</span>
             </div>
 
-            <h2
+            <Heading
               className={`font-sans font-normal text-[clamp(2.5rem,6vw,4.5rem)] leading-none text-[#d9c7b0] mb-4 tracking-tight transition-all duration-700 delay-100 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
             >
               {t.cafe.title}
-            </h2>
+            </Heading>
             <p
               className={`font-sans text-sm tracking-[0.18em] uppercase text-[#79a594] mb-6 transition-all duration-700 delay-150 ${inView ? 'opacity-100' : 'opacity-0'}`}
             >
@@ -67,7 +71,7 @@ export default function CafeSection() {
             </ul>
 
             <a
-              href="#booking"
+              href={localizedPath('/', language) + '#contact'}
               className="mt-10 inline-flex items-center gap-2 rounded-nagi-pill px-7 py-3 font-sans text-sm tracking-wide border border-[#d9c7b0]/50 text-[#d9c7b0] hover:bg-[#d9c7b0]/15 transition-all duration-200"
             >
               {t.cafe.ctaBtn}
@@ -83,7 +87,7 @@ export default function CafeSection() {
           >
             {/* Main large photo */}
             <div className="relative rounded-nagi-md overflow-hidden">
-              <img
+              <Image
                 src="/assets/photos/cafe/cafe-bar.webp"
                 alt="Quando Quando Cafe Bar"
                 className="w-full aspect-[4/3] object-cover"
@@ -93,8 +97,9 @@ export default function CafeSection() {
 
             {/* Floating accent — library nook */}
             <div className="absolute -bottom-6 left-6 w-[48%] rounded-nagi overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border-2 border-[#4f6b73]">
-              <img
+              <Image
                 src="/assets/photos/cafe/cafe-library-nook.webp"
+                sizes="(min-width: 1024px) 25vw, 50vw"
                 alt="Reading nook at Cafe"
                 className="w-full aspect-square object-cover"
                 loading="lazy"
@@ -120,8 +125,9 @@ export default function CafeSection() {
             { src: '/assets/photos/cafe/cafe-main-lounge.webp', alt: 'Không gian lounge chính của Quando Quando Cafe' },
           ].map(({ src, alt }) => (
             <div key={src} className="rounded-nagi overflow-hidden">
-              <img
+              <Image
                 src={src}
+                sizes="(min-width: 1280px) 384px, 33vw"
                 alt={alt}
                 className="w-full aspect-square object-cover hover:scale-105 transition-transform duration-500"
                 loading="lazy"

@@ -1,3 +1,4 @@
+import Image from './Image';
 import { useInView, useParallax } from '../hooks/useScroll';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -14,7 +15,7 @@ export default function HeroSection({
   onNavigateToMonthly,
   onOpenEarlyBird,
 }: HeroSectionProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [headlineRef, headlineInView] = useInView(0, '0px');
   const [parallaxRef, parallaxOffset] = useParallax(0.2);
 
@@ -30,12 +31,13 @@ export default function HeroSection({
         className="absolute inset-0 z-0"
         style={{ transform: `translateY(${parallaxOffset}px)` }}
       >
-        <img
+        <Image
           src="/assets/photos/architecture/facade-main.webp"
           alt="Mặt tiền boutique của Hẻm Nhà Living — ngôi nhà 5 tầng với ban công vòm Địa Trung Hải và cây xanh"
           className="w-full h-full object-cover object-top"
           loading="eager"
           fetchPriority="high"
+          sizes="100vw"
         />
         {/* Editorial overlay: reveals the top ~1/3 of the building and sky, smoothly transitions into warm cream for logo and content */}
         {/* Top vignette subtle shadow for header legibility */}
@@ -69,7 +71,7 @@ export default function HeroSection({
           </div>
 
           {/* Main headline logo - Left aligned flush with tagline text below */}
-          <h1 className="sr-only">Hẻm Nhà Living</h1>
+          <h1 className="sr-only">{language === 'vi' ? 'Hẻm Nhà Living — Homestay và studio thuê tháng tại Quận 7, TP.HCM' : 'Hẻm Nhà Living — Homestay and monthly studios in District 7, Ho Chi Minh City'}</h1>
           <div
             className={`relative mb-6 transition-all duration-500 ${headlineInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
           >
@@ -82,7 +84,7 @@ export default function HeroSection({
               aria-hidden="true"
             />
 
-            <img
+            <Image
               src="/logohemnha/logohem-14.png"
               alt="Hẻm Nhà Living"
               className="w-full max-w-[320px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[560px] h-auto object-contain block drop-shadow-xs"

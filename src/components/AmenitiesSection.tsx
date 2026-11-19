@@ -1,3 +1,4 @@
+import Image from './Image';
 import { useInView } from '../hooks/useScroll';
 import { AmenitySpace } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -46,8 +47,9 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
           className={`relative rounded-nagi-lg overflow-hidden mb-8 transition-all duration-900 delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
         >
           <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] min-h-[440px] md:min-h-[520px]">
-            <img
+            <Image
               src={featured.image}
+              sizes="(min-width: 1280px) 1152px, 100vw"
               alt="Hẻm Nhà Living Rooftop Terrace"
               className="w-full h-full object-cover"
               loading="lazy"
@@ -84,8 +86,9 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
         >
           {featured.gallery.map((src, i) => (
             <div key={i} className="rounded-nagi overflow-hidden">
-              <img
+              <Image
                 src={src}
+                sizes="(min-width: 1280px) 384px, 33vw"
                 alt={`Sân thượng Hẻm Nhà Living — góc ${i + 1}`}
                 className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500"
                 loading="lazy"
@@ -106,7 +109,7 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
               >
                 {/* Image */}
                 <div className={`${isEven ? '' : 'md:order-2'} rounded-nagi-md overflow-hidden`}>
-                  <img
+                  <Image
                     src={amenity.image}
                     alt={`${amenity.name} — ${amenity.tagline}`}
                     className="w-full aspect-[4/3] object-cover hover:scale-[1.03] transition-transform duration-600"

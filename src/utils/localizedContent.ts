@@ -17,6 +17,7 @@ export function getLocalizedRoom(room: Room | null | undefined, language: Langua
 
   return {
     ...room,
+    area: room.area.replace('ban công', 'balcony').replace('sân hiên riêng', 'private patio'),
     concept: translation.concept || room.concept,
     story: translation.story || room.story,
     floor: translation.floor || room.floor,

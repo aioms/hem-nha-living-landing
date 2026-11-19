@@ -1,16 +1,18 @@
+import Image from './Image';
 import { useState, useEffect, useRef } from 'react';
+import { localizedPath, tabPath, type View } from '../seo/routes';
 import { useLanguage } from '../context/LanguageContext';
 
-export type NavTab = 'home' | 'moments' | 'diy-living' | 'policies';
+export type NavTab = View;
 
 interface NavProps {
   currentTab: NavTab;
-  onTabChange: (tab: NavTab, sectionId?: string) => void;
   onBookingOpen: () => void;
+  initialPath: string;
 }
 
-export default function Navigation({ currentTab, onTabChange, onBookingOpen }: NavProps) {
-  const { language, setLanguage, t } = useLanguage();
+export default function Navigation({ currentTab, onBookingOpen, initialPath }: NavProps) {
+  const { language, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [darkSection, setDarkSection] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -68,11 +70,6 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
   const logoSrc = isHeaderDark ? '/logohemnha/logohem-9.png' : '/logohemnha/logohem-13.png';
   const textColor = isHeaderDark ? 'text-[#faf6ee]' : 'text-nagi-cardEdge';
 
-  const handleNavClick = (tab: NavTab, sectionId?: string) => {
-    setMenuOpen(false);
-    onTabChange(tab, sectionId);
-  };
-
   return (
     <nav
       ref={menuContainerRef}
@@ -91,13 +88,14 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16 flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
-        <button
-          onClick={() => handleNavClick('home')}
+        <a href={localizedPath(tabPath('home'), language)} onClick={() => setMenuOpen(false)}
           className="flex items-center gap-3 group text-left cursor-pointer focus:outline-none"
           aria-label="Hẻm Nhà Living — Trang chủ"
         >
-          <img
+          <Image
             src={logoSrc}
+            loading="eager"
+            sizes="52px"
             alt="Hẻm Nhà Living logo"
             className="h-11 w-11 md:h-13 md:w-13 object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-xs"
           />
@@ -113,14 +111,13 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
               Living
             </span>
           </div>
-        </button>
+        </a>
 
         {/* Desktop nav links */}
         <ul className="hidden md:flex items-center gap-1 lg:gap-2" role="list">
           {/* Home */}
           <li>
-            <button
-              onClick={() => handleNavClick('home')}
+            <a href={localizedPath(tabPath('home'), language)} onClick={() => setMenuOpen(false)}
               className={`px-3.5 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${
                 currentTab === 'home'
                   ? 'bg-black/40 text-white font-medium shadow-xs backdrop-blur-xs'
@@ -128,13 +125,12 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
               }`}
             >
               {t.nav.home}
-            </button>
+            </a>
           </li>
 
           {/* Hẻm Nhà Moments Tab */}
           <li>
-            <button
-              onClick={() => handleNavClick('moments')}
+            <a href={localizedPath(tabPath('moments'), language)} onClick={() => setMenuOpen(false)}
               className={`px-3.5 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${
                 currentTab === 'moments'
                   ? 'bg-black/40 text-white font-medium shadow-xs backdrop-blur-xs'
@@ -142,13 +138,12 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
               }`}
             >
               {t.nav.moments}
-            </button>
+            </a>
           </li>
 
           {/* Hẻm Nhà DIY & Living Tab */}
           <li>
-            <button
-              onClick={() => handleNavClick('diy-living')}
+            <a href={localizedPath(tabPath('diy-living'), language)} onClick={() => setMenuOpen(false)}
               className={`px-3.5 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${
                 currentTab === 'diy-living'
                   ? 'bg-black/40 text-white font-medium shadow-xs backdrop-blur-xs'
@@ -156,37 +151,34 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
               }`}
             >
               {t.nav.diyLiving}
-            </button>
+            </a>
           </li>
 
           {/* Cafe */}
           <li>
-            <button
-              onClick={() => handleNavClick('home', 'cafe')}
+            <a href={localizedPath(tabPath('home', 'cafe'), language)} onClick={() => setMenuOpen(false)}
               className="px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium"
             >
               {t.nav.cafe}
-            </button>
+            </a>
           </li>
 
           {/* Amenities */}
           <li>
-            <button
-              onClick={() => handleNavClick('home', 'amenities')}
+            <a href={localizedPath(tabPath('home', 'amenities'), language)} onClick={() => setMenuOpen(false)}
               className="px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium"
             >
               {t.nav.amenities}
-            </button>
+            </a>
           </li>
 
           {/* Contact */}
           <li>
-            <button
-              onClick={() => handleNavClick('home', 'contact')}
+            <a href={localizedPath(tabPath('home', 'contact'), language)} onClick={() => setMenuOpen(false)}
               className="px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium"
             >
               {t.nav.contact}
-            </button>
+            </a>
           </li>
         </ul>
 
@@ -198,30 +190,28 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
             role="group"
             aria-label={t.nav.switchLangAria}
           >
-            <button
-              onClick={() => setLanguage('vi')}
+            <a href={localizedPath(initialPath, 'vi')}
               className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                 language === 'vi'
                   ? 'bg-white text-nagi-cardEdge shadow-xs'
                   : 'opacity-70 hover:opacity-100'
               }`}
-              aria-pressed={language === 'vi'}
+              aria-current={language === 'vi'}
               title="Tiếng Việt"
             >
               VI
-            </button>
-            <button
-              onClick={() => setLanguage('en')}
+            </a>
+            <a href={localizedPath(initialPath, 'en')}
               className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                 language === 'en'
                   ? 'bg-white text-nagi-cardEdge shadow-xs'
                   : 'opacity-70 hover:opacity-100'
               }`}
-              aria-pressed={language === 'en'}
+              aria-current={language === 'en'}
               title="English"
             >
               EN
-            </button>
+            </a>
           </div>
 
           {/* CTA Button matching reference image: warm sand/gold rounded button */}
@@ -242,8 +232,7 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
             role="group"
             aria-label={t.nav.switchLangAria}
           >
-            <button
-              onClick={() => setLanguage('vi')}
+            <a href={localizedPath(initialPath, 'vi')}
               className={`px-2 py-0.5 rounded-full font-semibold transition-all duration-200 cursor-pointer ${
                 language === 'vi'
                   ? 'bg-white text-nagi-cardEdge shadow-xs'
@@ -251,9 +240,8 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
               }`}
             >
               VI
-            </button>
-            <button
-              onClick={() => setLanguage('en')}
+            </a>
+            <a href={localizedPath(initialPath, 'en')}
               className={`px-2 py-0.5 rounded-full font-semibold transition-all duration-200 cursor-pointer ${
                 language === 'en'
                   ? 'bg-white text-nagi-cardEdge shadow-xs'
@@ -261,7 +249,7 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
               }`}
             >
               EN
-            </button>
+            </a>
           </div>
 
           {/* Mobile hamburger */}
@@ -304,8 +292,7 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
               : 'bg-nagi-sand/98 border-nagi-border/20 shadow-lg backdrop-blur-md'
           }`}
         >
-          <button
-            onClick={() => handleNavClick('home')}
+          <a href={localizedPath(tabPath('home'), language)} onClick={() => setMenuOpen(false)}
             className={`w-full text-left font-sans text-base py-2.5 border-b border-current/10 flex items-center justify-between cursor-pointer ${
               currentTab === 'home'
                 ? isHeaderDark ? 'font-semibold text-nagi-goldLight' : 'font-semibold text-nagi-terracotta'
@@ -313,10 +300,9 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
             }`}
           >
             <span>{t.nav.home}</span>
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('moments')}
+          <a href={localizedPath(tabPath('moments'), language)} onClick={() => setMenuOpen(false)}
             className={`w-full text-left font-sans text-base py-2.5 border-b border-current/10 flex items-center justify-between cursor-pointer ${
               currentTab === 'moments'
                 ? isHeaderDark ? 'font-semibold text-nagi-goldLight' : 'font-semibold text-nagi-terracotta'
@@ -324,10 +310,9 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
             }`}
           >
             <span>{t.nav.moments}</span>
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('diy-living')}
+          <a href={localizedPath(tabPath('diy-living'), language)} onClick={() => setMenuOpen(false)}
             className={`w-full text-left font-sans text-base py-2.5 border-b border-current/10 flex items-center justify-between cursor-pointer ${
               currentTab === 'diy-living'
                 ? isHeaderDark ? 'font-semibold text-nagi-goldLight' : 'font-semibold text-nagi-terracotta'
@@ -335,31 +320,27 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
             }`}
           >
             <span>{t.nav.diyLiving}</span>
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('home', 'cafe')}
+          <a href={localizedPath(tabPath('home', 'cafe'), language)} onClick={() => setMenuOpen(false)}
             className={`w-full text-left font-sans text-base py-2.5 border-b border-current/10 cursor-pointer ${textColor}`}
           >
             {t.nav.cafe}
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('home', 'amenities')}
+          <a href={localizedPath(tabPath('home', 'amenities'), language)} onClick={() => setMenuOpen(false)}
             className={`w-full text-left font-sans text-base py-2.5 border-b border-current/10 cursor-pointer ${textColor}`}
           >
             {t.nav.amenities}
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('home', 'contact')}
+          <a href={localizedPath(tabPath('home', 'contact'), language)} onClick={() => setMenuOpen(false)}
             className={`w-full text-left font-sans text-base py-2.5 border-b border-current/10 cursor-pointer ${textColor}`}
           >
             {t.nav.contact}
-          </button>
+          </a>
 
-          <button
-            onClick={() => handleNavClick('policies')}
+          <a href={localizedPath(tabPath('policies'), language)} onClick={() => setMenuOpen(false)}
             className={`w-full text-left font-sans text-base py-2.5 border-b border-current/10 flex items-center justify-between cursor-pointer ${
               currentTab === 'policies'
                 ? isHeaderDark ? 'font-semibold text-nagi-goldLight' : 'font-semibold text-nagi-terracotta'
@@ -368,7 +349,7 @@ export default function Navigation({ currentTab, onTabChange, onBookingOpen }: N
           >
             <span>{language === 'vi' ? 'Chính sách & Điều khoản' : 'Policies & Terms'}</span>
             <span className="text-xs opacity-60">⚖️</span>
-          </button>
+          </a>
 
           <button
             onClick={() => {

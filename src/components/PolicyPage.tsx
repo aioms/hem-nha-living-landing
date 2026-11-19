@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { localizedPath, policyPath, ORIGIN } from '../seo/routes';
 import { useLanguage } from '../context/LanguageContext';
 import { useInView } from '../hooks/useScroll';
 
@@ -35,21 +36,6 @@ export default function PolicyPage({
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
-  const handleTabChange = (tab: PolicyTab) => {
-    setActiveTab(tab);
-    if (tab === 'terms') {
-      window.location.hash = 'terms';
-    } else if (tab === 'cancellation') {
-      window.location.hash = 'cancellation-policy';
-    } else if (tab === 'privacy') {
-      window.location.hash = 'privacy-policy';
-    } else {
-      window.location.hash = 'policies';
-    }
-    // Scroll smoothly to top of content
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const isVisible = (tab: 'terms' | 'cancellation' | 'privacy') => {
     return activeTab === 'all' || activeTab === tab;
   };
@@ -59,12 +45,11 @@ export default function PolicyPage({
       {/* Top Breadcrumb & Hero */}
       <header className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 mb-12">
         <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs font-sans text-nagi-muted">
-          <button
-            onClick={onNavigateHome}
+          <a href={localizedPath('/', language)}
             className="hover:text-nagi-terracotta transition-colors flex items-center gap-1 cursor-pointer"
           >
             <span>←</span> {p.breadcrumbHome}
-          </button>
+          </a>
           <span>/</span>
           <span className="text-nagi-cardEdge font-medium">{p.breadcrumbCurrent}</span>
         </nav>
@@ -81,7 +66,7 @@ export default function PolicyPage({
           </div>
 
           <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-semibold text-nagi-cardEdge tracking-tight">
-            {p.title}
+            {activeTab === 'all' ? p.title : p[activeTab].title}
           </h1>
 
           <p className="font-sans text-base md:text-lg text-nagi-slate/90 max-w-3xl leading-relaxed">
@@ -100,8 +85,7 @@ export default function PolicyPage({
 
         {/* Tab Filter Switcher */}
         <div className="mt-10 flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-nagi-clay/40 border border-nagi-border/15 max-w-fit">
-          <button
-            onClick={() => handleTabChange('all')}
+          <a href={localizedPath(policyPath('all'), language)}
             className={`px-4 py-2 rounded-xl text-xs md:text-sm font-sans font-medium transition-all cursor-pointer ${
               activeTab === 'all'
                 ? 'bg-nagi-cardEdge text-nagi-sand shadow-sm'
@@ -109,9 +93,8 @@ export default function PolicyPage({
             }`}
           >
             {p.filterAll}
-          </button>
-          <button
-            onClick={() => handleTabChange('terms')}
+          </a>
+          <a href={localizedPath(policyPath('terms'), language)}
             className={`px-4 py-2 rounded-xl text-xs md:text-sm font-sans font-medium transition-all cursor-pointer ${
               activeTab === 'terms'
                 ? 'bg-nagi-cardEdge text-nagi-sand shadow-sm'
@@ -119,9 +102,8 @@ export default function PolicyPage({
             }`}
           >
             📋 {p.filterTerms}
-          </button>
-          <button
-            onClick={() => handleTabChange('cancellation')}
+          </a>
+          <a href={localizedPath(policyPath('cancellation'), language)}
             className={`px-4 py-2 rounded-xl text-xs md:text-sm font-sans font-medium transition-all cursor-pointer ${
               activeTab === 'cancellation'
                 ? 'bg-nagi-cardEdge text-nagi-sand shadow-sm'
@@ -129,9 +111,8 @@ export default function PolicyPage({
             }`}
           >
             🔄 {p.filterCancellation}
-          </button>
-          <button
-            onClick={() => handleTabChange('privacy')}
+          </a>
+          <a href={localizedPath(policyPath('privacy'), language)}
             className={`px-4 py-2 rounded-xl text-xs md:text-sm font-sans font-medium transition-all cursor-pointer ${
               activeTab === 'privacy'
                 ? 'bg-nagi-cardEdge text-nagi-sand shadow-sm'
@@ -139,7 +120,7 @@ export default function PolicyPage({
             }`}
           >
             🔒 {p.filterPrivacy}
-          </button>
+          </a>
         </div>
       </header>
 
@@ -164,7 +145,7 @@ export default function PolicyPage({
                   </h2>
                 </div>
                 <button
-                  onClick={() => handleCopy(window.location.href.split('#')[0] + '#cancellation-policy', 'cancel-link')}
+                  onClick={() => handleCopy(ORIGIN + localizedPath('/chinh-sach-huy-phong', language), 'cancel-link')}
                   className="px-3 py-1.5 rounded-full border border-nagi-border/30 text-xs font-sans text-nagi-muted hover:text-nagi-cardEdge hover:border-nagi-cardEdge/40 transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>🔗</span>
@@ -424,7 +405,7 @@ export default function PolicyPage({
                   </h2>
                 </div>
                 <button
-                  onClick={() => handleCopy(window.location.href.split('#')[0] + '#terms', 'terms-link')}
+                  onClick={() => handleCopy(ORIGIN + localizedPath('/dieu-khoan', language), 'terms-link')}
                   className="px-3 py-1.5 rounded-full border border-nagi-border/30 text-xs font-sans text-nagi-muted hover:text-nagi-cardEdge hover:border-nagi-cardEdge/40 transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>🔗</span>
@@ -482,7 +463,7 @@ export default function PolicyPage({
                   </h2>
                 </div>
                 <button
-                  onClick={() => handleCopy(window.location.href.split('#')[0] + '#privacy-policy', 'privacy-link')}
+                  onClick={() => handleCopy(ORIGIN + localizedPath('/chinh-sach-bao-mat', language), 'privacy-link')}
                   className="px-3 py-1.5 rounded-full border border-nagi-border/30 text-xs font-sans text-nagi-muted hover:text-nagi-cardEdge hover:border-nagi-cardEdge/40 transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>🔗</span>
@@ -534,12 +515,11 @@ export default function PolicyPage({
             {p.footerNote.desc}
           </p>
           <div className="pt-2 flex flex-wrap justify-center items-center gap-3">
-            <button
-              onClick={onNavigateHome}
+            <a href={localizedPath('/', language)}
               className="px-6 py-3 rounded-full border border-nagi-cardEdge/30 text-nagi-cardEdge font-sans text-sm font-medium hover:bg-nagi-cardEdge/5 transition-colors cursor-pointer"
             >
               ← {language === 'vi' ? 'Quay lại trang chủ' : 'Back to Home'}
-            </button>
+            </a>
             <button
               onClick={onBookingOpen}
               className="px-6 py-3 rounded-full bg-nagi-terracotta text-nagi-sand font-sans text-sm font-medium hover:brightness-110 shadow-sm transition-all cursor-pointer"

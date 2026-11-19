@@ -1,3 +1,4 @@
+import Image from './Image';
 import { useState, useEffect } from 'react';
 import { Room } from '../types';
 import { MOMENT_THEMES, formatPriceCompact } from '../utils/themes';
@@ -53,7 +54,7 @@ function RoomCard({ room, index, onSelect }: RoomCardProps) {
                 key={img.url + i}
                 className="w-full h-full flex-shrink-0 relative"
               >
-                <img
+                <Image
                   src={img.url}
                   alt={img.caption}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -213,7 +214,7 @@ function RoomCard({ room, index, onSelect }: RoomCardProps) {
                   {formatPriceCompact(room.shortTermPrice ?? 0)}
                 </div>
               </div>
-              {room.monthlyPrice ? (
+              {room.monthlyPriceDisplay ? (
                 <>
                   <div className="opacity-40" style={{ color: theme.mutedColor }}>·</div>
                   <div>
@@ -221,7 +222,7 @@ function RoomCard({ room, index, onSelect }: RoomCardProps) {
                       Thuê tháng
                     </div>
                     <div className="font-sans text-xl font-medium" style={{ color: theme.textColor }}>
-                      {formatPriceCompact(room.monthlyPrice)}/tháng
+                      {room.monthlyPriceDisplay}/tháng
                     </div>
                   </div>
                 </>

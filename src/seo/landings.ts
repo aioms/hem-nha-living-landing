@@ -123,9 +123,9 @@ const studioVi: LandingContent = {
       [{ text: 'Hẻm Minimal', href: '/thue-thang/hem-minimal' }, 'Living', 'Tầng 2', '23 m² + ban công', '1–2 người lớn', '2.x M đ', '7.x M đ'],
       [{ text: 'Hẻm Japandi', href: '/thue-thang/hem-japandi' }, 'Living', 'Tầng 2', '23 m² + ban công', '2 người lớn', '3.x M đ', '8.x M đ'],
       [{ text: 'Mo-Japandi', href: '/thue-thang/mo-japandi' }, 'Living', 'Tầng 2', '23 m² + ban công', '2 người lớn', '2.x M đ', '7.x M đ'],
-      [{ text: 'Hẻm Scandi', href: '/thue-thang/hem-scandi' }, 'Living', 'Tầng 2', '23 m² + ban công', '2 người lớn', '3.x M đ', 'Liên hệ'],
+      [{ text: 'Hẻm Scandi', href: '/thue-thang/hem-scandi' }, 'Living', 'Tầng 2', '23 m² + ban công', '2 người lớn', '3.x M đ', '8.x M đ'],
       [{ text: 'Hẻm DIY 1', href: '/thue-thang/hem-diy-1' }, 'DIY', 'Tầng trệt', '22 m² + 8 m² sân hiên', '1–2 người lớn', 'Theo năm', '4.x M đ'],
-      [{ text: 'Hẻm DIY 2', href: '/thue-thang/hem-diy-2' }, 'DIY', 'Tầng trệt', '22 m² + 8 m² sân hiên', '2 người lớn', 'Theo năm', 'Liên hệ'],
+      [{ text: 'Hẻm DIY 2', href: '/thue-thang/hem-diy-2' }, 'DIY', 'Tầng trệt', '22 m² + 8 m² sân hiên', '2 người lớn', 'Theo năm', '5.x M đ'],
     ] }, links: [{ text: 'Xem bảng phòng thuê tuần, tháng, năm', href: '/thue-thang' }] },
     { id: 'gia', h2: 'Giá thuê tuần / tháng và chi phí phát sinh', bullets: [
       'Giá công bố dạng .x là nguồn tham chiếu; liên hệ để xác nhận tổng chi phí và phòng trống.',
@@ -148,7 +148,7 @@ const studioVi: LandingContent = {
   ],
   faqTitle: 'Câu hỏi thường gặp về studio thuê tháng',
   faqs: [
-    { q: 'Studio thuê tháng ở Hẻm Nhà giá khoảng bao nhiêu?', a: 'Hẻm Living công bố dạng .x: 7.x hoặc 8.x M đ/tháng tùy căn, 2.x hoặc 3.x M đ/tuần. Hẻm DIY 1 khoảng 4.x M đ/tháng theo hợp đồng năm. Liên hệ để xác nhận tổng chi phí và phòng trống.' },
+    { q: 'Studio thuê tháng ở Hẻm Nhà giá khoảng bao nhiêu?', a: 'Hẻm Living công bố dạng .x: 7.x hoặc 8.x M đ/tháng tùy căn, 2.x hoặc 3.x M đ/tuần. Hẻm DIY 1 khoảng 4.x M đ/tháng và Hẻm DIY 2 khoảng 5.x M đ/tháng, theo hợp đồng năm. Liên hệ để xác nhận tổng chi phí và phòng trống.' },
     { q: 'Thuê theo tuần hoặc vài tháng được không?', a: 'Được với Hẻm Living: thuê tuần, tháng hoặc năm. Hẻm DIY thuê theo năm, thanh toán theo tháng.' },
     { q: 'Phòng đã có nội thất chưa?', a: 'Hẻm Living đầy đủ nội thất. Hẻm DIY là không gian nguyên bản để bạn tự trang trí.' },
     { q: 'Giá đã gồm điện, nước, wifi chưa?', a: 'Giá thuê gồm wifi. Điện và nước tính theo thực tế, theo đơn giá nhà nước.' },

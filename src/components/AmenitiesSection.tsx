@@ -46,7 +46,7 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
         <div
           className={`relative rounded-nagi-lg overflow-hidden mb-8 transition-all duration-900 delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
         >
-          <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] min-h-[440px] md:min-h-[520px]">
+          <div className="relative w-full max-w-full overflow-hidden min-h-[440px] sm:min-h-0 sm:aspect-[16/9] md:aspect-[21/9] md:min-h-[520px]">
             <Image
               src={featured.image}
               sizes="(min-width: 1280px) 1152px, 100vw"
@@ -57,9 +57,9 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-[#1e2a2e]/95 via-[#1e2a2e]/60 to-transparent" />
 
             {/* Overlay text */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10 lg:p-12">
-              <div className="grid md:grid-cols-2 gap-6 items-end">
-                <div className="min-w-0">
+            <div className="absolute inset-x-0 bottom-0 box-border w-full max-w-full overflow-hidden px-6 sm:px-8 md:px-10 lg:px-12 pb-6 sm:pb-8 md:pb-10 lg:pb-12 pt-16 sm:pt-20">
+              <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-end w-full min-w-0 max-w-full">
+                <div className="min-w-0 w-full">
                   <span className="arch-tag !text-[#d9c7b0] !border-[#d9c7b0]/40 mb-3 sm:mb-4 block">
                     {t.amenities.rooftopHours || featured.hours}
                   </span>
@@ -70,8 +70,8 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
                     {t.amenities.rooftopTagline || featured.tagline}
                   </p>
                 </div>
-                <div className="min-w-0">
-                  <p className="text-base md:text-lg text-[#faf6f0] leading-relaxed max-w-full break-words">
+                <div className="min-w-0 w-full box-border md:max-w-none">
+                  <p className="text-base md:text-lg text-[#faf6f0] leading-relaxed break-words [overflow-wrap:anywhere] max-w-full">
                     {t.amenities.rooftopDesc || featured.description}
                   </p>
                 </div>

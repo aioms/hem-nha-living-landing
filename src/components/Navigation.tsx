@@ -29,11 +29,12 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
         document.getElementById('contact'),
       ];
 
+      const navProbe = 88;
       let isOverDark = false;
       for (const el of nightElements) {
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 70 && rect.bottom >= 70) {
+          if (rect.top <= navProbe && rect.bottom >= 28) {
             isOverDark = true;
             break;
           }
@@ -69,6 +70,12 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
   const isAtHomeTop = currentTab === 'home' && !scrolled;
   const logoSrc = isHeaderDark ? '/logohemnha/logohem-9.png' : '/logohemnha/logohem-13.png';
   const textColor = isHeaderDark ? 'text-[#faf6ee]' : 'text-nagi-cardEdge';
+  const inactiveDesktopNav = isHeaderDark
+    ? 'text-[#faf6ee] hover:text-white hover:bg-white/10 font-medium'
+    : 'text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium';
+  const activeDesktopNav = isHeaderDark
+    ? 'bg-white/15 text-white font-medium shadow-xs backdrop-blur-xs ring-1 ring-white/20'
+    : 'bg-black/40 text-white font-medium shadow-xs backdrop-blur-xs';
 
   return (
     <nav
@@ -76,12 +83,12 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
       className={`fixed top-0 left-0 right-0 z-[200] transition-all duration-300 ${
         scrolled
           ? darkSection
-            ? 'bg-nagi-darkBg/95 border-b border-nagi-goldLight/20 shadow-md backdrop-blur-md'
-            : 'bg-[#faf6f0]/95 border-b border-nagi-border/15 shadow-sm backdrop-blur-md'
+            ? 'bg-[#1e2a2e]/[0.98] border-b border-nagi-goldLight/20 shadow-md backdrop-blur-md'
+            : 'bg-[#faf6f0]/[0.98] border-b border-nagi-border/15 shadow-sm backdrop-blur-md'
           : isAtHomeTop
             ? 'bg-gradient-to-b from-white/70 via-white/30 to-transparent backdrop-blur-[2px] border-b border-white/20'
             : darkSection
-              ? 'bg-nagi-darkBg/90 backdrop-blur-md border-b border-nagi-goldLight/20'
+              ? 'bg-[#1e2a2e]/[0.97] backdrop-blur-md border-b border-nagi-goldLight/20'
               : 'bg-[#faf6f0]/85 backdrop-blur-md border-b border-[#223035]/10 shadow-xs'
       }`}
       aria-label="Site navigation"
@@ -119,9 +126,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
           <li>
             <a href={localizedPath(tabPath('home'), language)} onClick={() => setMenuOpen(false)}
               className={`px-3.5 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${
-                currentTab === 'home'
-                  ? 'bg-black/40 text-white font-medium shadow-xs backdrop-blur-xs'
-                  : 'text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium'
+                currentTab === 'home' ? activeDesktopNav : inactiveDesktopNav
               }`}
             >
               {t.nav.home}
@@ -132,9 +137,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
           <li>
             <a href={localizedPath(tabPath('moments'), language)} onClick={() => setMenuOpen(false)}
               className={`px-3.5 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${
-                currentTab === 'moments'
-                  ? 'bg-black/40 text-white font-medium shadow-xs backdrop-blur-xs'
-                  : 'text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium'
+                currentTab === 'moments' ? activeDesktopNav : inactiveDesktopNav
               }`}
             >
               {t.nav.moments}
@@ -145,9 +148,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
           <li>
             <a href={localizedPath(tabPath('diy-living'), language)} onClick={() => setMenuOpen(false)}
               className={`px-3.5 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${
-                currentTab === 'diy-living'
-                  ? 'bg-black/40 text-white font-medium shadow-xs backdrop-blur-xs'
-                  : 'text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium'
+                currentTab === 'diy-living' ? activeDesktopNav : inactiveDesktopNav
               }`}
             >
               {t.nav.diyLiving}
@@ -157,7 +158,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
           {/* Cafe */}
           <li>
             <a href={localizedPath(tabPath('home', 'cafe'), language)} onClick={() => setMenuOpen(false)}
-              className="px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium"
+              className={`px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${inactiveDesktopNav}`}
             >
               {t.nav.cafe}
             </a>
@@ -166,7 +167,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
           {/* Amenities */}
           <li>
             <a href={localizedPath(tabPath('home', 'amenities'), language)} onClick={() => setMenuOpen(false)}
-              className="px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium"
+              className={`px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${inactiveDesktopNav}`}
             >
               {t.nav.amenities}
             </a>
@@ -175,7 +176,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
           {/* Contact */}
           <li>
             <a href={localizedPath(tabPath('home', 'contact'), language)} onClick={() => setMenuOpen(false)}
-              className="px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer text-nagi-cardEdge hover:text-black hover:bg-black/5 font-medium"
+              className={`px-3 py-1.5 rounded-full font-sans text-xs lg:text-sm tracking-wide transition-all duration-200 cursor-pointer ${inactiveDesktopNav}`}
             >
               {t.nav.contact}
             </a>
@@ -255,7 +256,11 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
           {/* Mobile hamburger */}
           <button
             type="button"
-            className="p-2.5 rounded-full transition-all duration-200 cursor-pointer text-nagi-cardEdge bg-black/5 hover:bg-black/10 active:bg-black/15"
+            className={`p-2.5 rounded-full transition-all duration-200 cursor-pointer ${
+              isHeaderDark
+                ? 'text-[#faf6ee] bg-white/10 hover:bg-white/15 active:bg-white/20'
+                : 'text-nagi-cardEdge bg-black/5 hover:bg-black/10 active:bg-black/15'
+            }`}
             onClick={(e) => {
               e.stopPropagation();
               setMenuOpen(prev => !prev);

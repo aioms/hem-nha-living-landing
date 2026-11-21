@@ -162,6 +162,7 @@ const studioVi: LandingContent = {
 };
 
 const enDistances = 'Road distances, measured on a map and for reference only (actual travel time depends on traffic): Crescent Mall about 3.8 km; SECC about 3.8 km; Phu My Hung (Ton Dat Tien area) about 4.1 km; Ben Thanh Market (District 1) about 5.6 km; Tan Son Nhat Airport about 12.4 km.';
+const enParking = 'Motorbikes and cars are parked outside the alley; you walk into the house.';
 const shortStayEn: LandingContent = {
   breadcrumb: 'Short stay in District 7',
   h1: 'A short stay in District 7 — Tan Thuan, not downtown',
@@ -214,9 +215,160 @@ const shortStayEn: LandingContent = {
   labels: { home: 'Home', mapText: 'Open in Google Maps', related: 'More' },
 };
 
+const phuMyHungVi: LandingContent = {
+  breadcrumb: 'Homestay gần Phú Mỹ Hưng',
+  h1: 'Homestay gần Phú Mỹ Hưng — 4,1 km từ khu Tôn Dật Tiên',
+  intro: [
+    'Hẻm Nhà Living nằm ở Tân Thuận, Quận 7, không nằm trong Phú Mỹ Hưng. Khoảng cách tới khu Tôn Dật Tiên khoảng 4,1 km, Crescent Mall khoảng 3,8 km theo đường đi. Nhà 5 tầng với bốn phòng homestay Sớm Mai, Mơ Trưa, Hoàng Hôn và Đêm Sao.',
+    'Hẻm Nhà dự kiến đón khách từ tháng 12/2026. Đăng ký Early Bird để giữ chỗ hoặc liên hệ 0912254657.',
+  ],
+  sections: [
+    { id: 'khoang-cach', h2: 'Khoảng cách từ Hẻm Nhà tới Phú Mỹ Hưng và các điểm lân cận', paragraphs: [
+      'Địa chỉ: 19/8A Tân Thuận Tây, Tân Thuận, Quận 7, TP. Hồ Chí Minh. Hẻm Nhà ở Tân Thuận, không nằm trong Phú Mỹ Hưng.',
+      viDistances, viParking,
+    ], mapLink: MAPS },
+    { id: 'bon-phong', h2: 'Bốn phòng homestay cho 2 người', table: { head: ['Phòng', 'Sức chứa', 'Diện tích', 'Giá niêm yết', 'Điểm khác'], rows: roomRows('vi') }, links: [{ text: 'Xem cả bốn phòng tại Hẻm Nhà Moments', href: '/homestay' }] },
+    { id: 'gia', h2: 'Giá và chính sách đặt phòng', paragraphs: [
+      'Bảng trên ghi giá niêm yết mỗi đêm và giá "từ" đang hiển thị trên site. Điều kiện áp dụng giá "từ" sẽ được xác nhận khi bạn liên hệ 0912254657.',
+      'Homestay ngắn ngày đặt cọc 50%. Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ; dưới 48 giờ hoặc không đến thì không hoàn tiền.',
+    ], links: [{ text: 'Chính sách hủy phòng', href: '/chinh-sach-huy-phong' }] },
+    { id: 'tien-nghi', h2: 'Tiện nghi tại Hẻm Nhà', bullets: [
+      'Quando Quando Cafe đón cả khách không lưu trú: bàn làm việc chung, wifi, góc sách, đĩa than; cafe mở từ 07:00.',
+      'Rooftop 06:00–23:00; bida và bi lắc 10:00–23:00.',
+      'Giặt sấy tự phục vụ ở khu chung, thanh toán bằng mã QR.',
+      'Thú cưng được mang theo. Hẻm Nhà hỗ trợ đăng ký tạm trú cho khách nước ngoài.',
+    ], links: [{ text: 'Quando Quando Cafe', href: '/cafe' }, { text: 'Rooftop và tiện ích', href: '/tien-ich' }] },
+    { id: 'noi-quy', h2: 'Nội quy và giờ nhận phòng', bullets: [
+      'Check-in từ 14:00, check-out trước 12:00. Cần nhận phòng sớm thì liên hệ trước.',
+      'Ra vào 24/7 bằng khóa thông minh, không có giờ giới nghiêm.',
+      'Giờ yên tĩnh 22:00–07:00; không hút thuốc trong phòng.',
+      'Nếu cần ở theo tuần hoặc tháng, xem studio thuê tháng.',
+    ], links: [{ text: 'Studio thuê tháng Quận 7', href: '/studio-thue-thang-quan-7' }, { text: 'Bảng phòng thuê tuần, tháng, năm', href: '/thue-thang' }, { text: 'Homestay Quận 7', href: '/homestay-quan-7' }] },
+  ],
+  faqTitle: 'Câu hỏi thường gặp về homestay gần Phú Mỹ Hưng',
+  faqs: [
+    { q: 'Hẻm Nhà Living cách Phú Mỹ Hưng bao xa?', a: 'Khoảng 4,1 km tới khu Tôn Dật Tiên theo đường đi. Hẻm Nhà nằm ở Tân Thuận, Quận 7, không nằm trong Phú Mỹ Hưng.' },
+    { q: 'Giá homestay gần Phú Mỹ Hưng tại Hẻm Nhà là bao nhiêu?', a: `Giá niêm yết hiện tại: ${nightlyList('vi')}. Điều kiện áp dụng giá "từ" sẽ được xác nhận khi bạn liên hệ 0912254657.` },
+    { q: 'Mỗi phòng ở được bao nhiêu người?', a: 'Mỗi phòng homestay dành cho 2 người lớn.' },
+    { q: 'Check-in, check-out lúc mấy giờ?', a: 'Check-in từ 14:00 và check-out trước 12:00.' },
+    { q: 'Có hủy miễn phí không? Cọc bao nhiêu?', a: 'Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ. Homestay ngắn ngày đặt cọc 50%.' },
+    { q: 'Có chỗ gửi xe không?', a: 'Xe máy và ô tô gửi ở ngoài hẻm, đi bộ vào nhà.' },
+    { q: 'Khi nào Hẻm Nhà đón khách?', a: 'Hẻm Nhà dự kiến đón khách vào tháng 12/2026. Đăng ký Early Bird hoặc liên hệ 0912254657.' },
+    { q: 'Có mang thú cưng được không?', a: 'Được. Thú cưng được mang theo.' },
+  ],
+  cta: { title: 'Đặt phòng hoặc giữ chỗ Early Bird', text: 'Đặt qua form trên site, gọi hoặc nhắn Zalo 0912254657. Hẻm Nhà xác nhận đặt phòng trong 2–4 giờ và chưa thu phí cho đến khi xác nhận. Hẻm Nhà dự kiến mở cửa tháng 12/2026; bạn có thể đăng ký Early Bird để giữ chỗ.', book: 'Kiểm tra phòng trống và đặt chỗ', earlyBird: 'Đăng ký Early Bird', phone: 'Gọi / Zalo 0912254657', email: 'hii.hemnhaliving@gmail.com' },
+  labels: { home: 'Trang chủ', mapText: 'Mở trong Google Maps', related: 'Xem thêm' },
+};
+
+const seccVi: LandingContent = {
+  breadcrumb: 'Chỗ ở gần SECC',
+  h1: 'Chỗ ở gần SECC — cách 3,8 km tại Tân Thuận, Quận 7',
+  intro: [
+    'Hẻm Nhà Living là ngôi nhà 5 tầng ở Tân Thuận, Quận 7, cách SECC (Trung tâm Hội chợ Triển lãm Sài Gòn) khoảng 3,8 km theo đường đi. Nhà có bốn phòng homestay Sớm Mai, Mơ Trưa, Hoàng Hôn và Đêm Sao, Quando Quando Cafe và rooftop.',
+    'Nếu bạn đang tham dự sự kiện hoặc triển lãm tại SECC và cần chỗ nghỉ 1–3 đêm, Hẻm Nhà là một lựa chọn trong Quận 7. Dự kiến đón khách từ tháng 12/2026.',
+  ],
+  sections: [
+    { id: 'khoang-cach', h2: 'Khoảng cách từ Hẻm Nhà tới SECC và các điểm lân cận', paragraphs: [
+      'Địa chỉ: 19/8A Tân Thuận Tây, Tân Thuận, Quận 7, TP. Hồ Chí Minh.',
+      viDistances, viParking,
+    ], mapLink: MAPS },
+    { id: 'bon-phong', h2: 'Bốn phòng homestay cho 2 người', table: { head: ['Phòng', 'Sức chứa', 'Diện tích', 'Giá niêm yết', 'Điểm khác'], rows: roomRows('vi') }, links: [{ text: 'Xem cả bốn phòng tại Hẻm Nhà Moments', href: '/homestay' }] },
+    { id: 'gia', h2: 'Giá và chính sách đặt phòng', paragraphs: [
+      'Bảng trên ghi giá niêm yết mỗi đêm và giá "từ" đang hiển thị trên site. Điều kiện áp dụng giá "từ" sẽ được xác nhận khi bạn liên hệ 0912254657.',
+      'Homestay ngắn ngày đặt cọc 50%. Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ; dưới 48 giờ hoặc không đến thì không hoàn tiền.',
+    ], links: [{ text: 'Chính sách hủy phòng', href: '/chinh-sach-huy-phong' }] },
+    { id: 'tien-nghi', h2: 'Tiện nghi cho khách công tác', bullets: [
+      'Quando Quando Cafe: wifi, bàn làm việc chung, góc sách, đĩa than. Cafe mở từ 07:00. Đón cả khách không lưu trú.',
+      'Rooftop 06:00–23:00; bida và bi lắc 10:00–23:00.',
+      'Giặt sấy tự phục vụ ở khu chung, thanh toán bằng mã QR.',
+      'Ra vào 24/7 bằng khóa thông minh. Giờ yên tĩnh 22:00–07:00.',
+    ], links: [{ text: 'Quando Quando Cafe', href: '/cafe' }, { text: 'Rooftop và tiện ích', href: '/tien-ich' }] },
+    { id: 'o-lau', h2: 'Ở lâu hơn — studio thuê tuần hoặc tháng', paragraphs: [
+      'Nếu bạn cần ở nhiều hơn vài đêm, Hẻm Nhà có studio Hẻm Living đầy đủ nội thất ở tầng 2, thuê theo tuần, tháng hoặc năm.',
+    ], links: [{ text: 'Studio thuê tháng Quận 7', href: '/studio-thue-thang-quan-7' }, { text: 'Bảng phòng thuê tuần, tháng, năm', href: '/thue-thang' }, { text: 'Homestay Quận 7', href: '/homestay-quan-7' }, { text: 'Homestay gần Phú Mỹ Hưng', href: '/homestay-gan-phu-my-hung' }] },
+  ],
+  faqTitle: 'Câu hỏi thường gặp về chỗ ở gần SECC',
+  faqs: [
+    { q: 'Hẻm Nhà Living cách SECC bao xa?', a: 'Khoảng 3,8 km theo đường đi. Thời gian thực tế tùy giờ cao điểm.' },
+    { q: 'Giá phòng gần SECC tại Hẻm Nhà là bao nhiêu?', a: `Giá niêm yết hiện tại: ${nightlyList('vi')}. Liên hệ 0912254657 để xác nhận.` },
+    { q: 'Mỗi phòng ở được bao nhiêu người?', a: 'Mỗi phòng homestay dành cho 2 người lớn.' },
+    { q: 'Check-in, check-out lúc mấy giờ?', a: 'Check-in từ 14:00 và check-out trước 12:00.' },
+    { q: 'Có wifi và chỗ làm việc không?', a: 'Có. Quando Quando Cafe có wifi và bàn làm việc chung.' },
+    { q: 'Hủy phòng thế nào? Cọc bao nhiêu?', a: 'Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ. Homestay ngắn ngày đặt cọc 50%.' },
+    { q: 'Khi nào Hẻm Nhà đón khách?', a: 'Hẻm Nhà dự kiến đón khách vào tháng 12/2026. Liên hệ 0912254657 hoặc đăng ký Early Bird.' },
+  ],
+  cta: { title: 'Đặt phòng hoặc giữ chỗ Early Bird', text: 'Đặt qua form trên site, gọi hoặc nhắn Zalo 0912254657. Hẻm Nhà xác nhận đặt phòng trong 2–4 giờ và chưa thu phí cho đến khi xác nhận. Hẻm Nhà dự kiến mở cửa tháng 12/2026; bạn có thể đăng ký Early Bird để giữ chỗ.', book: 'Kiểm tra phòng trống và đặt chỗ', earlyBird: 'Đăng ký Early Bird', phone: 'Gọi / Zalo 0912254657', email: 'hii.hemnhaliving@gmail.com' },
+  labels: { home: 'Trang chủ', mapText: 'Mở trong Google Maps', related: 'Xem thêm' },
+};
+
+const studioRows = (language: Language): Cell[][] => {
+  const prefix = language === 'vi' ? '' : '/en';
+  const vi = language === 'vi';
+  return [
+    [{ text: 'Hẻm Minimal', href: `${prefix}/thue-thang/hem-minimal` }, 'Living', vi ? 'Tầng 2' : 'Floor 2', vi ? '23 m² + ban công' : '23 m² + balcony', vi ? '1–2 người lớn' : '1–2 adults', '2.x M đ', '7.x M đ'],
+    [{ text: 'Hẻm Japandi', href: `${prefix}/thue-thang/hem-japandi` }, 'Living', vi ? 'Tầng 2' : 'Floor 2', vi ? '23 m² + ban công' : '23 m² + balcony', vi ? '2 người lớn' : '2 adults', '3.x M đ', '8.x M đ'],
+    [{ text: 'Mo-Japandi', href: `${prefix}/thue-thang/mo-japandi` }, 'Living', vi ? 'Tầng 2' : 'Floor 2', vi ? '23 m² + ban công' : '23 m² + balcony', vi ? '2 người lớn' : '2 adults', '2.x M đ', '7.x M đ'],
+    [{ text: 'Hẻm Scandi', href: `${prefix}/thue-thang/hem-scandi` }, 'Living', vi ? 'Tầng 2' : 'Floor 2', vi ? '23 m² + ban công' : '23 m² + balcony', vi ? '2 người lớn' : '2 adults', '3.x M đ', '8.x M đ'],
+    [{ text: 'Hẻm DIY 1', href: `${prefix}/thue-thang/hem-diy-1` }, 'DIY', vi ? 'Tầng trệt' : 'Ground floor', vi ? '22 m² + 8 m² sân hiên' : '22 m² + 8 m² patio', vi ? '1–2 người lớn' : '1–2 adults', vi ? 'Theo năm' : 'Annual', '4.x M đ'],
+    [{ text: 'Hẻm DIY 2', href: `${prefix}/thue-thang/hem-diy-2` }, 'DIY', vi ? 'Tầng trệt' : 'Ground floor', vi ? '22 m² + 8 m² sân hiên' : '22 m² + 8 m² patio', vi ? '2 người lớn' : '2 adults', vi ? 'Theo năm' : 'Annual', '5.x M đ'],
+  ];
+};
+
+const monthlyStudioEn: LandingContent = {
+  breadcrumb: 'Monthly studio District 7',
+  h1: 'Monthly studio in District 7 — Tan Thuan, not a hotel tower',
+  intro: [
+    'Hẻm Nhà Living is a five-storey house at 19/8A Tan Thuan Tay, Tan Thuan, District 7. It has furnished Hẻm Living studios on floor 2 for weekly, monthly or annual stays, and unfurnished Hẻm DIY studios on the ground floor for annual leases. The house also has Quando Quando Cafe and a rooftop.',
+    'Planned opening: December 2026.',
+  ],
+  sections: [
+    { id: 'why', h2: 'Why rent here instead of a generic serviced apartment', bullets: [
+      'A five-storey house with its own design, not a block of identical rooms.',
+      'Quando Quando Cafe with resident perks; rooftop, billiards, foosball, and self-service laundry paid by QR.',
+      '24/7 access with a smart lock. CCTV.',
+      'HKD invoices on request.',
+    ], paragraphs: ['Hẻm Nhà does not compete on the lowest price: Hẻm Living publishes at 7.x–8.x M VND per month. In return you get designed spaces, a cafe, a rooftop and the ability to rent by the week.'] },
+    { id: 'two-lines', h2: 'Two studio lines: Hẻm Living and Hẻm DIY', paragraphs: [
+      'Hẻm Living: furnished studios on floor 2, about 23 m² + balcony, kitchenette, weekly, monthly or annual.',
+      'Hẻm DIY: ground-floor studios, 22 m² + 8 m² private patio, annual lease (monthly payments), you style the space.',
+    ], table: { head: ['Unit', 'Line', 'Floor', 'Size', 'Sleeps', 'Weekly', 'Monthly'], rows: studioRows('en') }, links: [{ text: 'See all studios', href: '/en/thue-thang' }] },
+    { id: 'included', h2: 'What is included in the rent', bullets: [
+      'Rates shown as .x are reference prices; contact to confirm the total cost and availability.',
+      'Rent includes private wifi (fibre, house-wide). Electricity and water are billed at actual consumption at government tariffs.',
+      'Laundry and cleaning are available at resident rates; Hẻm Nhà will confirm the fees when you contact them.',
+      'Long-term rentals (weekly, monthly or annual) have a deposit by agreement.',
+      'The 48-hour cancellation policy applies to bookings on the site; specific lease terms will be confirmed when you contact the team.',
+    ], links: [{ text: 'Cancellation policy', href: '/en/chinh-sach-huy-phong' }] },
+    { id: 'location', h2: 'Location in District 7', paragraphs: [
+      'Address: 19/8A Tan Thuan Tay, Tan Thuan, District 7, Ho Chi Minh City. The house is in Tan Thuan, not inside Phu My Hung.',
+      enDistances, enParking,
+      'Pets are welcome. Hẻm Nhà can help foreign guests with temporary residence registration.',
+    ], mapLink: MAPS },
+    { id: 'short-stay', h2: 'Only need a few nights?', paragraphs: [
+      'Hẻm Nhà Moments has four homestay rooms for short stays. Each room sleeps two adults.',
+    ], links: [{ text: 'Short stay in District 7', href: '/en/short-stay-district-7' }, { text: 'All four homestay rooms', href: '/en/homestay' }] },
+  ],
+  faqTitle: 'FAQ: monthly studio in District 7',
+  faqs: [
+    { q: 'How much is a monthly studio at Hẻm Nhà Living?', a: 'Hẻm Living publishes rates in .x format: 7.x or 8.x M VND per month depending on the unit, 2.x or 3.x M VND per week. Hẻm DIY 1 is about 4.x M VND/month and Hẻm DIY 2 about 5.x M VND/month on annual leases. Contact +84 912 254 657 for the confirmed total.' },
+    { q: 'Can I rent by the week?', a: 'Yes. Hẻm Living studios can be rented by the week, month or year. Hẻm DIY is annual only, with monthly payments.' },
+    { q: 'Are the studios furnished?', a: 'Hẻm Living is fully furnished. Hẻm DIY is an empty shell for you to style yourself.' },
+    { q: 'Is wifi included?', a: 'Yes. Electricity and water are billed at actual usage at government tariffs.' },
+    { q: 'What is the deposit?', a: 'Long-term rentals (weekly, monthly or annual) have a deposit by agreement. Contact 0912254657 to confirm terms.' },
+    { q: 'Where is the house?', a: '19/8A Tan Thuan Tay, Tan Thuan, District 7, Ho Chi Minh City. It is in Tan Thuan, not inside Phu My Hung.' },
+    { q: 'Can Hẻm Nhà help with residence registration?', a: 'Yes. Hẻm Nhà can help foreign guests with temporary residence registration (tạm trú).' },
+    { q: 'When does the house open?', a: 'Hẻm Nhà Living plans to open in December 2026. Contact +84 912 254 657 or hii.hemnhaliving@gmail.com.' },
+  ],
+  cta: { title: 'Get studio rates and availability', text: 'Message Zalo/WhatsApp +84 912 254 657, email hii.hemnhaliving@gmail.com, or use the booking form. Confirmation takes 2–4 hours and nothing is charged until confirmed. The house opens in December 2026.', book: 'Check availability and reserve', phone: 'Call / Zalo +84 912 254 657', email: 'hii.hemnhaliving@gmail.com' },
+  labels: { home: 'Home', mapText: 'Open in Google Maps', related: 'More' },
+};
+
 export const LANDINGS: Record<LandingId, LandingContent> = {
   'homestay-quan-7': homestayVi,
   'studio-thue-thang-quan-7': studioVi,
   'short-stay-district-7': shortStayEn,
+  'homestay-gan-phu-my-hung': phuMyHungVi,
+  'cho-o-gan-secc': seccVi,
+  'monthly-studio-district-7': monthlyStudioEn,
 };
 export const landingFaqs = (id: LandingId) => LANDINGS[id].faqs;

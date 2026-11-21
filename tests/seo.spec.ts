@@ -154,6 +154,9 @@ const landings = [
   { path: '/homestay-quan-7', lang: 'vi', title: 'Homestay Quận 7 tại Tân Thuận | Hẻm Nhà Living', h1: 'Homestay Quận 7 trong hẻm Tân Thuận', faqs: 8, hreflang: { vi: '/homestay-quan-7', en: '/en/short-stay-district-7' } },
   { path: '/studio-thue-thang-quan-7', lang: 'vi', title: 'Studio thuê tháng Quận 7 tại Tân Thuận | Hẻm Nhà Living', h1: 'Studio thuê tháng ở Tân Thuận, Quận 7', faqs: 8, hreflang: { vi: '/studio-thue-thang-quan-7' } },
   { path: '/en/short-stay-district-7', lang: 'en', title: 'Short Stay in District 7, Saigon | Hẻm Nhà Living', h1: 'A short stay in District 7 — Tan Thuan, not downtown', faqs: 10, hreflang: { vi: '/homestay-quan-7', en: '/en/short-stay-district-7' } },
+  { path: '/homestay-gan-phu-my-hung', lang: 'vi', title: 'Homestay gần Phú Mỹ Hưng, Quận 7 | Hẻm Nhà Living', h1: 'Homestay gần Phú Mỹ Hưng — 4,1 km từ khu Tôn Dật Tiên', faqs: 8, hreflang: { vi: '/homestay-gan-phu-my-hung' } },
+  { path: '/cho-o-gan-secc', lang: 'vi', title: 'Chỗ ở gần SECC Quận 7 — Homestay Hẻm Nhà Living', h1: 'Chỗ ở gần SECC — cách 3,8 km tại Tân Thuận, Quận 7', faqs: 7, hreflang: { vi: '/cho-o-gan-secc' } },
+  { path: '/en/monthly-studio-district-7', lang: 'en', title: 'Monthly Studio in District 7, Saigon | Hẻm Nhà Living', h1: 'Monthly studio in District 7 — Tan Thuan, not a hotel tower', faqs: 8, hreflang: { vi: '/studio-thue-thang-quan-7', en: '/en/monthly-studio-district-7' } },
 ] as const;
 
 for (const landing of landings) {
@@ -178,6 +181,12 @@ for (const landing of landings) {
     const graph = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent() || '{}')['@graph'] as Record<string, any>[];
     const types = graph.map(node => node['@type']);
     expect(types).toEqual(expect.arrayContaining(['LodgingBusiness', 'WebPage', 'BreadcrumbList', 'FAQPage']));
+    const business = graph.find(node => node['@type'] === 'LodgingBusiness')!;
+    if (landing.path.includes('studio')) {
+      expect(business.numberOfRooms).toBeUndefined();
+    } else {
+      expect(business.numberOfRooms).toBe(4);
+    }
     expect(graph.find(node => node['@type'] === 'FAQPage')!.mainEntity).toHaveLength(landing.faqs);
     expect(graph.find(node => node['@type'] === 'WebPage')!.about['@id']).toBe('https://hemnhaliving.com/#business');
     const text = await page.locator('main > section').first().innerText();

@@ -34,7 +34,7 @@ export function structuredData(route: Route, language: Language) {
       { '@type': 'ListItem', position: 2, name: page.breadcrumb, item: canonical },
     ] });
     // Same business identity; the four homestay rooms are the only room count the owner has published.
-    if (route.landing !== 'studio-thue-thang-quan-7') graph.find(node => node['@type'] === 'LodgingBusiness')!.numberOfRooms = 4;
+    if (route.landing !== 'studio-thue-thang-quan-7' && route.landing !== 'monthly-studio-district-7') graph.find(node => node['@type'] === 'LodgingBusiness')!.numberOfRooms = 4;
   }
   if (route.view === 'cafe' || route.view === 'home') graph.push({ '@type': 'CafeOrCoffeeShop', '@id': ORIGIN + '/#quando-quando', name: 'Quando Quando Cafe', url: ORIGIN + localizedPath('/cafe', language), address, telephone: '+84912254657', containedInPlace: { '@id': businessId } });
   // Studio rates are intentionally blurred. Do not publish numeric Offer/priceRange or availability.

@@ -24,6 +24,7 @@ import { findRoute, legacyPath, localizedPath, navigate, tabPath } from './seo/r
 import { updateHead } from './seo/metadata';
 import FaqPage from './components/FaqPage';
 import RoomPage from './components/RoomPage';
+import LandingPage from './components/LandingPage';
 
 export default function App({ initialPath = '/' }: { initialPath?: string }) {
   const { language } = useLanguage();
@@ -36,6 +37,8 @@ export default function App({ initialPath = '/' }: { initialPath?: string }) {
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [roomForDetail, setRoomForDetail] = useState<Room | null>(null);
   const [earlyBirdOpen, setEarlyBirdOpen] = useState(false);
+
+  useEffect(() => { document.documentElement.dataset.hydrated = 'true'; }, []);
 
   useEffect(() => {
     const sync = () => {
@@ -178,6 +181,12 @@ export default function App({ initialPath = '/' }: { initialPath?: string }) {
             <ContactSection
               onBookingOpen={() => openBooking()}
             />
+          </>
+        )}
+        {currentTab === 'landing' && route?.landing && (
+          <>
+            <LandingPage key={path} id={route.landing} onBookingOpen={() => openBooking()} onOpenEarlyBird={() => setEarlyBirdOpen(true)} />
+            <ContactSection onBookingOpen={() => openBooking()} />
           </>
         )}
         {['cafe', 'faq', 'amenities'].includes(currentTab) && (

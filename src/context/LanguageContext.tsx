@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { translations, Language, Translations } from '../i18n/translations';
-import { languageFromPath, localizedPath, navigate } from '../seo/routes';
+import { languageFromPath, navigate, switchPath } from '../seo/routes';
 
 interface LanguageContextType {
   language: Language;
@@ -16,7 +16,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode; initialLang
   const [language, setLanguageState] = useState<Language>(initialLanguage);
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    navigate(localizedPath(window.location.pathname, lang) + window.location.hash);
+    navigate(switchPath(window.location.pathname, lang) + window.location.hash);
   };
   useEffect(() => {
     const sync = () => setLanguageState(languageFromPath(window.location.pathname));

@@ -1,6 +1,6 @@
 import Image from './Image';
 import { useState, useEffect, useRef } from 'react';
-import { localizedPath, tabPath, type View } from '../seo/routes';
+import { localizedPath, switchPath, tabPath, type View } from '../seo/routes';
 import { useLanguage } from '../context/LanguageContext';
 
 export type NavTab = View;
@@ -190,7 +190,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
             role="group"
             aria-label={t.nav.switchLangAria}
           >
-            <a href={localizedPath(initialPath, 'vi')}
+            <a href={switchPath(initialPath, 'vi')}
               className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                 language === 'vi'
                   ? 'bg-white text-nagi-cardEdge shadow-xs'
@@ -201,7 +201,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
             >
               VI
             </a>
-            <a href={localizedPath(initialPath, 'en')}
+            <a href={switchPath(initialPath, 'en')}
               className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                 language === 'en'
                   ? 'bg-white text-nagi-cardEdge shadow-xs'
@@ -232,7 +232,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
             role="group"
             aria-label={t.nav.switchLangAria}
           >
-            <a href={localizedPath(initialPath, 'vi')}
+            <a href={switchPath(initialPath, 'vi')}
               className={`px-2 py-0.5 rounded-full font-semibold transition-all duration-200 cursor-pointer ${
                 language === 'vi'
                   ? 'bg-white text-nagi-cardEdge shadow-xs'
@@ -241,7 +241,7 @@ export default function Navigation({ currentTab, onBookingOpen, initialPath }: N
             >
               VI
             </a>
-            <a href={localizedPath(initialPath, 'en')}
+            <a href={switchPath(initialPath, 'en')}
               className={`px-2 py-0.5 rounded-full font-semibold transition-all duration-200 cursor-pointer ${
                 language === 'en'
                   ? 'bg-white text-nagi-cardEdge shadow-xs'

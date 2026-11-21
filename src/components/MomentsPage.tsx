@@ -349,6 +349,7 @@ export default function MomentsPage({ rooms, onRoomSelect, onViewDetail, onNavig
           </a>
           <span>/</span>
           <span className="text-nagi-terracotta font-medium">{t.momentsPage.breadcrumbCurrent}</span>
+          <a href={language === 'vi' ? '/homestay-quan-7' : '/en/short-stay-district-7'} className="ml-auto hover:text-nagi-cardEdge hover:underline">{language === 'vi' ? 'Homestay Quận 7' : 'Short stay in District 7'}</a>
         </div>
       </div>
 

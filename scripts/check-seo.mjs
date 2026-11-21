@@ -7,7 +7,8 @@ import sharp from 'sharp';
 const origin = 'https://hemnhaliving.com';
 const sitemap = load(await readFile('dist/sitemap.xml', 'utf8'), { xml: true });
 const urls = sitemap('loc').map((_, node) => sitemap(node).text()).get();
-assert.equal(urls.length, 40);
+assert.equal(urls.length, 43);
+const landings = { '/homestay-quan-7': { vi: '/homestay-quan-7', en: '/en/short-stay-district-7', faq: 8 }, '/studio-thue-thang-quan-7': { vi: '/studio-thue-thang-quan-7', faq: 8 }, '/en/short-stay-district-7': { vi: '/homestay-quan-7', en: '/en/short-stay-district-7', faq: 10 } };
 assert.equal(new Set(urls).size, urls.length);
 const titles = new Set(), descriptions = new Set(), links = new Map(), imagePaths = new Set();
 const htmlFile = pathname => pathname === '/' ? 'dist/index.html' : path.join('dist', pathname + '.html');
@@ -39,11 +40,12 @@ for (const url of urls) {
   assert.ok($('meta[property="og:image"]').attr('content').startsWith(origin + '/'));
   assert.equal($('meta[property="og:image:width"]').attr('content'), '1200');
   assert.equal($('meta[property="og:image:height"]').attr('content'), '630');
-  assert.equal($('link[hreflang]').length, 3);
-  const vi = pathname.replace(/^\/en(?=\/|$)/, '') || '/';
-  const en = '/en' + (vi === '/' ? '' : vi);
+  const landing = landings[pathname];
+  const vi = landing ? landing.vi : pathname.replace(/^\/en(?=\/|$)/, '') || '/';
+  const en = landing ? landing.en : '/en' + (vi === '/' ? '' : vi);
+  assert.equal($('link[hreflang]').length, 1 + (vi ? 1 : 0) + (en ? 1 : 0), url);
   assert.equal($('link[hreflang="vi"]').attr('href'), origin + vi);
-  assert.equal($('link[hreflang="en"]').attr('href'), origin + en);
+  assert.equal($('link[hreflang="en"]').attr('href'), en ? origin + en : undefined);
   assert.equal($('link[hreflang="x-default"]').attr('href'), origin + vi);
   assert.equal($('main h1').length, 1, `One H1: ${url}`);
   const text = normalize($('main').text());
@@ -73,7 +75,13 @@ for (const url of urls) {
   assert.ok(business.address.streetAddress.includes('19/8A') && business.sameAs.length >= 2);
   assert.doesNotMatch(JSON.stringify(graph), /"(?:offers|price|priceRange)"/, 'No invented numeric offers/rates');
   const faq = graph.find(node => node['@type'] === 'FAQPage');
-  assert.equal(faq.mainEntity.length, /\/faq$/.test(pathname) ? 13 : 5);
+  assert.equal(faq.mainEntity.length, landing ? landing.faq : /\/faq$/.test(pathname) ? 13 : 5);
+  if (landing) {
+    assert.ok(graph.some(node => node['@type'] === 'BreadcrumbList' && node.itemListElement.length === 2), `Breadcrumb: ${url}`);
+    assert.equal(graph.find(node => node['@type'] === 'WebPage').about['@id'], origin + '/#business');
+    assert.ok(text.includes('0912254657') || text.includes('+84 912 254 657'));
+    assert.doesNotMatch(normalize($('main > section').first().text()), /\b\d+\s*(?:phút|minutes?|mins?)\b/i, `Distances in km only: ${url}`);
+  }
   for (const question of faq.mainEntity) {
     assert.ok(text.includes(normalize(question.name)), `Visible FAQ question: ${url}`);
     assert.ok(text.includes(normalize(question.acceptedAnswer.text)), `Visible FAQ answer: ${url}`);

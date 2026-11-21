@@ -5,6 +5,10 @@ import {
   formatEarlyBirdStayOption,
   formatEarlyBirdExpectedDate,
 } from '../services/bookingService';
+import {
+  EARLY_BIRD_DEFAULT_EXPECTED_DATE,
+  EARLY_BIRD_EXPECTED_DATE_OPTIONS,
+} from '../config/booking';
 
 interface EarlyBirdModalProps {
   isOpen: boolean;
@@ -26,7 +30,7 @@ const initialForm: EarlyBirdFormState = {
   phone: '',
   email: '',
   stayType: 'homestay',
-  expectedDate: 'mid_december',
+  expectedDate: EARLY_BIRD_DEFAULT_EXPECTED_DATE,
   note: '',
 };
 
@@ -260,15 +264,22 @@ export default function EarlyBirdModal({ isOpen, onClose, formUrl }: EarlyBirdMo
                   {t.earlyBird.modal.expectedDateLabel}
                 </label>
                 <select
+                  id="earlybird-expected-date"
                   value={form.expectedDate}
                   onChange={(e) => setForm({ ...form, expectedDate: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-nagi bg-white border border-[#d9c7b0]/80 text-nagi-slate text-sm focus:outline-none focus:border-[#79a594] focus:ring-2 focus:ring-[#79a594]/20 transition-all cursor-pointer"
                 >
-                  <option value="early_december">{t.earlyBird.modal.expectedDateEarlyDec}</option>
-                  <option value="mid_december">{t.earlyBird.modal.expectedDateMidDec}</option>
-                  <option value="festive_season">{t.earlyBird.modal.expectedDateLateDec}</option>
-                  <option value="jan_2027">{t.earlyBird.modal.expectedDateEarly2027}</option>
-                  <option value="flexible">{language === 'vi' ? 'Chưa chốt ngày cụ thể (Linh hoạt)' : 'Flexible dates'}</option>
+                  {EARLY_BIRD_EXPECTED_DATE_OPTIONS.map((key) => (
+                    <option key={key} value={key}>
+                      {key === 'flexible'
+                        ? (language === 'vi' ? 'Chưa chốt ngày cụ thể (Linh hoạt)' : 'Flexible dates')
+                        : key === 'mid_december'
+                          ? t.earlyBird.modal.expectedDateMidDec
+                          : key === 'festive_season'
+                            ? t.earlyBird.modal.expectedDateLateDec
+                            : t.earlyBird.modal.expectedDateEarly2027}
+                    </option>
+                  ))}
                 </select>
               </div>
 

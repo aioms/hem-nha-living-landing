@@ -149,3 +149,72 @@ for (const language of ['vi', 'en'] as const) {
     await expect(booking).toContainText(language === 'vi' ? 'Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ.' : 'Free cancellation up to 48 hours before check-in.');
   });
 }
+
+const landings = [
+  { path: '/homestay-quan-7', lang: 'vi', title: 'Homestay Quận 7 tại Tân Thuận | Hẻm Nhà Living', h1: 'Homestay Quận 7 trong hẻm Tân Thuận', faqs: 8, hreflang: { vi: '/homestay-quan-7', en: '/en/short-stay-district-7' } },
+  { path: '/studio-thue-thang-quan-7', lang: 'vi', title: 'Studio thuê tháng Quận 7 tại Tân Thuận | Hẻm Nhà Living', h1: 'Studio thuê tháng ở Tân Thuận, Quận 7', faqs: 8, hreflang: { vi: '/studio-thue-thang-quan-7' } },
+  { path: '/en/short-stay-district-7', lang: 'en', title: 'Short Stay in District 7, Saigon | Hẻm Nhà Living', h1: 'A short stay in District 7 — Tan Thuan, not downtown', faqs: 10, hreflang: { vi: '/homestay-quan-7', en: '/en/short-stay-district-7' } },
+] as const;
+
+for (const landing of landings) {
+  test(`landing ${landing.path} has metadata, JSON-LD, sitemap entry and km-only copy`, async ({ page, request }) => {
+    expect(paths).toContain(landing.path);
+    const sitemap = await (await request.get('/sitemap.xml')).text();
+    expect(sitemap).toContain(`<loc>https://hemnhaliving.com${landing.path}</loc>`);
+    const llms = await (await request.get('/llms.txt')).text();
+    expect(llms).toContain(`https://hemnhaliving.com${landing.path}`);
+    const raw = await (await request.get(landing.path)).text();
+    expect(raw).toContain(`<title data-seo>${landing.title}</title>`);
+    expect(raw).toContain(`rel="canonical" href="https://hemnhaliving.com${landing.path}"`);
+    expect(raw).toContain(`property="og:url" content="https://hemnhaliving.com${landing.path}"`);
+    await page.goto(landing.path);
+    await expect(page).toHaveTitle(landing.title);
+    await expect(page.locator('html')).toHaveAttribute('lang', landing.lang);
+    await expect(page.locator('main h1')).toHaveText(landing.h1);
+    const hreflang = await page.locator('link[hreflang]').evaluateAll(nodes => Object.fromEntries(nodes.map(node => [node.getAttribute('hreflang'), node.getAttribute('href')])));
+    expect(hreflang.vi).toBe('https://hemnhaliving.com' + landing.hreflang.vi);
+    expect(hreflang['x-default']).toBe('https://hemnhaliving.com' + landing.hreflang.vi);
+    expect(hreflang.en).toBe('en' in landing.hreflang ? 'https://hemnhaliving.com' + landing.hreflang.en : undefined);
+    const graph = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent() || '{}')['@graph'] as Record<string, any>[];
+    const types = graph.map(node => node['@type']);
+    expect(types).toEqual(expect.arrayContaining(['LodgingBusiness', 'WebPage', 'BreadcrumbList', 'FAQPage']));
+    expect(graph.find(node => node['@type'] === 'FAQPage')!.mainEntity).toHaveLength(landing.faqs);
+    expect(graph.find(node => node['@type'] === 'WebPage')!.about['@id']).toBe('https://hemnhaliving.com/#business');
+    const text = await page.locator('main > section').first().innerText();
+    expect(text).not.toMatch(/\b\d+\s*(phút|minutes?|mins?)\b/i);
+    expect(text).toMatch(/\d(?:[.,]\d)? km/);
+  });
+}
+
+test('existing pages keep visible text except the floor heading and loosened meta titles', async ({ page }) => {
+  await page.goto('/thue-thang');
+  await expect(page.locator('main')).toContainText('Tầng 2');
+  await expect(page.locator('main')).not.toContainText('Tầng 2 — Tầng 4');
+  await expect(page).toHaveTitle(/^Studio Hẻm DIY & Living/);
+  await page.goto('/en/thue-thang');
+  await expect(page.locator('main')).not.toContainText('Floors 2 — 4');
+  await page.goto('/homestay');
+  await expect(page).toHaveTitle(/^Hẻm Nhà Moments/);
+});
+
+test('prerendered hero text is visible when the JS bundle never runs', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: true });
+  const page = await context.newPage();
+  await page.route('**/*', route => {
+    const url = new URL(route.request().url());
+    return url.hostname === '127.0.0.1' && !url.pathname.endsWith('.js') ? route.continue() : route.abort();
+  });
+  await page.goto('/');
+  await page.waitForTimeout(3200);
+  await expect(page.locator('main p').first()).toHaveCSS('opacity', '1');
+  await page.goto('/thue-thang');
+  await page.waitForTimeout(3200);
+  await expect(page.locator('main h1')).toHaveCSS('opacity', '1');
+  await context.close();
+});
+
+test('hero still animates in for JS users', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+  await expect(page.locator('main p').first()).toHaveCSS('opacity', '1');
+});

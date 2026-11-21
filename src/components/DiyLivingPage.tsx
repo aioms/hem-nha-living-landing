@@ -343,6 +343,7 @@ export default function DiyLivingPage({
           </a>
           <span>/</span>
           <span className="text-nagi-terracotta font-medium">{t.diyLivingPage.breadcrumbCurrent}</span>
+          {language === 'vi' && <a href="/studio-thue-thang-quan-7" className="ml-auto hover:text-nagi-cardEdge hover:underline">Studio thuê tháng Quận 7</a>}
         </div>
       </div>
 
@@ -518,7 +519,7 @@ export default function DiyLivingPage({
                 <div className="arch-tag !border-amber-700/40 !text-amber-800">
                   <span>{language === 'vi' ? 'Phân loại 2' : 'Option 2'}</span>
                   <span>·</span>
-                  <span>{language === 'vi' ? 'Tầng 2 — Tầng 4' : 'Floors 2 — 4'}</span>
+                  <span>{language === 'vi' ? 'Tầng 2' : 'Floor 2'}</span>
                   <span>·</span>
                   <span>{language === 'vi' ? 'Linh hoạt Tuần / Tháng / Năm' : 'Flexible Weekly / Monthly / Annual'}</span>
                 </div>

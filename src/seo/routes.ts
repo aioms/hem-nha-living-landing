@@ -3,7 +3,8 @@ import { DIY_LIVING_ROOMS } from '../data/diyLivingRooms';
 import type { Language } from '../i18n/translations';
 
 export const ORIGIN = 'https://hemnhaliving.com';
-export type View = 'home' | 'moments' | 'diy-living' | 'cafe' | 'faq' | 'amenities' | 'policies';
+export type View = 'home' | 'moments' | 'diy-living' | 'cafe' | 'faq' | 'amenities' | 'policies' | 'landing';
+export type LandingId = 'homestay-quan-7' | 'studio-thue-thang-quan-7' | 'short-stay-district-7';
 export type Policy = 'all' | 'terms' | 'cancellation' | 'privacy';
 export interface Route {
   path: string;
@@ -12,12 +13,16 @@ export interface Route {
   description: [string, string];
   roomId?: string;
   policy?: Policy;
+  landing?: LandingId;
+  // Landing pages exist in one language only and declare their own hreflang counterparts.
+  languages?: Language[];
+  alternates?: Partial<Record<Language, string>>;
 }
 export const ROUTES: Route[] = [
   { path: '/', view: 'home', title: ['Hẻm Nhà Living | Homestay & studio thuê tháng Quận 7', 'Hẻm Nhà Living | Homestay & monthly studios in District 7'], description: ['Một nhịp sống riêng tại 19/8A Tân Thuận Tây, Quận 7, TP.HCM: homestay, studio thuê tuần/tháng, Quando Quando Cafe và rooftop. Dự kiến mở cửa tháng 12/2026.', 'Find your own pace at 19/8A Tan Thuan Tay, District 7, Ho Chi Minh City: homestay, weekly/monthly studios, Quando Quando Cafe and rooftop. Planned opening: December 2026.'] },
-  { path: '/homestay', view: 'moments', title: ['Homestay Quận 7 — Bốn khoảnh khắc | Hẻm Nhà Living', 'District 7 homestay — Four moments | Hẻm Nhà Living'], description: ['Sớm Mai, Mơ Trưa, Hoàng Hôn và Đêm Sao: bốn phòng homestay tại Tân Thuận, Quận 7. Không gian cho hai người lớn, check-in 14:00, check-out 12:00.', 'Sớm Mai, Mơ Trưa, Hoàng Hôn and Đêm Sao: four homestay rooms in Tan Thuan, District 7. Rooms for two adults. Check-in 14:00, check-out 12:00.'] },
+  { path: '/homestay', view: 'moments', title: ['Hẻm Nhà Moments — Bốn khoảnh khắc | Hẻm Nhà Living', 'Hẻm Nhà Moments — Four moments | Hẻm Nhà Living'], description: ['Sớm Mai, Mơ Trưa, Hoàng Hôn và Đêm Sao: bốn phòng homestay tại Tân Thuận, Quận 7. Không gian cho hai người lớn, check-in 14:00, check-out 12:00.', 'Sớm Mai, Mơ Trưa, Hoàng Hôn and Đêm Sao: four homestay rooms in Tan Thuan, District 7. Rooms for two adults. Check-in 14:00, check-out 12:00.'] },
   ...ROOMS.map((room): Route => ({ path: `/homestay/${room.id === 'trua-he' ? 'mo-trua' : room.id}`, view: 'moments', roomId: room.id, title: [`Phòng ${room.name} — Homestay Quận 7 | Hẻm Nhà Living`, `${room.name} room — District 7 homestay | Hẻm Nhà Living`], description: [`Phòng ${room.name} tại Hẻm Nhà Living, 19/8A Tân Thuận Tây, Quận 7: ${room.area}, ${room.capacity.toLowerCase()}. ${room.concept}. Dự kiến đón khách tháng 12/2026.`, `${room.name} at Hẻm Nhà Living, 19/8A Tan Thuan Tay, District 7: ${room.area.replace('ban công', 'balcony')}, two adults. Discover your own moment. Planned opening: December 2026.`] })),
-  { path: '/thue-thang', view: 'diy-living', title: ['Studio thuê tuần, tháng & năm Quận 7 | Hẻm Nhà Living', 'Weekly, monthly & annual studios in District 7 | Hẻm Nhà Living'], description: ['Hẻm DIY thuê năm, tự bài trí; Hẻm Living đầy đủ nội thất thuê tuần, tháng hoặc năm tại Tân Thuận, Quận 7. Có wifi, cafe Quando Quando và rooftop.', 'Annual DIY studios to make your own, or furnished Living studios for weekly, monthly and annual stays in Tan Thuan, District 7. Wifi, Quando Quando Cafe and rooftop.'] },
+  { path: '/thue-thang', view: 'diy-living', title: ['Studio Hẻm DIY & Living — bảng phòng thuê tuần, tháng, năm | Hẻm Nhà Living', 'Hẻm DIY & Living studios — weekly, monthly & annual room list | Hẻm Nhà Living'], description: ['Hẻm DIY thuê năm, tự bài trí; Hẻm Living đầy đủ nội thất thuê tuần, tháng hoặc năm tại Tân Thuận, Quận 7. Có wifi, cafe Quando Quando và rooftop.', 'Annual DIY studios to make your own, or furnished Living studios for weekly, monthly and annual stays in Tan Thuan, District 7. Wifi, Quando Quando Cafe and rooftop.'] },
   ...DIY_LIVING_ROOMS.map((room): Route => ({ path: `/thue-thang/${room.id}`, view: 'diy-living', roomId: room.id, title: [`${room.name} — Studio Quận 7 | Hẻm Nhà Living`, `${room.name} — District 7 studio | Hẻm Nhà Living`], description: [`Studio ${room.name} tại 19/8A Tân Thuận Tây, Quận 7. ${room.area}. ${room.concept}. Liên hệ Hẻm Nhà Living để nhận bảng giá và xác nhận lịch lưu trú.`, `${room.name} studio at 19/8A Tan Thuan Tay, District 7. ${room.area.replace('ban công', 'balcony').replace('sân hiên riêng', 'private patio')}. Contact Hẻm Nhà Living for rates and to confirm your stay.`] })),
   { path: '/cafe', view: 'cafe', title: ['Quando Quando Cafe — Góc cà phê Quận 7 | Hẻm Nhà Living', 'Quando Quando Cafe in District 7 | Hẻm Nhà Living'], description: ['Quando Quando Cafe tại Hẻm Nhà Living, 19/8A Tân Thuận Tây, Quận 7: cà phê, góc sách, đĩa than và bàn làm việc chung. Đón cả khách không lưu trú.', 'Quando Quando Cafe at Hẻm Nhà Living, 19/8A Tan Thuan Tay, District 7: coffee, books, vinyl and coworking tables. Non-resident guests welcome.'] },
   { path: '/tien-ich', view: 'amenities', title: ['Rooftop, bida & tiện ích Quận 7 | Hẻm Nhà Living', 'Rooftop, billiards & shared spaces | Hẻm Nhà Living'], description: ['Khoảng trời chung ở Hẻm Nhà Living, Quận 7: rooftop, bida, bi lắc và giặt sấy tự phục vụ. Khám phá tiện ích dành cho những nhịp sống riêng.', 'A shared sky for individual rhythms at Hẻm Nhà Living, District 7: rooftop, billiards, foosball and self-service laundry. Explore the shared spaces.'] },
@@ -26,6 +31,9 @@ export const ROUTES: Route[] = [
   { path: '/dieu-khoan', view: 'policies', policy: 'terms', title: ['Điều khoản dịch vụ & nội quy | Hẻm Nhà Living', 'Terms of service & house rules | Hẻm Nhà Living'], description: ['Điều khoản dịch vụ và nội quy lưu trú tại Hẻm Nhà Living, 19/8A Tân Thuận Tây, Quận 7. Thông tin dành cho khách trước khi đặt phòng.', 'Terms of service and house rules at Hẻm Nhà Living, 19/8A Tan Thuan Tay, District 7. Information for guests before booking.'] },
   { path: '/chinh-sach-huy-phong', view: 'policies', policy: 'cancellation', title: ['Chính sách hủy phòng & hoàn tiền | Hẻm Nhà Living', 'Cancellation & refund policy | Hẻm Nhà Living'], description: ['Hủy miễn phí trước giờ nhận phòng ít nhất 48 giờ tại Hẻm Nhà Living. Homestay cọc 50%; studio dài hạn cọc theo thỏa thuận. Liên hệ 0912254657 để xác nhận điều kiện đặt chỗ.', 'Free cancellation up to 48 hours before check-in at Hẻm Nhà Living. Homestay deposit: 50%; long-term studio deposit by agreement. Contact 0912254657 to confirm reservation conditions.'] },
   { path: '/chinh-sach-bao-mat', view: 'policies', policy: 'privacy', title: ['Chính sách bảo mật thông tin | Hẻm Nhà Living', 'Privacy policy | Hẻm Nhà Living'], description: ['Cách Hẻm Nhà Living thu thập, sử dụng và bảo vệ thông tin khi bạn đăng ký hoặc đặt phòng. Xem chính sách bảo mật và thông tin liên hệ.', 'How Hẻm Nhà Living collects, uses and protects information when you register or book. Read the privacy policy and contact details.'] },
+  { path: '/homestay-quan-7', view: 'landing', landing: 'homestay-quan-7', languages: ['vi'], alternates: { vi: '/homestay-quan-7', en: '/en/short-stay-district-7' }, title: ['Homestay Quận 7 tại Tân Thuận | Hẻm Nhà Living', 'Homestay Quận 7 tại Tân Thuận | Hẻm Nhà Living'], description: ['Homestay 4 phòng tại 19/8A Tân Thuận Tây, Quận 7: Sớm Mai, Mơ Trưa, Hoàng Hôn, Đêm Sao. Mỗi phòng 2 người, check-in 14:00. Dự kiến đón khách tháng 12/2026. Liên hệ 0912254657.', 'Homestay 4 phòng tại 19/8A Tân Thuận Tây, Quận 7: Sớm Mai, Mơ Trưa, Hoàng Hôn, Đêm Sao. Mỗi phòng 2 người, check-in 14:00. Dự kiến đón khách tháng 12/2026. Liên hệ 0912254657.'] },
+  { path: '/studio-thue-thang-quan-7', view: 'landing', landing: 'studio-thue-thang-quan-7', languages: ['vi'], alternates: { vi: '/studio-thue-thang-quan-7' }, title: ['Studio thuê tháng Quận 7 tại Tân Thuận | Hẻm Nhà Living', 'Studio thuê tháng Quận 7 tại Tân Thuận | Hẻm Nhà Living'], description: ['Studio đầy đủ nội thất thuê tuần, tháng hoặc năm tại 19/8A Tân Thuận Tây, Quận 7. Hẻm Living tầng 2; Hẻm DIY tầng trệt thuê năm. Wifi gồm trong giá; điện nước theo thực tế. Liên hệ 0912254657.', 'Studio đầy đủ nội thất thuê tuần, tháng hoặc năm tại 19/8A Tân Thuận Tây, Quận 7. Hẻm Living tầng 2; Hẻm DIY tầng trệt thuê năm. Wifi gồm trong giá; điện nước theo thực tế. Liên hệ 0912254657.'] },
+  { path: '/short-stay-district-7', view: 'landing', landing: 'short-stay-district-7', languages: ['en'], alternates: { vi: '/homestay-quan-7', en: '/en/short-stay-district-7' }, title: ['Short Stay in District 7, Saigon | Hẻm Nhà Living', 'Short Stay in District 7, Saigon | Hẻm Nhà Living'], description: ['A 4-room boutique homestay in Tan Thuan, District 7, Ho Chi Minh City. Rooms for two, check-in at 14:00, on-site cafe and rooftop. Opening December 2026. WhatsApp/Zalo +84 912 254 657.', 'A 4-room boutique homestay in Tan Thuan, District 7, Ho Chi Minh City. Rooms for two, check-in at 14:00, on-site cafe and rooftop. Opening December 2026. WhatsApp/Zalo +84 912 254 657.'] },
 ];
 
 export function languageFromPath(path: string): Language { return /^\/en(?:\/|$)/.test(path) ? 'en' : 'vi'; }
@@ -36,7 +44,21 @@ export function localizedPath(path: string, language: Language) {
   const base = basePath(suffixAt < 0 ? path : path.slice(0, suffixAt));
   return (language === 'en' ? `/en${base === '/' ? '' : base}` : base) + suffix;
 }
-export function findRoute(path: string) { return ROUTES.find(route => route.path === basePath(path)); }
+export function findRoute(path: string) {
+  const route = ROUTES.find(item => item.path === basePath(path));
+  return route && (!route.languages || route.languages.includes(languageFromPath(path))) ? route : undefined;
+}
+export function routeLanguages(route: Route): Language[] { return route.languages || ['vi', 'en']; }
+export function routePaths(route: Route) { return routeLanguages(route).map(language => localizedPath(route.path, language)); }
+// Target of the VI/EN switcher: the declared counterpart, else the same page in the other language, else that language's home.
+export function switchPath(path: string, language: Language) {
+  const route = findRoute(path);
+  if (!route?.languages) return localizedPath(path, language);
+  const alt = route.alternates?.[language];
+  if (alt) return alt;
+  if (route.landing === 'studio-thue-thang-quan-7') return localizedPath('/thue-thang', language);
+  return localizedPath('/', language);
+}
 export function roomPath(id: string) { return ROUTES.find(route => route.roomId === id)?.path || '/homestay'; }
 export function policyPath(policy: string) { return ROUTES.find(route => route.policy === policy)?.path || '/chinh-sach'; }
 export function tabPath(tab: View, section?: string) {

@@ -211,6 +211,10 @@ export default function ContactSection({ onBookingOpen }: ContactSectionProps) {
         <div className="mt-20 pt-8 border-t border-nagi-muted/20 flex flex-wrap gap-4 items-center justify-between text-nagi-muted font-sans text-xs">
           <span>© {new Date().getFullYear()} {t.contact.rightsReserved}</span>
           <div className="flex flex-wrap gap-6">
+            {language === 'vi' ? <>
+              <a href="/homestay-quan-7" className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left">Homestay Quận 7</a>
+              <a href="/studio-thue-thang-quan-7" className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left">Studio thuê tháng Quận 7</a>
+            </> : <a href="/en/short-stay-district-7" className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left">Short stay in District 7</a>}
             <a href={localizedPath(policyPath('terms'), language)}
               className="hover:text-nagi-parchment transition-colors cursor-pointer text-xs font-sans text-left"
             >

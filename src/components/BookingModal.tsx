@@ -9,6 +9,13 @@ import { getRoomTheme, formatPriceCompact } from '../utils/themes';
 import { useLanguage } from '../context/LanguageContext';
 import { getLocalizedRoom } from '../utils/localizedContent';
 import { submitRegularBooking } from '../services/bookingService';
+import {
+  getCheckInMinDate,
+  getCheckOutMinDate,
+  getMonthlyStartMinDate,
+  isBeforeOpeningDate,
+  openingDateErrorMessage,
+} from '../config/booking';
 
 const ALL_ROOMS = [...ROOMS, ...DIY_LIVING_ROOMS];
 
@@ -94,9 +101,23 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
     return true;
   });
 
+  const openingDateError = openingDateErrorMessage(language);
+
+  const checkInOpeningInvalid = isBeforeOpeningDate(form.checkIn);
+  const checkOutOpeningInvalid = isBeforeOpeningDate(form.checkOut);
+  const monthlyStartOpeningInvalid = isBeforeOpeningDate(form.monthlyStartDate);
+
+  const monthlyDateError = monthlyStartOpeningInvalid ? openingDateError : null;
+
   const canAdvanceDates = (() => {
-    if (form.stayType === 'short_term') return form.checkIn && form.checkOut && form.checkIn < form.checkOut;
-    return form.monthlyStartDate && form.monthlyMonths >= 1;
+    if (form.stayType === 'short_term') {
+      if (!form.checkIn || !form.checkOut || checkInOpeningInvalid || checkOutOpeningInvalid) return false;
+      const minOut = getCheckOutMinDate(form.checkIn);
+      if (form.checkOut < minOut) return false;
+      return form.checkIn < form.checkOut;
+    }
+    if (!form.monthlyStartDate || form.monthlyMonths < 1 || monthlyDateError) return false;
+    return true;
   })();
 
   const handleSubmit = async () => {
@@ -269,10 +290,14 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                           id="checkin"
                           type="date"
                           value={form.checkIn}
-                          min={new Date().toISOString().split('T')[0]}
+                          min={getCheckInMinDate()}
                           onChange={e => update({ checkIn: e.target.value })}
+                          aria-invalid={checkInOpeningInvalid}
                           className="w-full rounded-nagi border border-nagi-border/30 bg-white px-4 py-3 font-sans text-sm text-nagi-cardEdge focus:outline-none focus:ring-2 focus:ring-nagi-gold/50"
                         />
+                        {checkInOpeningInvalid && (
+                          <p className="mt-1.5 font-sans text-xs text-red-600" role="alert">{openingDateError}</p>
+                        )}
                       </div>
                       <div>
                         <label className="font-sans text-xs uppercase tracking-widest text-nagi-muted mb-2 block" htmlFor="checkout">
@@ -282,10 +307,14 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                           id="checkout"
                           type="date"
                           value={form.checkOut}
-                          min={form.checkIn || new Date().toISOString().split('T')[0]}
+                          min={getCheckOutMinDate(form.checkIn)}
                           onChange={e => update({ checkOut: e.target.value })}
+                          aria-invalid={checkOutOpeningInvalid}
                           className="w-full rounded-nagi border border-nagi-border/30 bg-white px-4 py-3 font-sans text-sm text-nagi-cardEdge focus:outline-none focus:ring-2 focus:ring-nagi-gold/50"
                         />
+                        {checkOutOpeningInvalid && (
+                          <p className="mt-1.5 font-sans text-xs text-red-600" role="alert">{openingDateError}</p>
+                        )}
                       </div>
                     </div>
                   ) : (
@@ -298,10 +327,14 @@ export default function BookingModal({ isOpen, initialRoom, onClose }: BookingMo
                           id="monthstart"
                           type="date"
                           value={form.monthlyStartDate}
-                          min={new Date().toISOString().split('T')[0]}
+                          min={getMonthlyStartMinDate()}
                           onChange={e => update({ monthlyStartDate: e.target.value })}
+                          aria-invalid={monthlyStartOpeningInvalid}
                           className="w-full rounded-nagi border border-nagi-border/30 bg-white px-4 py-3 font-sans text-sm text-nagi-cardEdge focus:outline-none focus:ring-2 focus:ring-nagi-gold/50"
                         />
+                        {monthlyDateError && (
+                          <p className="mt-1.5 font-sans text-xs text-red-600" role="alert">{monthlyDateError}</p>
+                        )}
                       </div>
                       <div>
                         <label className="font-sans text-xs uppercase tracking-widest text-nagi-muted mb-2 block" htmlFor="months">

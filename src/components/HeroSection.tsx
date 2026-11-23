@@ -86,7 +86,7 @@ export default function HeroSection({
 
             <Image
               src="/logohemnha/logohem-14.png"
-              alt="Hẻm Nhà Living"
+              alt="Biểu trưng thư pháp thương hiệu Hẻm Nhà Living"
               className="w-full max-w-[320px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[560px] h-auto object-contain block drop-shadow-xs"
               loading="eager"
             />

@@ -40,6 +40,11 @@ for (const url of urls) {
   assert.ok($('meta[property="og:image"]').attr('content').startsWith(origin + '/'));
   assert.equal($('meta[property="og:image:width"]').attr('content'), '1200');
   assert.equal($('meta[property="og:image:height"]').attr('content'), '630');
+  const ogImg = $('meta[property="og:image"]').attr('content');
+  assert.ok($('meta[property="og:image:alt"]').attr('content'), `OG image alt: ${url}`);
+  assert.equal($('meta[name="twitter:image"]').attr('content'), ogImg);
+  assert.ok($('meta[name="twitter:image:alt"]').attr('content'), `Twitter image alt: ${url}`);
+  assert.ok($('meta[name="robots"]').attr('content').includes('max-image-preview:large'), `max-image-preview:large: ${url}`);
   const landing = landings[pathname];
   const vi = landing ? landing.vi : pathname.replace(/^\/en(?=\/|$)/, '') || '/';
   const en = landing ? landing.en : '/en' + (vi === '/' ? '' : vi);
@@ -73,6 +78,19 @@ for (const url of urls) {
   assert.equal(business.geo.longitude, 106.7266712);
   assert.equal(business.address.addressCountry, 'VN');
   assert.ok(business.address.streetAddress.includes('19/8A') && business.sameAs.length >= 2);
+  assert.ok(Array.isArray(business.image) && business.image.length >= 4, `LodgingBusiness image array: ${url}`);
+  for (const imgUrl of business.image) {
+    assert.ok(imgUrl.startsWith(origin + '/'), `Absolute image URL in LodgingBusiness: ${imgUrl}`);
+  }
+  const webpage = graph.find(node => node['@type'] === 'WebPage');
+  assert.ok(webpage.image && webpage.image.url && webpage.image.width && webpage.image.height, `WebPage ImageObject: ${url}`);
+  assert.ok(webpage.image.url.startsWith(origin + '/assets/optimized/'), `WebPage image URL: ${webpage.image.url}`);
+  if (pathname.includes('/homestay/') || pathname.includes('/thue-thang/')) {
+    const roomNode = graph.find(node => ['HotelRoom', 'Accommodation'].includes(node['@type']));
+    assert.ok(roomNode, `Room schema on ${url}`);
+    assert.ok(roomNode.name && Array.isArray(roomNode.image) && roomNode.image.length > 0, `Room schema properties on ${url}`);
+    assert.equal(roomNode.containedInPlace['@id'], origin + '/#business', `Room containedInPlace on ${url}`);
+  }
   assert.doesNotMatch(JSON.stringify(graph), /"(?:offers|price|priceRange)"/, 'No invented numeric offers/rates');
   const faq = graph.find(node => node['@type'] === 'FAQPage');
   assert.equal(faq.mainEntity.length, landing ? landing.faq : /\/faq$/.test(pathname) ? 13 : 5);
@@ -117,8 +135,29 @@ for (const src of imagePaths) {
   const meta = await sharp('dist' + src).metadata();
   assert.equal(meta.format, 'webp', src);
 }
-const og = await sharp('dist/assets/og/hem-nha-living.jpg').metadata();
-assert.equal(og.width, 1200); assert.equal(og.height, 630);
+const ogFiles = [
+  'hem-nha-living.jpg', 'og-homestay.jpg', 'og-som-mai.jpg', 'og-mo-trua.jpg', 'og-hoang-hon.jpg',
+  'og-dem-sao.jpg', 'og-thue-thang.jpg', 'og-hem-diy-1.jpg', 'og-hem-diy-2.jpg', 'og-hem-minimal.jpg',
+  'og-hem-japandi.jpg', 'og-mo-japandi.jpg', 'og-hem-scandi.jpg', 'og-cafe.jpg', 'og-tien-ich.jpg',
+  'og-landing-homestay-quan-7.jpg', 'og-landing-short-stay-district-7.jpg',
+  'og-landing-studio-thue-thang-quan-7.jpg', 'og-landing-monthly-studio-district-7.jpg',
+  'og-landing-homestay-gan-phu-my-hung.jpg', 'og-landing-cho-o-gan-secc.jpg',
+];
+for (const file of ogFiles) {
+  const meta = await sharp(`dist/assets/og/${file}`).metadata();
+  assert.equal(meta.width, 1200, `OG width 1200 on ${file}`);
+  assert.equal(meta.height, 630, `OG height 630 on ${file}`);
+}
+const sitemapRaw = await readFile('dist/sitemap.xml', 'utf8');
+assert.ok(sitemapRaw.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'), 'Sitemap image namespace');
+const sitemapDoc = load(sitemapRaw, { xml: true });
+const imageLocs = sitemapDoc('image\\:loc').map((_, node) => sitemapDoc(node).text()).get();
+assert.ok(imageLocs.length >= 46, `Sitemap has ${imageLocs.length} images (expected >= 46)`);
+for (const loc of imageLocs) {
+  assert.ok(loc.startsWith(origin + '/assets/optimized/'), `Sitemap image is optimized WebP: ${loc}`);
+  const imgPath = 'dist' + new URL(loc).pathname;
+  assert.ok(await access(imgPath).then(() => true, () => false), `Sitemap image exists: ${imgPath}`);
+}
 for (const file of ['robots.txt', 'llms.txt']) {
   const content = await readFile('dist/' + file, 'utf8');
   assert.equal(content, await readFile('public/' + file, 'utf8'));

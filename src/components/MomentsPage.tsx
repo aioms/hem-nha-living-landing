@@ -77,6 +77,7 @@ export function RoomCardItem({ room: rawRoom, index, onSelect, onDetail, fullDet
                   alt={img.caption || room.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading={i === 0 && index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={i === 0 && index === 0 ? 'high' : undefined}
                 />
               </div>
             ))}

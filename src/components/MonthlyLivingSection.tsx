@@ -46,7 +46,7 @@ export default function MonthlyLivingSection({ onBookingOpen, onNavigateToDiyLiv
                     target.src = '/assets/photos/diy-living/hem-scandi/page_090.jpg';
                   }
                 }}
-                alt="Long-term apartment interior at Hẻm Nhà Living"
+                alt="Không gian nội thất studio Hẻm Japandi phong cách ấm cúng tại Hẻm Nhà Living"
                 className="w-full aspect-[3/4] object-cover"
                 loading="lazy"
               />
@@ -67,7 +67,7 @@ export default function MonthlyLivingSection({ onBookingOpen, onNavigateToDiyLiv
                     target.src = '/assets/photos/rooms/som-mai/hero.webp';
                   }
                 }}
-                alt="Patio garden of DIY living"
+                alt="Khoảng sân hiên riêng biệt với giàn lam gỗ pergola tại studio Hẻm DIY 1"
                 className="w-full aspect-square object-cover"
                 loading="lazy"
               />

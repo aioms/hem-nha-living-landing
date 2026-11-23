@@ -50,7 +50,7 @@ export default function AmenitiesSection({ amenities }: AmenitiesSectionProps) {
             <Image
               src={featured.image}
               sizes="(min-width: 1280px) 1152px, 100vw"
-              alt="Hẻm Nhà Living Rooftop Terrace"
+              alt="Khu vực rooftop ngắm hoàng hôn với bàn bida và quầy bar tại Hẻm Nhà Living"
               className="w-full h-full object-cover"
               loading="lazy"
             />

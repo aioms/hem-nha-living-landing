@@ -19,9 +19,10 @@ export default function CafeSection({ standalone = false }: { standalone?: boole
         <Image
           src="/assets/photos/cafe/cafe-main-lounge.webp"
           sizes="100vw"
-          alt=""
-          aria-hidden="true"
+          alt="Không gian lounge chính ấm cúng tại Quando Quando Cafe"
           className="w-full h-full object-cover object-center"
+          loading={standalone ? 'eager' : 'lazy'}
+          fetchPriority={standalone ? 'high' : undefined}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1e2a2e] via-[#1e2a2e]/85 to-[#1e2a2e]/25" />
       </div>
@@ -89,7 +90,7 @@ export default function CafeSection({ standalone = false }: { standalone?: boole
             <div className="relative rounded-nagi-md overflow-hidden">
               <Image
                 src="/assets/photos/cafe/cafe-bar.webp"
-                alt="Quando Quando Cafe Bar"
+                alt="Quầy bar pha chế cà phê tại Quando Quando Cafe, Hẻm Nhà Living"
                 className="w-full aspect-[4/3] object-cover"
                 loading="lazy"
               />
@@ -100,7 +101,7 @@ export default function CafeSection({ standalone = false }: { standalone?: boole
               <Image
                 src="/assets/photos/cafe/cafe-library-nook.webp"
                 sizes="(min-width: 1024px) 25vw, 50vw"
-                alt="Reading nook at Cafe"
+                alt="Góc đọc sách thư giãn và máy quay đĩa than tại Quando Quando Cafe"
                 className="w-full aspect-square object-cover"
                 loading="lazy"
               />

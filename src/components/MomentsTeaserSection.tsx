@@ -104,7 +104,7 @@ export default function MomentsTeaserSection({
                   <Image
                     src={room.images[0]?.url}
                     sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    alt={room.name}
+                    alt={room.images[0]?.caption || `Phòng homestay ${room.name} tại Hẻm Nhà Living`}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                   />

@@ -115,6 +115,9 @@ export interface Translations {
     pLiving: string;
     fromLabel: string;
     monthUnit: string;
+    priceBadgeText: string;
+    badgeEyebrow: string;
+    badgeTitle: string;
     benefits: {
       utilities: { title: string; desc: string };
       wifi: { title: string; desc: string };
@@ -246,6 +249,8 @@ export interface Translations {
     nightUnit: string;
     bookBtn: string;
     detailBtn: string;
+    comboPriceNote: string;
+    viewPriceTableBtn: string;
     prevImg: string;
     nextImg: string;
   };
@@ -465,6 +470,9 @@ export const translations: Record<Language, Translations> = {
       pLiving: '• Hẻm Nhà Living (Thuê tuần/tháng/năm): Những căn studio tiện nghi và phong cách, nơi mọi thứ đã được chuẩn bị sẵn sàng để bạn dọn vào và tận hưởng ngay.',
       fromLabel: 'Từ',
       monthUnit: '₫ / tháng',
+      priceBadgeText: 'Gói giá linh hoạt phù hợp mọi nhu cầu',
+      badgeEyebrow: 'Gói giá linh hoạt',
+      badgeTitle: 'Phù hợp mọi nhu cầu',
       benefits: {
         utilities: { title: 'Điện & Nước', desc: 'Theo đơn giá nhà nước' },
         wifi: { title: 'Wifi Cáp quang', desc: 'Phủ sóng toàn nhà' },
@@ -617,6 +625,8 @@ export const translations: Record<Language, Translations> = {
       nightUnit: '/đêm',
       bookBtn: 'Kiểm tra & Đặt phòng',
       detailBtn: 'Xem chi tiết',
+      comboPriceNote: 'Có áp dụng giá theo combo giờ trong ngày/combo đêm',
+      viewPriceTableBtn: 'Xem bảng giá',
       prevImg: 'Ảnh trước',
       nextImg: 'Ảnh tiếp theo',
     },
@@ -634,7 +644,7 @@ export const translations: Record<Language, Translations> = {
       monthUnit: '₫ / tháng',
       yearUnit: 'hợp đồng năm',
       depositLabel: 'Cọc',
-      bookBtn: 'Đăng ký thuê phòng',
+      bookBtn: 'Nhận giá thuê ưu đãi',
       detailBtn: 'Xem chi tiết',
       prevImg: 'Ảnh trước',
       nextImg: 'Ảnh tiếp theo',
@@ -880,6 +890,9 @@ export const translations: Record<Language, Translations> = {
       pLiving: '• Hẻm Nhà Living (Weekly, monthly, or yearly): Tastefully furnished studios with every essential in place, ready for you to move straight in.',
       fromLabel: 'From',
       monthUnit: 'VND / month',
+      priceBadgeText: 'Flexible packages for every living need',
+      badgeEyebrow: 'Flexible Packages',
+      badgeTitle: 'For Every Living Need',
       benefits: {
         utilities: { title: 'Utilities', desc: 'State-regulated rates' },
         wifi: { title: 'Fiber Wi-Fi', desc: 'High-speed throughout' },
@@ -1032,6 +1045,8 @@ export const translations: Record<Language, Translations> = {
       nightUnit: '/night',
       bookBtn: 'Check & Reserve',
       detailBtn: 'View Details',
+      comboPriceNote: 'Hourly combos & overnight combos available',
+      viewPriceTableBtn: 'Xem bảng giá',
       prevImg: 'Previous photo',
       nextImg: 'Next photo',
     },
@@ -1049,7 +1064,7 @@ export const translations: Record<Language, Translations> = {
       monthUnit: 'VND / month',
       yearUnit: 'annual lease',
       depositLabel: 'Deposit',
-      bookBtn: 'Inquire & Apply',
+      bookBtn: 'Get Special Rates',
       detailBtn: 'View Details',
       prevImg: 'Previous photo',
       nextImg: 'Next photo',

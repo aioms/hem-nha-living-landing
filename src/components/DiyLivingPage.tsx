@@ -2,7 +2,7 @@ import Image from './Image';
 import { useState, useEffect } from 'react';
 import { localizedPath, roomPath } from '../seo/routes';
 import { Room } from '../types';
-import { DIY_THEME, LIVING_THEME } from '../utils/themes';
+import { DIY_THEME, LIVING_THEME, formatPriceCompact } from '../utils/themes';
 import { useInView } from '../hooks/useScroll';
 import { useLanguage } from '../context/LanguageContext';
 import { getLocalizedRoom } from '../utils/localizedContent';
@@ -242,46 +242,63 @@ export function DiyLivingCard({ room: rawRoom, index, onSelect, onDetail, fullDe
 
           {/* Pricing & CTA Buttons */}
           <div style={{ borderTop: `1px solid ${theme.borderColor}`, paddingTop: '1.25rem' }}>
-            <div className="flex items-baseline gap-4 mb-4">
-              {room.weeklyPriceDisplay && (
-                <>
-                  <div>
-                    <div
-                      className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60 mb-0.5"
-                      style={{ color: theme.mutedColor }}
-                    >
-                      {language === 'vi' ? 'Theo tuần' : 'Weekly rate'}
-                    </div>
-                    <div
-                      className="font-serif text-lg md:text-xl font-bold"
-                      style={{ color: theme.accentColor }}
-                    >
-                      {room.weeklyPriceDisplay}
-                      <span className="text-sm font-normal text-current opacity-70">
-                        {language === 'vi' ? '/tuần' : '/wk'}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="opacity-40" style={{ color: theme.mutedColor }}>·</div>
-                </>
-              )}
+            {isDiy ? (
+              <div className="mb-4">
+                <div
+                  className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60 mb-0.5"
+                  style={{ color: theme.mutedColor }}
+                >
+                  {language === 'vi' ? 'Hợp đồng năm (thanh toán tháng)' : 'Annual lease (monthly rate)'}
+                </div>
+                <div className="font-serif text-xl md:text-2xl font-bold" style={{ color: theme.accentColor }}>
+                  {room.monthlyPriceDisplay || formatPriceCompact(room.monthlyPrice || 0)}
+                  <span className="text-sm font-normal text-current opacity-70">
+                    {language === 'vi' ? '/tháng' : '/mo'}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="mb-4">
+                {/* Dòng nhãn nhỏ: chữ in hoa, letter-spacing thoáng, màu xám nhạt */}
+                <div
+                  className="font-sans text-[0.68rem] uppercase tracking-[0.16em] opacity-65 mb-1.5 font-medium"
+                  style={{ color: theme.mutedColor }}
+                >
+                  {language === 'vi' ? 'ÁP DỤNG GIÁ THEO ĐÊM . TUẦN . THÁNG' : 'RATES APPLY PER NIGHT · WEEK · MONTH'}
+                </div>
 
-              {room.monthlyPriceDisplay ? (
-                <div>
-                  <div
-                    className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60 mb-0.5"
+                {/* Dòng giá chính: font serif đậm, nổi bật + chữ nhỏ: "áp dụng từ gói tuần" */}
+                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-2">
+                  <span
+                    className="font-serif text-2xl md:text-3xl font-bold tracking-tight"
+                    style={{ color: theme.accentColor }}
+                  >
+                    {room.convertedDailyPriceDisplay || (room.shortTermPrice ? `Từ ${Math.round(room.shortTermPrice / 1000)}k /đêm` : '')}
+                  </span>
+                  <span
+                    className="font-sans text-xs md:text-sm opacity-70 italic font-normal"
                     style={{ color: theme.mutedColor }}
                   >
-                    {isDiy
-                      ? (language === 'vi' ? 'Hợp đồng năm (thanh toán tháng)' : 'Annual lease (monthly rate)')
-                      : (language === 'vi' ? 'Thuê tháng' : 'Monthly lease')}
-                  </div>
-                  <div className="font-serif text-xl md:text-2xl font-bold" style={{ color: theme.accentColor }}>
-                    {room.monthlyPriceDisplay}<span className="text-sm font-normal text-current opacity-70">{language === 'vi' ? '/tháng' : '/mo'}</span>
-                  </div>
+                    ({language === 'vi' ? (room.convertedDailyRateNote || 'áp dụng từ gói tuần') : 'applicable from weekly package'})
+                  </span>
                 </div>
-              ) : null}
-            </div>
+
+                {/* Dòng liên kết tinh tế: text link có mũi tên ↗, gạch chân mảnh, màu chữ đậm, hover mượt */}
+                <div>
+                  <a
+                    href={room.pricingTableUrl || '#bang-gia-niem-yet'}
+                    target={room.pricingTableUrl?.startsWith('http') || room.pricingTableUrl?.endsWith('.pdf') ? '_blank' : undefined}
+                    rel={room.pricingTableUrl?.startsWith('http') || room.pricingTableUrl?.endsWith('.pdf') ? 'noopener noreferrer' : undefined}
+                    className="inline-flex items-center gap-1.5 font-sans text-xs sm:text-sm font-medium underline underline-offset-4 decoration-1 hover:opacity-75 transition-all duration-200 cursor-pointer group"
+                    style={{ color: theme.accentColor }}
+                    title={language === 'vi' ? 'Xem bảng giá niêm yết' : 'View official rate sheet'}
+                  >
+                    <span>{language === 'vi' ? 'Xem bảng giá niêm yết' : 'View official rate sheet'}</span>
+                    <span className="text-xs transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+                  </a>
+                </div>
+              </div>
+            )}
 
             <div className="flex gap-3">
               <button
@@ -291,9 +308,9 @@ export function DiyLivingCard({ room: rawRoom, index, onSelect, onDetail, fullDe
                   backgroundColor: theme.accentColor,
                   color: '#fbf5e8',
                 }}
-                aria-label={`${t.diyLivingPage.bookBtn} ${room.name}`}
+                aria-label={`${isDiy ? t.diyLivingPage.bookBtn : (language === 'vi' ? 'Nhận giá thuê ưu đãi' : 'Get Special Rates')} ${room.name}`}
               >
-                {t.diyLivingPage.bookBtn}
+                {isDiy ? t.diyLivingPage.bookBtn : (language === 'vi' ? 'Nhận giá thuê ưu đãi' : 'Get Special Rates')}
               </button>
 
               <button

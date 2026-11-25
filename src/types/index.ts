@@ -23,8 +23,13 @@ export interface Room {
   floor: string;
   shortTermPrice?: number; // VND per night
   originalShortTermPrice?: number; // VND per night (original before discount)
-  weeklyPriceDisplay?: string; // Published studio rate; keep blurred, e.g. "2.x M đ"
-  monthlyPriceDisplay?: string; // Published studio rate; keep blurred, e.g. "4.x M đ"
+  pricingTableUrl?: string; // Link đến bảng giá chi tiết
+  convertedDailyPriceDisplay?: string; // e.g. "Từ 440k /đêm"
+  convertedDailyRateNote?: string; // e.g. "áp dụng từ gói tuần"
+  weeklyPrice?: number;    // VND per week
+  weeklyPriceDisplay?: string; // Formatted display, e.g. "2.x M đ"
+  monthlyPrice?: number;   // VND per month
+  monthlyPriceDisplay?: string; // Formatted display, e.g. "4.x M đ"
   amenities: string[];
   features: {
     highlight: string;

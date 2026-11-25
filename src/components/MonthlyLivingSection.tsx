@@ -74,10 +74,18 @@ export default function MonthlyLivingSection({ onBookingOpen, onNavigateToDiyLiv
             </div>
 
             {/* Price badge floating */}
-            <div className="absolute -top-5 left-6 bg-nagi-deepSlate text-nagi-sand rounded-nagi-md px-5 py-3 shadow-floating-card">
-              <div className="font-sans text-[0.6rem] tracking-widest uppercase opacity-80 mb-0.5">{t.monthly.fromLabel}</div>
-              <div className="font-sans text-2xl font-bold">4.x M</div>
-              <div className="font-sans text-[0.6rem] tracking-widest uppercase opacity-80">{t.monthly.monthUnit}</div>
+            <div className="absolute -top-4 left-6 bg-nagi-deepSlate text-nagi-sand rounded-xl px-3.5 py-2 shadow-floating-card border border-white/10 flex items-center gap-2.5">
+              <div className="w-6 h-6 rounded-full bg-[#79a594]/20 border border-[#79a594]/30 flex items-center justify-center text-[#9fd3bf] shrink-0 text-[10px]">
+                ✦
+              </div>
+              <div>
+                <div className="font-sans text-[0.58rem] tracking-[0.16em] uppercase opacity-70 font-medium leading-none mb-1">
+                  {t.monthly.badgeEyebrow}
+                </div>
+                <div className="font-serif text-xs sm:text-[0.85rem] font-semibold tracking-tight text-white whitespace-nowrap leading-tight">
+                  {t.monthly.badgeTitle}
+                </div>
+              </div>
             </div>
           </div>
 

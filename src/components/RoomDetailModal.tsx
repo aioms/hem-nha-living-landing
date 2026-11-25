@@ -249,43 +249,78 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
                       formatPriceCompact(room.shortTermPrice)
                     )}
                   </div>
+                  {room.originalShortTermPrice && (
+                    <div className="font-sans text-[0.7rem] italic opacity-75 mt-1" style={{ color: theme.mutedColor }}>
+                      * {t.momentsPage.comboPriceNote}
+                    </div>
+                  )}
                 </div>
                 <div className="opacity-40">·</div>
               </>
             )}
 
-            {room.weeklyPriceDisplay && (
-              <>
-                <div>
-                  <div className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60">
-                    {language === 'vi' ? 'Theo tuần' : 'Weekly rate'}
-                  </div>
-                  <div className="font-serif text-xl font-bold" style={{ color: theme.accentColor }}>
-                    {room.weeklyPriceDisplay}
-                    <span className="text-sm font-normal text-current opacity-70">
-                      {language === 'vi' ? '/tuần' : '/wk'}
-                    </span>
-                  </div>
-                </div>
-                <div className="opacity-40">·</div>
-              </>
-            )}
-
-            {room.monthlyPriceDisplay && (
+            {room.category === 'living' && room.convertedDailyPriceDisplay ? (
               <div>
-                <div className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60">
-                  {room.category === 'diy'
-                    ? (language === 'vi' ? 'Thuê năm (trả tháng)' : 'Annual lease (monthly)')
-                    : (language === 'vi' ? 'Thuê tháng' : 'Monthly lease')}
+                <div className="font-sans text-[0.65rem] uppercase tracking-[0.16em] opacity-60 mb-0.5">
+                  {language === 'vi' ? 'ÁP DỤNG GIÁ THEO ĐÊM . TUẦN . THÁNG' : 'RATES: NIGHT · WEEK · MONTH'}
                 </div>
-                <div className="font-serif text-2xl font-bold" style={{ color: theme.accentColor }}>
-                  {room.monthlyPriceDisplay}<span className="text-sm font-normal text-current opacity-70">{t.roomDetailModal.perMonthLabel}</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-serif text-2xl font-bold" style={{ color: theme.accentColor }}>
+                    {room.convertedDailyPriceDisplay}
+                  </span>
+                  <span className="font-sans text-xs opacity-70 italic font-normal" style={{ color: theme.mutedColor }}>
+                    ({language === 'vi' ? (room.convertedDailyRateNote || 'áp dụng từ gói tuần') : 'applicable from weekly package'})
+                  </span>
                 </div>
               </div>
+            ) : (
+              <>
+                {room.weeklyPrice && (
+                  <>
+                    <div>
+                      <div className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60">
+                        {language === 'vi' ? 'Theo tuần' : 'Weekly rate'}
+                      </div>
+                      <div className="font-serif text-xl font-bold" style={{ color: theme.accentColor }}>
+                        {room.weeklyPriceDisplay || formatPriceCompact(room.weeklyPrice)}
+                        <span className="text-sm font-normal text-current opacity-70">
+                          {language === 'vi' ? '/tuần' : '/wk'}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="opacity-40">·</div>
+                  </>
+                )}
+
+                {room.monthlyPrice && (
+                  <div>
+                    <div className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60">
+                      {room.category === 'diy'
+                        ? (language === 'vi' ? 'Thuê năm (trả tháng)' : 'Annual lease (monthly)')
+                        : (language === 'vi' ? 'Thuê tháng' : 'Monthly lease')}
+                    </div>
+                    <div className="font-serif text-2xl font-bold" style={{ color: theme.accentColor }}>
+                      {room.monthlyPriceDisplay || formatPriceCompact(room.monthlyPrice)}<span className="text-sm font-normal text-current opacity-70">{t.roomDetailModal.perMonthLabel}</span>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
 
           <div className="flex items-center gap-3">
+            {room.pricingTableUrl && (
+              <a
+                href={room.pricingTableUrl}
+                target={room.pricingTableUrl.startsWith('http') ? '_blank' : undefined}
+                rel={room.pricingTableUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="px-4 py-2.5 rounded-nagi-pill text-sm font-sans border hover:bg-black/5 transition-colors cursor-pointer inline-flex items-center gap-1.5"
+                style={{ borderColor: theme.borderColor, color: theme.textColor }}
+              >
+                <span>{t.momentsPage.viewPriceTableBtn}</span>
+                <span className="text-xs opacity-70">↗</span>
+              </a>
+            )}
             <button
               onClick={onClose}
               className="px-5 py-2.5 rounded-nagi-pill text-sm font-sans border hover:bg-black/5 transition-colors cursor-pointer"
@@ -306,7 +341,9 @@ export default function RoomDetailModal({ room: rawRoom, isOpen, onClose, onBook
             >
               {room.category === 'diy'
                 ? (language === 'vi' ? 'Hỏi thuê dài hạn' : 'Inquire Annual Lease')
-                : (t.roomDetailModal.bookThisRoomBtn)}
+                : (room.category === 'living'
+                  ? (language === 'vi' ? 'Nhận giá thuê ưu đãi' : 'Get Special Rates')
+                  : t.roomDetailModal.bookThisRoomBtn)}
             </button>
           </div>
         </div>

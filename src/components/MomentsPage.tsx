@@ -237,7 +237,7 @@ export function RoomCardItem({ room: rawRoom, index, onSelect, onDetail, fullDet
 
           {/* Pricing & CTA Buttons */}
           <div style={{ borderTop: `1px solid ${theme.borderColor}`, paddingTop: '1.25rem' }}>
-            <div className="flex items-baseline gap-4 mb-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-2">
               <div>
                 <div
                   className="font-sans text-[0.65rem] uppercase tracking-wider opacity-60 mb-0.5"
@@ -269,6 +269,23 @@ export function RoomCardItem({ room: rawRoom, index, onSelect, onDetail, fullDet
                 </div>
               </div>
 
+              {/* Button Xem bảng giá */}
+              <a
+                href={room.pricingTableUrl || '#bang-gia'}
+                target={room.pricingTableUrl?.startsWith('http') ? '_blank' : undefined}
+                rel={room.pricingTableUrl?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-sans font-medium border transition-all duration-200 hover:opacity-85 hover:scale-[1.02] shadow-xs cursor-pointer self-end"
+                style={{
+                  borderColor: theme.borderColor,
+                  color: theme.textColor,
+                  backgroundColor: isNight ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.03)',
+                }}
+                title={language === 'vi' ? 'Xem bảng giá chi tiết' : 'View detailed price table'}
+              >
+                <span>{t.momentsPage.viewPriceTableBtn}</span>
+                <span className="text-[11px] opacity-70">↗</span>
+              </a>
+
               {room.monthlyPriceDisplay ? (
                 <>
                   <div className="opacity-40" style={{ color: theme.mutedColor }}>·</div>
@@ -287,6 +304,14 @@ export function RoomCardItem({ room: rawRoom, index, onSelect, onDetail, fullDet
                 </>
               ) : null}
             </div>
+
+            {/* Note combo */}
+            <p
+              className="font-sans text-[0.72rem] md:text-xs mb-4 italic opacity-75 leading-relaxed"
+              style={{ color: theme.mutedColor }}
+            >
+              * {t.momentsPage.comboPriceNote}
+            </p>
 
             <div className="flex gap-3">
               <button
